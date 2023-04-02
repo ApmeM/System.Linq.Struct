@@ -4,7 +4,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace HonkPerf.NET.RefLinq.Enumerators
+namespace System.Linq.Struct
 {
 
     public struct ArrayEnumerator<T> : IRefEnumerator<T>

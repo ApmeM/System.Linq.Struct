@@ -3,11 +3,9 @@
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
 using System.Collections.Generic;
-using HonkPerf.NET.RefLinq.Enumerators;
 
-namespace HonkPerf.NET.RefLinq
+namespace System.Linq.Struct
 {
-
     public static partial class LazyLinqExtensions
     {
         public static RefLinqEnumerable<T, IReadOnlyListEnumerator<T>> ToRefLinq<T>(this IReadOnlyList<T> c)

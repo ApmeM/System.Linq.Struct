@@ -1,9 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 
-public class MultiHashSetWrapper<T>
+namespace System.Linq.Struct
 {
-    public HashSet<T> Set;
+    public class MultiHashSetWrapper<T>
+    {
+        public HashSet<T> Set;
 
-    public HashSet<T>.Enumerator GetEnumerator() => Set.GetEnumerator();
+        public HashSet<T>.Enumerator GetEnumerator() => Set.GetEnumerator();
+    }
 }

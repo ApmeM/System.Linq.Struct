@@ -2,10 +2,10 @@
 // This file from HonkPerf.NET project is MIT-licensed.
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
-global using HonkPerf.NET.RefLinq;
+global using System.Linq.Struct;
 global using Xunit;
 
-using HonkPerf.NET.RefLinq.Enumerators;
+using System.Linq.Struct;
 using System.Collections.Generic;
 using System.Linq;
 

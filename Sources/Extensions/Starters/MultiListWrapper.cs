@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MultiListWrapper<T> : IReadOnlyList<T>
+namespace System.Linq.Struct
 {
-    public List<T> data;
-
-    public T this[int index] => data[index];
-
-    public int Count => data.Count;
-
-    public IEnumerator<T> GetEnumerator()
+    public class MultiListWrapper<T> : IReadOnlyList<T>
     {
-        return data.GetEnumerator();
-    }
+        public List<T> data;
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return data.GetEnumerator();
+        public T this[int index] => data[index];
+
+        public int Count => data.Count;
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return data.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.GetEnumerator();
+        }
     }
 }

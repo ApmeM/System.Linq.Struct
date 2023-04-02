@@ -2,11 +2,10 @@
 // This file from HonkPerf.NET project is MIT-licensed.
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
-using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace HonkPerf.NET.RefLinq.Enumerators
+namespace System.Linq.Struct
 {
 
     public struct OrderBy<T, TEnumerator, TKey>

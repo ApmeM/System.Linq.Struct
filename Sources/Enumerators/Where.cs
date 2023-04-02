@@ -2,10 +2,9 @@
 // This file from HonkPerf.NET project is MIT-licensed.
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
-using System;
 using System.Runtime.CompilerServices;
 
-namespace HonkPerf.NET.RefLinq.Enumerators
+namespace System.Linq.Struct
 {
 
     public struct Where<T, TEnumerator>

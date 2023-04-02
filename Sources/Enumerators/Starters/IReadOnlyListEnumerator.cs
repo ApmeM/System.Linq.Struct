@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace HonkPerf.NET.RefLinq.Enumerators
+namespace System.Linq.Struct
 {
 
     public struct IReadOnlyListEnumerator<T> : IRefEnumerator<T>
