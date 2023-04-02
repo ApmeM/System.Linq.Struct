@@ -43,8 +43,7 @@ public class WhereTest
         var seq =
             new[] { 1, 2, 3, 4, 5, 6 }
             .ToRefLinq()
-            .Where((c, local) => c + local > 8, local);
+            .Where(c => c + local > 8);
         TestUtils.EqualSequences(seq, new[] { 3, 4, 5, 6 });
     }
 }
-

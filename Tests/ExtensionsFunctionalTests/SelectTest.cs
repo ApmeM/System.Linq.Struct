@@ -33,7 +33,7 @@ public class SelectTest
         var seq =
             new int[] { 1, 2, 3 }
             .ToRefLinq()
-            .Select((c, local) => c * local, local);
+            .Select(c => c * local);
         TestUtils.EqualSequences(seq, new int[] { 5, 10, 15 });
     }
 }

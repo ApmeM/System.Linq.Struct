@@ -12,7 +12,7 @@ public class SelectManyTest
         var a = 
             new [] { 1d, 2d, 3d }
             .ToRefLinq()
-            .Select(c => Enumerable.Range(1, (int)c))
+            .Select(c => TestUtils.Range(1, (int)c).ToRefLinq())
             .SelectMany();
         TestUtils.EqualSequences(a, new [] { 1, 1, 2, 1, 2, 3 });
     }
@@ -23,7 +23,7 @@ public class SelectManyTest
         var a =
             new[] { 1d, 2d, 3d }
             .ToRefLinq()
-            .SelectMany(c => Enumerable.Range(1, (int)c));
+            .SelectMany(c => TestUtils.Range(1, (int)c).ToRefLinq());
         TestUtils.EqualSequences(a, new[] { 1, 1, 2, 1, 2, 3 });
     }
 
@@ -34,7 +34,7 @@ public class SelectManyTest
         var a =
             new[] { 1d, 2d, 3d }
             .ToRefLinq()
-            .SelectMany((c, local) => Enumerable.Range(1, (int)c + local), local);
+            .SelectMany(c => TestUtils.Range(1, (int)c + local).ToRefLinq());
         TestUtils.EqualSequences(a, new[] { 1, 2, 1, 2, 3, 1, 2, 3, 4 });
     }
 

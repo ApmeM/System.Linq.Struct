@@ -4,7 +4,6 @@
 
 using System.Collections.Generic;
 using HonkPerf.NET.RefLinq.Enumerators;
-using LocomotorECS;
 
 namespace HonkPerf.NET.RefLinq
 {
@@ -21,7 +20,5 @@ namespace HonkPerf.NET.RefLinq
             => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c));
         public static RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>> ToRefLinq<T>(this MultiHashSetWrapper<T> c)
             => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c));
-        public static RefLinqEnumerable<KeyValuePair<T, EntityListChangeNotificator>, EntityLookupEnumerator<T>> ToRefLinq<T>(this EntityLookup<T> c)
-            => new RefLinqEnumerable<KeyValuePair<T, EntityListChangeNotificator>, EntityLookupEnumerator<T>>(new EntityLookupEnumerator<T>(c));
     }
 }

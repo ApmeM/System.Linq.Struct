@@ -2,6 +2,7 @@
 // This file from HonkPerf.NET project is MIT-licensed.
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
+using System;
 using HonkPerf.NET.RefLinq.Enumerators;
 
 namespace HonkPerf.NET.RefLinq
@@ -16,6 +17,12 @@ namespace HonkPerf.NET.RefLinq
             foreach (var _ in seq)
                 c++;
             return c;
+        }
+
+        public static int Count<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
+            where TEnumerator : IRefEnumerator<T>
+        {
+            return seq.Where(pred).Count();
         }
     }
 }

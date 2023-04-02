@@ -17,5 +17,21 @@ namespace HonkPerf.NET.RefLinq
                 result += el;
             return result;
         }
+        public static float Sum<TEnumerator>(this RefLinqEnumerable<float, TEnumerator> seq)
+            where TEnumerator : IRefEnumerator<float>
+        {
+            var result = 0f;
+            foreach (var el in seq)
+                result += el;
+            return result;
+        }
+        public static double Sum<TEnumerator>(this RefLinqEnumerable<double, TEnumerator> seq)
+            where TEnumerator : IRefEnumerator<double>
+        {
+            var result = 0d;
+            foreach (var el in seq)
+                result += el;
+            return result;
+        }
     }
 }

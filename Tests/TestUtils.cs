@@ -4,21 +4,25 @@
 
 global using HonkPerf.NET.RefLinq;
 global using Xunit;
-global using HonkPerf.NET.Core;
 
 using HonkPerf.NET.RefLinq.Enumerators;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tests;
 
 public static class TestUtils
 {
     public static void EqualSequences<T, TEnumerator>(RefLinqEnumerable<T, TEnumerator> en, IEnumerable<T> expected)
-        where TEnumerator : IRefEnumerable<T>
+        where TEnumerator : IRefEnumerator<T>
     {
         var list = new List<T>();
         foreach (var el in en)
             list.Add(el);
         Assert.Equal(expected, list);
+    }
+
+    public static int[] Range(int from, int count){
+        return Enumerable.Range(from, count).ToArray();
     }
 }

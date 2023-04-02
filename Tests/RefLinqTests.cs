@@ -30,7 +30,7 @@ public class RefLinqTests
         var greaterThan = GetThing();
         var res = 0;
         var z = new[] { 1, 2, 3 }.ToRefLinq();
-        foreach (var n in z.Select((a, greaterThan) => a + greaterThan, greaterThan))
+        foreach (var n in z.Select(a => a + greaterThan))
             res += n;
 
         Assert.Equal(51, res);

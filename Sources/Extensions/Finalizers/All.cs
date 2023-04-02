@@ -9,7 +9,7 @@ namespace HonkPerf.NET.RefLinq
 {
     public static partial class ActiveLinqExtensions
     {
-        public static bool All<T, TDelegate, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
+        public static bool All<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
             where TEnumerator : IRefEnumerator<T>
         {
             foreach (var el in seq)
