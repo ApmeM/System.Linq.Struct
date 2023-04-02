@@ -64,6 +64,11 @@ jobs:
           name: nuget
           path: ./artifacts
 
+      - name: Setup nuget
+        uses: nuget/setup-nuget@v1
+        with:
+          nuget-version: 'latest'
+
       - name: Setup nuget config
         run: nuget.exe sources add -name github -source "https://nuget.pkg.github.com/apmem/index.json" -username ${{ github.actor }} -password ${{ secrets.GITHUB_TOKEN }}
 
