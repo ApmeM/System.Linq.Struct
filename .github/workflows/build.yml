@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: nuget
-          path: ./Sources/bin/Debug/System.Linq.Struct.${GITHUB_REF:11}.nupkg
+          path: ./Sources/bin/Debug/System.Linq.Struct.*.nupkg
 
 
   pack:
