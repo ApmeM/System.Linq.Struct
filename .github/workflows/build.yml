@@ -2,28 +2,79 @@ name: Build and test
 
 on:
   push:
-    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+    branches:
+      - 'main'
   pull_request:
-    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  packages: read
 
 jobs:
- build:
-
+  build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '6.0.x'
-        include-prerelease: true
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
+        with:
+          fetch-depth: 0
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 2.2.108
+          source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         
-    - name: Restore dependencies
-      run: dotnet restore
+      - name: Restore packages
+        run: dotnet restore
       
-    - name: Build
-      run: dotnet build --no-restore
+      - name: Build
+        run: dotnet build
       
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - name: Test
+        run: dotnet test
+      
+      - name: Pack
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: dotnet pack -p:PackageVersion=${GITHUB_REF#refs/heads/v}
+
+      - name: Upload windows artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuget
+          path: ./Sources/bin/Debug/System.Linq.Struct.${GITHUB_REF#refs/heads/v}.nupkg
+
+
+  pack:
+    needs: build
+    name: deploy
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nuget
+          path: ./artifacts
+
+      - name: Setup nuget config
+        run: nuget.exe sources add -name github -source "https://nuget.pkg.github.com/apmem/index.json" -username ${{ github.actor }} -password ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload to GitHub Packages
+        run: |
+            for f in ./artifacts/*.nupkg
+            do
+              nuget push $f -Source "github"
+            done
+        shell: bash
