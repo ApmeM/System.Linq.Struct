@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct{
 
-public struct Zip<T1, T2, TEnumerator1, TEnumerator2>
+public struct Zip<T1, TEnumerator1, T2, TEnumerator2>
     : IRefEnumerator<(T1, T2)>
     where TEnumerator1 : IRefEnumerator<T1>
     where TEnumerator2 : IRefEnumerator<T2>
@@ -43,6 +43,6 @@ public struct Zip<T1, T2, TEnumerator1, TEnumerator2>
     private static void ThrowInvalid()
         => throw new InvalidOperationException("Collections should have the same size");
 
-    public Zip<T1, T2, TEnumerator1, TEnumerator2> GetEnumerator() => this;
+    public Zip<T1, TEnumerator1, T2, TEnumerator2> GetEnumerator() => this;
 }
 }

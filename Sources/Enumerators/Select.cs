@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 namespace System.Linq.Struct
 {
 
-    public struct Select<T, U, TEnumerator>
+    public struct Select<T, TEnumerator, U>
         : IRefEnumerator<U>
         where TEnumerator : IRefEnumerator<T>
     {
@@ -30,6 +30,6 @@ namespace System.Linq.Struct
         }
         public U Current { get; private set; }
 
-        public Select<T, U, TEnumerator> GetEnumerator() => this;
+        public Select<T, TEnumerator, U> GetEnumerator() => this;
     }
 }

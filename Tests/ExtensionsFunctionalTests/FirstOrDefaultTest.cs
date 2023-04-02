@@ -16,6 +16,15 @@ public class FirstOrDefaultTest
         Assert.Equal(2, seq);
     }
     [Fact]
+    public void Test2()
+    {
+        var seq =
+            new[] { 2, 3, 4 }
+            .ToRefLinq()
+            .FirstOrDefault(c=>c > 2);
+        Assert.Equal(3, seq);
+    }
+    [Fact]
     public void Test3()
     {
         var seq =

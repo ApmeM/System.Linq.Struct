@@ -33,6 +33,6 @@ public class MultiplyTest
             new int[] { }
             .ToRefLinq()
             .Multiply();
-        Assert.Equal(1, s);
+        Assert.Equal(0, s);
     }
 }

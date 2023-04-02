@@ -11,7 +11,6 @@ public class SelectManyTest
     {
         var a = 
             new [] { 1d, 2d, 3d }
-            .ToRefLinq()
             .Select(c => TestUtils.Range(1, (int)c).ToRefLinq())
             .SelectMany();
         TestUtils.EqualSequences(a, new [] { 1, 1, 2, 1, 2, 3 });
@@ -22,7 +21,6 @@ public class SelectManyTest
     {
         var a =
             new[] { 1d, 2d, 3d }
-            .ToRefLinq()
             .SelectMany(c => TestUtils.Range(1, (int)c).ToRefLinq());
         TestUtils.EqualSequences(a, new[] { 1, 1, 2, 1, 2, 3 });
     }
@@ -33,7 +31,6 @@ public class SelectManyTest
         var local = 1;
         var a =
             new[] { 1d, 2d, 3d }
-            .ToRefLinq()
             .SelectMany(c => TestUtils.Range(1, (int)c + local).ToRefLinq());
         TestUtils.EqualSequences(a, new[] { 1, 2, 1, 2, 3, 1, 2, 3, 4 });
     }
@@ -43,7 +40,6 @@ public class SelectManyTest
     {
         var a =
             new[] { 1, 2, 3, 4, 5 }
-            .ToRefLinq()
             .Select(i => System.Array.Empty<int>().ToRefLinq())
             .SelectMany();
         TestUtils.EqualSequences(a, new int[] { });
@@ -54,7 +50,6 @@ public class SelectManyTest
     {
         var a =
             new[] { 1, 2, 3, 4, 5 }
-            .ToRefLinq()
             .Select(i => (i % 2 == 0 ? System.Array.Empty<int>() : new[] { i, i * 2, i * 3 }).ToRefLinq())
             .SelectMany();
         TestUtils.EqualSequences(a, new[] { 1, 2, 3, 3, 6, 9, 5, 10, 15 });

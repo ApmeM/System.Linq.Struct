@@ -15,7 +15,7 @@ public class ExampleTest
 
         var seq =
             arr
-            .ToRefLinq()
+            .Where(c => true)
             .Select(c => c + 5)
             .Where(c => c % 2 == 0)
             .Select(c => c - 6.0 / localVar)
