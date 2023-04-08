@@ -251,56 +251,48 @@ namespace System.Linq.Struct
             return max;
         }
 
-        static Func<T, T, T> BuildSum<T>()
+        private static class MethodGenerator<T>
         {
-            var a = Expression.Parameter(typeof(T));
-            var b = Expression.Parameter(typeof(T));
-            return (Func<T, T, T>)Expression.Lambda(Expression.Add(a, b), a, b).Compile();
-        }
-        static Func<T, T, T> BuildMultiply<T>()
-        {
-            var a = Expression.Parameter(typeof(T));
-            var b = Expression.Parameter(typeof(T));
-            return (Func<T, T, T>)Expression.Lambda(Expression.Multiply(a, b), a, b).Compile();
-        }
-        static Func<T, int, T> BuildDivide<T>()
-        {
-            var a = Expression.Parameter(typeof(T));
-            var b = Expression.Parameter(typeof(int));
-            return (Func<T, int, T>)Expression.Lambda(Expression.Divide(a, Expression.Convert(b, typeof(T))), a, b).Compile();
+            public static Func<T, T, T> sum;
+            public static Func<T, T, T> mul;
+            public static Func<T, int, T> div;
+
+            static MethodGenerator()
+            {
+                var a = Expression.Parameter(typeof(T));
+                var b = Expression.Parameter(typeof(T));
+                var c = Expression.Parameter(typeof(int));
+                sum = (Func<T, T, T>)Expression.Lambda(Expression.Add(a, b), a, b).Compile();
+                mul = (Func<T, T, T>)Expression.Lambda(Expression.Multiply(a, b), a, b).Compile();
+                div = (Func<T, int, T>)Expression.Lambda(Expression.Divide(a, Expression.Convert(c, typeof(T))), a, c).Compile();
+            }
         }
 
         public static T Sum<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq)
             where TEnumerator : IRefEnumerator<T>
         {
-            // TODO: fix memory allocation.
-            var func = BuildSum<T>();
             T result = default(T);
             foreach (var el in seq)
-                result = func(result, el);
+                result = MethodGenerator<T>.sum(result, el);
             return result;
         }
 
         public static T Average<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq)
             where TEnumerator : IRefEnumerator<T>
         {
-            // TODO: fix memory allocation.
-            var func = BuildSum<T>();
             T result = default(T);
             int count = 0;
             foreach (var el in seq)
             {
-                result = func(result, el);
+                result = MethodGenerator<T>.sum(result, el);
                 count++;
             }
-            return BuildDivide<T>()(result, count);
+            return MethodGenerator<T>.div(result, count);
         }
 
         public static T Multiply<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq)
             where TEnumerator : IRefEnumerator<T>
         {
-            // TODO: fix memory allocation.
-            var func = BuildMultiply<T>();
             bool resultInitialized = false;
             T result = default(T);
             foreach (var el in seq)
@@ -312,7 +304,7 @@ namespace System.Linq.Struct
                 }
                 else
                 {
-                    result = func(result, el);
+                    result = MethodGenerator<T>.mul(result, el);
                 }
             }
 
