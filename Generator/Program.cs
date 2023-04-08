@@ -37,6 +37,13 @@ internal class Program
 
     private static void Main(string[] args)
     {
+        var sources = new List<Tuple<string, string>>{
+            new Tuple<string, string>("IReadOnlyList<T>", "IReadOnlyListEnumerator<T>"),
+            new Tuple<string, string>("T[]", "ArrayEnumerator<T>"),
+            new Tuple<string, string>("HashSet<T>", "HashSetEnumerator<T>"),
+            new Tuple<string, string>("MultiHashSetWrapper<T>", "MultiHashSetWrapperEnumerator<T>")
+        };
+
         var toAddPredicate = new List<Method>{
             new Method("Count", "int"),
             new Method("Any", "bool"),
@@ -65,12 +72,10 @@ internal class Program
             new Method("Select", null, new List<Param>{new Param("Func<T, U>", "map")}, new List<Param>{new Param("", "U")}, "U"),
         };
 
-        var sources = new List<Tuple<string, string>>{
-            new Tuple<string, string>("IReadOnlyList<T>", "IReadOnlyListEnumerator<T>"),
-            new Tuple<string, string>("T[]", "ArrayEnumerator<T>"),
-            new Tuple<string, string>("HashSet<T>", "HashSetEnumerator<T>"),
-            new Tuple<string, string>("MultiHashSetWrapper<T>", "MultiHashSetWrapperEnumerator<T>")
-        };
+        foreach (var type in sources)
+        {
+            toAddBasicExtension.Add(new Method("Zip", null, new List<Param> { new Param(type.Item1.Replace("T", "T2"), "seq2", $"new {type.Item2.Replace("T", "T2")}(seq2)") }, new List<Param> { new Param("", "T2"), new Param("", "", type.Item2.Replace("T", "T2")) }, "(T,T2)"));
+        }
 
         var toMultiSources = new List<Method>{
             new Method("MaxBy", "T", new List<Param> { new Param("Func<T, T2>", "keySelector") }, new List<Param>{new Param("", "T2")}),
@@ -101,26 +106,28 @@ internal class Program
         {
             var paramMethodString = method.Params == null ? "" : ("," + string.Join(",", method.Params.Select(a => $"{a.Type} {a.Name}")));
             var paramUsageString = method.Params == null ? "" : ("," + string.Join(",", method.Params.Select(a => $"{a.Usage}")));
-            var genericMethodString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Select(a => $"{a.Name}")));
+            var genericNameString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Name)).Select(a => $"{a.Name}")));
+            var genericUsageString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Usage)).Select(a => $"{a.Usage}")));
             var genericConstraintString = method.Generics == null ? "" : (string.Join(" ", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Type)).Select(a => $"where {a.Name} : {a.Type}")));
 
-            Console.WriteLine($"        public static RefLinqEnumerable<{method.ResultType}, {method.Name}<T, TPrevious {genericMethodString}>> {method.Name}<T, TPrevious{genericMethodString}>(this RefLinqEnumerable<T, TPrevious> prev {paramMethodString})");
+            Console.WriteLine($"        public static RefLinqEnumerable<{method.ResultType}, {method.Name}<T, TPrevious {genericUsageString}>> {method.Name}<T, TPrevious{genericNameString}>(this RefLinqEnumerable<T, TPrevious> prev {paramMethodString})");
             Console.WriteLine($"            where TPrevious : IRefEnumerator<T> {genericConstraintString}");
-            Console.WriteLine($"            => new RefLinqEnumerable<{method.ResultType}, {method.Name}<T, TPrevious{genericMethodString}>>(new {method.Name}<T, TPrevious{genericMethodString}>(prev.enumerator {paramUsageString}));");
+            Console.WriteLine($"            => new RefLinqEnumerable<{method.ResultType}, {method.Name}<T, TPrevious{genericUsageString}>>(new {method.Name}<T, TPrevious{genericUsageString}>(prev.enumerator {paramUsageString}));");
 
-            toMultiSources.Add(new Method(method.Name, $"RefLinqEnumerable<{method.ResultType}, {method.Name}<T, {{0}}{genericMethodString}>>", method.Params, method.Generics));
+            toMultiSources.Add(new Method(method.Name, $"RefLinqEnumerable<{method.ResultType}, {method.Name}<T, {{0}}{genericUsageString}>>", method.Params, method.Generics));
         }
 
         foreach (var method in toMultiSources)
         {
             var paramMethodString = method.Params == null ? "" : ("," + string.Join(",", method.Params.Select(a => $"{a.Type} {a.Name}")));
             var paramUsageString = method.Params == null ? "" : (string.Join(",", method.Params.Select(a => $"{a.Name}")));
-            var genericMethodString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Select(a => $"{a.Name}")));
+            var genericNameString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Name)).Select(a => $"{a.Name}")));
+            var genericUsageString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Usage)).Select(a => $"{a.Usage}")));
             var genericConstraintString = method.Generics == null ? "" : (string.Join(" ", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Type)).Select(a => $"where {a.Name} : {a.Type}")));
 
             foreach (var type in sources)
             {
-                Console.WriteLine($"        public static {string.Format(method.Type ?? "", type.Item2)} {method.Name}<T {genericMethodString}>(this {type.Item1} c {paramMethodString})");
+                Console.WriteLine($"        public static {string.Format(method.Type ?? "", type.Item2)} {method.Name}<T {genericNameString}>(this {type.Item1} c {paramMethodString})");
                 if (!string.IsNullOrWhiteSpace(genericConstraintString))
                     Console.WriteLine($"            {genericConstraintString}");
                 Console.WriteLine($"            => new RefLinqEnumerable<T, {type.Item2}>(new {type.Item2}(c)).{method.Name}({paramUsageString});");

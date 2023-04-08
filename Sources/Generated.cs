@@ -69,6 +69,18 @@ namespace System.Linq.Struct
         public static RefLinqEnumerable<U, Select<T, TPrevious ,U>> Select<T, TPrevious,U>(this RefLinqEnumerable<T, TPrevious> prev ,Func<T, U> map)
             where TPrevious : IRefEnumerator<T> 
             => new RefLinqEnumerable<U, Select<T, TPrevious,U>>(new Select<T, TPrevious,U>(prev.enumerator ,map));
+        public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,IReadOnlyListEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,IReadOnlyList<T2> seq2)
+            where TPrevious : IRefEnumerator<T> 
+            => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,IReadOnlyListEnumerator<T2>>>(new Zip<T, TPrevious,T2,IReadOnlyListEnumerator<T2>>(prev.enumerator ,new IReadOnlyListEnumerator<T2>(seq2)));
+        public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,ArrayEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,T2[] seq2)
+            where TPrevious : IRefEnumerator<T> 
+            => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,ArrayEnumerator<T2>>>(new Zip<T, TPrevious,T2,ArrayEnumerator<T2>>(prev.enumerator ,new ArrayEnumerator<T2>(seq2)));
+        public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,HashSetEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,HashSet<T2> seq2)
+            where TPrevious : IRefEnumerator<T> 
+            => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,HashSetEnumerator<T2>>>(new Zip<T, TPrevious,T2,HashSetEnumerator<T2>>(prev.enumerator ,new HashSetEnumerator<T2>(seq2)));
+        public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,MultiHashSetWrapper<T2> seq2)
+            where TPrevious : IRefEnumerator<T> 
+            => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,MultiHashSetWrapperEnumerator<T2>>>(new Zip<T, TPrevious,T2,MultiHashSetWrapperEnumerator<T2>>(prev.enumerator ,new MultiHashSetWrapperEnumerator<T2>(seq2)));
         public static T MaxBy<T ,T2>(this IReadOnlyList<T> c ,Func<T, T2> keySelector)
             => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).MaxBy(keySelector);
         public static T MaxBy<T ,T2>(this T[] c ,Func<T, T2> keySelector)
@@ -405,6 +417,38 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Select(map);
         public static RefLinqEnumerable<U, Select<T, MultiHashSetWrapperEnumerator<T>,U>> Select<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, U> map)
             => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Select(map);
+        public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,IReadOnlyList<T2> seq2)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this T[] c ,IReadOnlyList<T2> seq2)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, HashSetEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this HashSet<T> c ,IReadOnlyList<T2> seq2)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,IReadOnlyList<T2> seq2)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,T2[] seq2)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this T[] c ,T2[] seq2)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, HashSetEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this HashSet<T> c ,T2[] seq2)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,T2[] seq2)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,HashSet<T2> seq2)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this T[] c ,HashSet<T2> seq2)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, HashSetEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this HashSet<T> c ,HashSet<T2> seq2)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,HashSet<T2> seq2)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,MultiHashSetWrapper<T2> seq2)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this T[] c ,MultiHashSetWrapper<T2> seq2)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, HashSetEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this HashSet<T> c ,MultiHashSetWrapper<T2> seq2)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,MultiHashSetWrapper<T2> seq2)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
         public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, IReadOnlyListEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, U, TUEnumerator>(this IReadOnlyList<T> c, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
             where TUEnumerator : IRefEnumerator<U>
             => c.Select(func).SelectMany();
