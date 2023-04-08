@@ -22,7 +22,7 @@ namespace System.Linq.Struct
             sortListEnumerator = default;
             comparer = (a, b) => Comparer<TKey>.Default.Compare(keySelector(a), keySelector(b));
         }
-        
+
         private TEnumerator prev;
         private readonly Func<T, TKey> keySelector;
         private readonly List<T> sortList;

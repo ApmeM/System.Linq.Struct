@@ -5,20 +5,20 @@ namespace System.Linq.Struct
 {
     public class MultiListWrapper<T> : IReadOnlyList<T>
     {
-        public List<T> data;
+        public IReadOnlyList<T> Data;
 
-        public T this[int index] => data[index];
+        public T this[int index] => Data[index];
 
-        public int Count => data.Count;
+        public int Count => Data.Count;
 
         public IEnumerator<T> GetEnumerator()
         {
-            return data.GetEnumerator();
+            return Data.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return data.GetEnumerator();
+            return Data.GetEnumerator();
         }
     }
 }
