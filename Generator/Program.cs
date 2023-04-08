@@ -48,6 +48,7 @@ internal class Program
             new Method("LastOrDefault", "T"),
             new Method("Max", "T"),
             new Method("Min", "T"),
+            new Method("Average", "T"),
             new Method("Sum", "T"),
             new Method("Multiply", "T"),
         };

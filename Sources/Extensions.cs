@@ -194,7 +194,6 @@ namespace System.Linq.Struct
             return max;
         }
 
-
         public static T Min<TEnumerator, T>(this RefLinqEnumerable<T, TEnumerator> seq)
             where TEnumerator : IRefEnumerator<T>
         {
@@ -258,6 +257,18 @@ namespace System.Linq.Struct
             var b = Expression.Parameter(typeof(T));
             return (Func<T, T, T>)Expression.Lambda(Expression.Add(a, b), a, b).Compile();
         }
+        static Func<T, T, T> BuildMultiply<T>()
+        {
+            var a = Expression.Parameter(typeof(T));
+            var b = Expression.Parameter(typeof(T));
+            return (Func<T, T, T>)Expression.Lambda(Expression.Multiply(a, b), a, b).Compile();
+        }
+        static Func<T, int, T> BuildDivide<T>()
+        {
+            var a = Expression.Parameter(typeof(T));
+            var b = Expression.Parameter(typeof(int));
+            return (Func<T, int, T>)Expression.Lambda(Expression.Divide(a, Expression.Convert(b, typeof(T))), a, b).Compile();
+        }
 
         public static T Sum<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq)
             where TEnumerator : IRefEnumerator<T>
@@ -270,11 +281,19 @@ namespace System.Linq.Struct
             return result;
         }
 
-        static Func<T, T, T> BuildMultiply<T>()
+        public static T Average<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq)
+            where TEnumerator : IRefEnumerator<T>
         {
-            var a = Expression.Parameter(typeof(T));
-            var b = Expression.Parameter(typeof(T));
-            return (Func<T, T, T>)Expression.Lambda(Expression.Multiply(a, b), a, b).Compile();
+            // TODO: fix memory allocation.
+            var func = BuildSum<T>();
+            T result = default(T);
+            int count = 0;
+            foreach (var el in seq)
+            {
+                result = func(result, el);
+                count++;
+            }
+            return BuildDivide<T>()(result, count);
         }
 
         public static T Multiply<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq)

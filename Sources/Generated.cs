@@ -33,6 +33,9 @@ namespace System.Linq.Struct
         public static T Min<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
             where TEnumerator : IRefEnumerator<T>
             => seq.Where(pred).Min();
+        public static T Average<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
+            where TEnumerator : IRefEnumerator<T>
+            => seq.Where(pred).Average();
         public static T Sum<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
             where TEnumerator : IRefEnumerator<T>
             => seq.Where(pred).Sum();
@@ -274,6 +277,22 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Min(pred);
         public static T Min<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
             => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Min(pred);
+        public static T Average<T >(this IReadOnlyList<T> c )
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Average();
+        public static T Average<T >(this T[] c )
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Average();
+        public static T Average<T >(this HashSet<T> c )
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Average();
+        public static T Average<T >(this MultiHashSetWrapper<T> c )
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Average();
+        public static T Average<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Average(pred);
+        public static T Average<T >(this T[] c ,Func<T, bool> pred)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Average(pred);
+        public static T Average<T >(this HashSet<T> c ,Func<T, bool> pred)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Average(pred);
+        public static T Average<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Average(pred);
         public static T Sum<T >(this IReadOnlyList<T> c )
             => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Sum();
         public static T Sum<T >(this T[] c )
