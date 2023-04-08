@@ -7,21 +7,14 @@ namespace Tests.ExtensionsFunctionalTests;
 public class LastOrDefaultTest
 {
     [Fact]
-    public void Test1()
+    public void ListContainsValue()
     {
-        var seq =
-            new[] { 2, 3, 4 }
-            .ToRefLinq()
-            .LastOrDefault();
-        Assert.Equal(4, seq);
+        Assert.Equal(4, new[] { 2, 3, 4 }.LastOrDefault());
     }
+
     [Fact]
-    public void Test3()
+    public void EmptyList()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq()
-            .LastOrDefault();
-        Assert.Equal(0, seq);
+        Assert.Equal(0, new int[] { }.LastOrDefault());
     }
 }

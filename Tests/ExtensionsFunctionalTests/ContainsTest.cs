@@ -7,22 +7,20 @@ namespace Tests.ExtensionsFunctionalTests;
 public class ContainsTest
 {
     [Fact]
-    public void Test1()
+    public void ListContainsValue()
     {
-        var seq =
-            new[] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Contains(2);
-        Assert.True(seq);
+        Assert.True(new[] { 1, 2, 3, 4 }.Contains(2));
     }
 
     [Fact]
-    public void Test2()
+    public void ListDoesNotContainValue()
     {
-        var seq =
-            new[] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Contains(5);
-        Assert.False(seq);
+        Assert.False(new[] { 1, 2, 3, 4 }.Contains(5));
+    }
+
+    [Fact]
+    public void ListEmpty()
+    {
+        Assert.False(new int[] { }.Contains(5));
     }
 }

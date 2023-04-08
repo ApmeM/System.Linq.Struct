@@ -9,32 +9,26 @@ namespace Tests.ExtensionsFunctionalTests;
 public class SingleOrDefaultTest
 {
     [Fact]
-    public void Test1()
+    public void ListContainsValue()
     {
-        var seq =
-            new[] { 2 }
-            .ToRefLinq()
-            .SingleOrDefault();
-        Assert.Equal(2, seq);
+        Assert.Equal(2, new[] { 2 }.SingleOrDefault());
     }
 
     [Fact]
-    public void Test2()
+    public void EmptyList()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq()
-            .SingleOrDefault();
-        Assert.Equal(0, seq);
+        Assert.Equal(0, new int[] { }.SingleOrDefault());
     }
 
     [Fact]
-    public void Test3()
+    public void ListContainsMultipleValues()
     {
-        var seq =
-            new int[] { 1, 2 }
-            .ToRefLinq()
-            .SingleOrDefault();
-        Assert.Equal(0, seq);
+        Assert.Equal(0, new int[] { 1, 2 }.SingleOrDefault());
+    }
+
+    [Fact]
+    public void ListContainsSingleValueByCondition()
+    {
+        Assert.Equal(1, new int[] { 1, 2 }.SingleOrDefault(a => a == 1));
     }
 }

@@ -7,30 +7,26 @@ namespace Tests.ExtensionsFunctionalTests;
 public class FirstOrDefaultTest
 {
     [Fact]
-    public void Test1()
+    public void ListContainsValue()
     {
-        var seq =
-            new[] { 2, 3, 4 }
-            .ToRefLinq()
-            .FirstOrDefault();
-        Assert.Equal(2, seq);
+        Assert.Equal(2, new[] { 2, 3, 4 }.FirstOrDefault());
     }
+
     [Fact]
-    public void Test2()
+    public void ListContainsValueWithCondition()
     {
-        var seq =
-            new[] { 2, 3, 4 }
-            .ToRefLinq()
-            .FirstOrDefault(c=>c > 2);
-        Assert.Equal(3, seq);
+        Assert.Equal(3, new[] { 2, 3, 4 }.FirstOrDefault(c => c > 2));
     }
+
     [Fact]
-    public void Test3()
+    public void EmptyList()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq()
-            .FirstOrDefault();
-        Assert.Equal(0, seq);
+        Assert.Equal(0, new int[] { }.FirstOrDefault());
+    }
+
+    [Fact]
+    public void ListDoesNotContainValue()
+    {
+        Assert.Equal(0, new [] { 1 }.FirstOrDefault(c => c > 1));
     }
 }

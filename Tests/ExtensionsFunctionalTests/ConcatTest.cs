@@ -7,42 +7,26 @@ namespace Tests.ExtensionsFunctionalTests;
 public class ConcatTest
 {
     [Fact]
-    public void Test1()
+    public void BothListsHaveData()
     {
-        var seq =
-            new [] { 1, 2, 3 }
-            .ToRefLinq()
-            .Concat(new [] { 4, 5 }.ToRefLinq());
-        TestUtils.EqualSequences(seq, new [] { 1, 2, 3, 4, 5 });
+        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Concat(new [] { 4, 5 }.ToRefLinq()), new [] { 1, 2, 3, 4, 5 });
     }
 
     [Fact]
-    public void Test2()
+    public void OriginalListEmpty()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq()
-            .Concat(new[] { 4, 5 }.ToRefLinq());
-        TestUtils.EqualSequences(seq, new[] { 4, 5 });
+        TestUtils.EqualSequences(new int[] { }.Concat(new[] { 4, 5 }.ToRefLinq()), new[] { 4, 5 });
     }
 
     [Fact]
-    public void Test3()
+    public void SecondListEmpty()
     {
-        var seq =
-            new[] { 1, 2, 3 }
-            .ToRefLinq()
-            .Concat(new int[] { }.ToRefLinq());
-        TestUtils.EqualSequences(seq, new[] { 1, 2, 3 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Concat(new int[] { }.ToRefLinq()), new[] { 1, 2, 3 });
     }
 
     [Fact]
-    public void Test4()
+    public void BothListEmpty()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq()
-            .Concat(new int[] { }.ToRefLinq());
-        TestUtils.EqualSequences(seq, new int[] { });
+        TestUtils.EqualSequences(new int[] { }.Concat(new int[] { }.ToRefLinq()), new int[] { });
     }
 }

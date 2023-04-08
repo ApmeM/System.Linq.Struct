@@ -7,20 +7,13 @@ namespace Tests.ExtensionsFunctionalTests;
 public class LastTest
 {
     [Fact]
-    public void Test1()
+    public void ListContainsValue()
     {
-        var seq =
-            new[] { 2, 3, 4 }
-            .ToRefLinq()
-            .Last();
-        Assert.Equal(4, seq);
+        Assert.Equal(4, new[] { 2, 3, 4 }.Last());
     }
     [Fact]
-    public void Test3()
+    public void ListDoesNotContainValue()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq();
-        Assert.Throws<System.InvalidOperationException>(() => seq.Last());
+        Assert.Throws<System.InvalidOperationException>(() => new int[] { }.Last());
     }
 }

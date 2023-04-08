@@ -7,42 +7,26 @@ namespace Tests.ExtensionsFunctionalTests;
 public class TakeTest
 {
     [Fact]
-    public void Test1()
+    public void TakeEnoughData()
     {
-        var seq =
-            new [] { 1, 2, 3 }
-            .ToRefLinq()
-            .Take(2);
-        TestUtils.EqualSequences(seq, new [] { 1, 2 });
+        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Take(2), new [] { 1, 2 });
     }
 
     [Fact]
-    public void Test2()
+    public void TakeAllData()
     {
-        var seq =
-            new[] { 1, 2, 3 }
-            .ToRefLinq()
-            .Take(3);
-        TestUtils.EqualSequences(seq, new[] { 1, 2, 3 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Take(3), new[] { 1, 2, 3 });
     }
 
     [Fact]
-    public void Test3()
+    public void TakeMoreDataThenExists()
     {
-        var seq =
-            new[] { 1, 2, 3 }
-            .ToRefLinq()
-            .Take(6);
-        TestUtils.EqualSequences(seq, new[] { 1, 2, 3 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Take(6), new[] { 1, 2, 3 });
     }
 
     [Fact]
-    public void Test4()
+    public void TakeZeroItems()
     {
-        var seq =
-            new[] { 1, 2, 3 }
-            .ToRefLinq()
-            .Take(0);
-        TestUtils.EqualSequences(seq, new int[] { });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Take(0), new int[] { });
     }
 }

@@ -9,7 +9,7 @@ public class ZipTest
     [Fact]
     public void Test1()
     {
-        var z = new[] { 1, 2, 3, 10, 20, 30, 502, 2342, 23 }.ToRefLinq();
+        var z = new[] { 1, 2, 3, 10, 20, 30, 502, 2342, 23 };
         var w1 = z
             .Where(c => c > 5)
             .Select(c => c * 100.0);
@@ -29,7 +29,7 @@ public class ZipTest
     [Fact]
     public void Test2()
     {
-        var a = new [] { 1, 2, 3 }.ToRefLinq();
+        var a = new [] { 1, 2, 3 };
         var b = new [] { "aa", "aaa", "b" }.ToRefLinq();
         TestUtils.EqualSequences(a.Zip(b), new [] { (1, "aa"), (2, "aaa"), (3, "b") });
     }
@@ -37,7 +37,7 @@ public class ZipTest
     [Fact]
     public void Test3()
     {
-        var a = new[] { 1, 2, 3 }.ToRefLinq();
+        var a = new[] { 1, 2, 3 };
         var b = new[] { "aa", "aaa" }.ToRefLinq();
         Assert.Throws<System.InvalidOperationException>(() => a.Zip(b).Count());
     }
@@ -45,7 +45,7 @@ public class ZipTest
     [Fact]
     public void Test4()
     {
-        var a = new[] { 1, 2 }.ToRefLinq();
+        var a = new[] { 1, 2 };
         var b = new[] { "aa", "aaa", "b" }.ToRefLinq();
         Assert.Throws<System.InvalidOperationException>(() => a.Zip(b).Count());
     }
@@ -53,7 +53,7 @@ public class ZipTest
     [Fact]
     public void Test5()
     {
-        var a = new int[] { }.ToRefLinq();
+        var a = new int[] { };
         var b = new string[] { }.ToRefLinq();
         TestUtils.EqualSequences(a.Zip(b), new (int, string)[0]);
     }

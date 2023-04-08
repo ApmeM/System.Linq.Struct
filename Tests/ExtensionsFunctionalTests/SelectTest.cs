@@ -7,33 +7,21 @@ namespace Tests.ExtensionsFunctionalTests;
 public class SelectTest
 {
     [Fact]
-    public void Test1()
+    public void ListWithData()
     {
-        var seq = 
-            new [] { 1, 2, 3 } 
-            .ToRefLinq()
-            .Select(c => c * 2);
-        TestUtils.EqualSequences(seq, new [] { 2, 4, 6 });
+        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Select(c => c * 2), new [] { 2, 4, 6 });
     }
 
     [Fact]
-    public void Test2()
+    public void EmptyList()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq()
-            .Select(c => c * 2);
-        TestUtils.EqualSequences(seq, new int[] { });
+        TestUtils.EqualSequences(new int[] { }.Select(c => c * 2), new int[] { });
     }
 
     [Fact]
-    public void Test3()
+    public void UsingLocalVariable()
     {
         var local = 5;
-        var seq =
-            new int[] { 1, 2, 3 }
-            .ToRefLinq()
-            .Select(c => c * local);
-        TestUtils.EqualSequences(seq, new int[] { 5, 10, 15 });
+        TestUtils.EqualSequences(new int[] { 1, 2, 3 }.Select(c => c * local), new int[] { 5, 10, 15 });
     }
 }

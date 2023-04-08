@@ -15,7 +15,6 @@ System.Linq.Struct from a consumer perspective works like BCL Linq. Its differen
 
         var seq =
             arr
-            .ToRefLinq()
             .Select(c => c + 5)
             .Where(c => c % 2 == 0)
             .Select(c => c - 6.0 / localVar)
@@ -25,7 +24,7 @@ System.Linq.Struct from a consumer perspective works like BCL Linq. Its differen
             .OrderBy(a => a)
             .Skip(2)
             .Take(10)
-            .Concat(arr.ToRefLinq().Select(c => c / 1d));
+            .Concat(arr.Select(c => c / 1d));
         Assert.Equal(33.4, seq.Sum() + seq.Max());
 ```
 

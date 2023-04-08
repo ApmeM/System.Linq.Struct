@@ -7,33 +7,20 @@ namespace Tests.ExtensionsFunctionalTests;
 public class AnyTest
 {
     [Fact]
-    public void Test1()
+    public void ListContainsValue()
     {
-        var seq =
-            new[] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Any(c => c > 3);
-        Assert.True(seq);
+        Assert.True(new[] { 1, 2, 3, 4 }.Any(c => c > 3));
     }
 
     [Fact]
-    public void Test2()
+    public void ListDoesNotContainValue()
     {
-        var seq =
-            new[] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Any(c => c < 1);
-        Assert.False(seq);
+        Assert.False(new[] { 1, 2, 3, 4 }.Any(c => c < 1));
     }
 
     [Fact]
-    public void Test3()
+    public void EmptyList()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq();
-        Assert.False(seq.Any(c => c < 5));
-        Assert.False(seq.Any(c => c > 5));
-        Assert.False(seq.Any(c => c == 5));
+        Assert.False(new int[] { }.Any(c => c == 5));
     }
 }

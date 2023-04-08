@@ -5,9 +5,7 @@
 global using System.Linq.Struct;
 global using Xunit;
 
-using System.Linq.Struct;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Tests;
 
@@ -20,9 +18,5 @@ public static class TestUtils
         foreach (var el in en)
             list.Add(el);
         Assert.Equal(expected, list);
-    }
-
-    public static int[] Range(int from, int count){
-        return Enumerable.Range(from, count).ToArray();
     }
 }

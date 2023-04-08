@@ -7,32 +7,20 @@ namespace Tests.ExtensionsFunctionalTests;
 public class MultiplyTest
 {
     [Fact]
-    public void Test1()
+    public void ListWithIntData()
     {
-        var s = 
-            new [] { 1, 2, 3 }
-            .ToRefLinq()
-            .Multiply();
-        Assert.Equal(6, s);
+        Assert.Equal(6, new [] { 1, 2, 3 }.Multiply());
     }
 
     [Fact]
-    public void Test2()
+    public void ListWithDoubleData()
     {
-        var s =
-            new[] { 4, 0.5, 7 }
-            .ToRefLinq()
-            .Multiply();
-        Assert.Equal(14d, s);
+        Assert.Equal(14d, new[] { 4, 0.5, 7 }.Multiply());
     }
 
     [Fact]
-    public void Test3()
+    public void EmptyList()
     {
-        var s =
-            new int[] { }
-            .ToRefLinq()
-            .Multiply();
-        Assert.Equal(0, s);
+        Assert.Equal(0, new int[] { }.Multiply());
     }
 }

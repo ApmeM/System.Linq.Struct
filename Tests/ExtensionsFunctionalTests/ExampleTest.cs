@@ -7,7 +7,7 @@ namespace Tests.ExtensionsFunctionalTests;
 public class ExampleTest
 {
     [Fact]
-    public void Test1()
+    public void MultipleChainedMethods()
     {
         var arr = new[] { 1, 2, 3, 4 };
 
@@ -15,7 +15,6 @@ public class ExampleTest
 
         var seq =
             arr
-            .Where(c => true)
             .Select(c => c + 5)
             .Where(c => c % 2 == 0)
             .Select(c => c - 6.0 / localVar)
@@ -25,7 +24,7 @@ public class ExampleTest
             .OrderBy(a => a)
             .Skip(2)
             .Take(10)
-            .Concat(arr.ToRefLinq().Select(c => c / 1d));
+            .Concat(arr.Select(c => c / 1d));
         Assert.Equal(33.4, seq.Sum() + seq.Max());
     }
 }

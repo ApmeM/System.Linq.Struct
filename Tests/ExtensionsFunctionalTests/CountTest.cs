@@ -7,32 +7,20 @@ namespace Tests.ExtensionsFunctionalTests;
 public class CountTest
 {
     [Fact]
-    public void Test1()
+    public void TotalAmountOfItems()
     {
-        var seq =
-            new[] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Count(c => c > 3);
-        Assert.Equal(1, seq);
+        Assert.Equal(4, new[] { 1, 2, 3, 4 }.Count());
     }
 
     [Fact]
-    public void Test2()
+    public void WithCondition()
     {
-        var seq =
-            new[] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Count(c => c is >= 2 and <= 3);
-        Assert.Equal(2, seq);
+        Assert.Equal(2, new[] { 1, 2, 3, 4 }.Count(c => c is >= 2 and <= 3));
     }
 
     [Fact]
-    public void Test3()
+    public void ListEmpty()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq()
-            .Count();
-        Assert.Equal(0, seq);
+        Assert.Equal(0, new int[] { }.Count());
     }
 }

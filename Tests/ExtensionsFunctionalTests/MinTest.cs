@@ -9,41 +9,20 @@ namespace Tests.ExtensionsFunctionalTests;
 public class MinTest
 {
     [Fact]
-    public void Test1()
+    public void ListWithData()
     {
-        var seq =
-            new[] { 1, 7, 3, 4, 5, 1, 1 }
-            .ToRefLinq()
-            .Min();
-        Assert.Equal(1, seq);
+        Assert.Equal(-1, new[] { 1, 7, 3, 4, 5, -1, -1 }.Min());
     }
 
     [Fact]
-    public void Test2()
+    public void EmptyList()
     {
-        var seq =
-            new[] { 2.4, 6.7, -2.4 }
-            .ToRefLinq()
-            .Min();
-        Assert.Equal(-2.4, seq);
+        Assert.Throws<InvalidOperationException>(() => new float [] { }.Min());
     }
 
     [Fact]
-    public void Test3()
+    public void SingleElementList()
     {
-        var seq =
-            new float [] { }
-            .ToRefLinq();
-        Assert.Throws<InvalidOperationException>(() => seq.Min());
-    }
-
-    [Fact]
-    public void Test4()
-    {
-        var seq =
-            new float[] { 1.0f }
-            .ToRefLinq()
-            .Min();
-        Assert.Equal(1.0f, seq);
+        Assert.Equal(1.0f, new float[] { 1.0f }.Min());
     }
 }

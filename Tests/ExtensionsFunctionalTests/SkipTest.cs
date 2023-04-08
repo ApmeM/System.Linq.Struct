@@ -7,42 +7,26 @@ namespace Tests.ExtensionsFunctionalTests;
 public class SkipTest
 {
     [Fact]
-    public void Test1()
+    public void ListContainsEnoughData()
     {
-        var seq =
-            new [] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Skip(2);
-        TestUtils.EqualSequences(seq, new [] { 3, 4 });
+        TestUtils.EqualSequences(new [] { 1, 2, 3, 4 }.Skip(2), new [] { 3, 4 });
     }
 
     [Fact]
-    public void Test2()
+    public void SkipZeroValues()
     {
-        var seq =
-            new[] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Skip(0);
-        TestUtils.EqualSequences(seq, new[] { 1, 2, 3, 4 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3, 4 }.Skip(0), new[] { 1, 2, 3, 4 });
     }
 
     [Fact]
-    public void Test3()
+    public void SkipAllValues()
     {
-        var seq =
-            new[] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Skip(4);
-        TestUtils.EqualSequences(seq, new int[] { });
+        TestUtils.EqualSequences(new[] { 1, 2, 3, 4 }.Skip(4), new int[] { });
     }
 
     [Fact]
-    public void Test4()
+    public void SkipMoreValuesThenExists()
     {
-        var seq =
-            new[] { 1, 2, 3, 4 }
-            .ToRefLinq()
-            .Skip(6);
-        TestUtils.EqualSequences(seq, new int[] { });
+        TestUtils.EqualSequences(new[] { 1, 2, 3, 4 }.Skip(6), new int[] { });
     }
 }

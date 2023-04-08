@@ -9,30 +9,21 @@ namespace Tests.ExtensionsFunctionalTests;
 public class SingleTest
 {
     [Fact]
-    public void Test1()
+    public void ListContainsSingleValue()
     {
-        var seq =
-            new[] { 2 }
-            .ToRefLinq()
-            .Single();
-        Assert.Equal(2, seq);
+        Assert.Equal(2, new[] { 2 }.Single());
     }
 
     [Fact]
-    public void Test2()
+    public void EmptyList()
     {
-        var seq =
-            new int[] { }
-            .ToRefLinq();
+        var seq = new int[] { };
         Assert.Throws<InvalidOperationException>(() => seq.Single());
     }
 
     [Fact]
-    public void Test3()
+    public void ListContainsMultipleValues()
     {
-        var seq =
-            new int[] { 1, 2 }
-            .ToRefLinq();
-        Assert.Throws<InvalidOperationException>(() => seq.Single());
+        Assert.Throws<InvalidOperationException>(() => new int[] { 1, 2 }.Single());
     }
 }

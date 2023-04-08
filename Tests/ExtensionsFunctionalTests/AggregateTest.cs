@@ -7,22 +7,14 @@ namespace Tests.ExtensionsFunctionalTests;
 public class AggregateTest
 {
     [Fact]
-    public void Test1()
+    public void WithAccumulator()
     {
-        var seq = 
-            new [] { "aa", "bbb", "ccc" }
-            .ToRefLinq()
-            .Aggregate("", (string a, string b) => a + b);
-        Assert.Equal("aabbbccc", seq);
+        Assert.Equal("123", new [] { 1, 2, 3 }.Aggregate("", (a, b) => a + b));
     }
 
     [Fact]
-    public void Test2()
+    public void WithoutAccumulator()
     {
-        var seq =
-            new[] { "aa", "bbb", "ccc" }
-            .ToRefLinq()
-            .Aggregate("", (string a, string b) => a + b);
-        Assert.Equal("aabbbccc", seq);
+        Assert.Equal(6, new[] { 1, 2, 3 }.Aggregate((a, b) => a + b));
     }
 }

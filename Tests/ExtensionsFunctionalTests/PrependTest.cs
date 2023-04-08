@@ -7,14 +7,14 @@ namespace Tests.ExtensionsFunctionalTests;
 public class PrependTest
 {
     [Fact]
-    public void Test1()
+    public void ListWithData()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3 }.ToRefLinq().Prepend(5), new [] { 5, 1, 2, 3 });
+        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Prepend(5), new [] { 5, 1, 2, 3 });
     }
 
     [Fact]
-    public void Test2()
+    public void EmptyList()
     {
-        TestUtils.EqualSequences(new int[] { }.ToRefLinq().Prepend(5), new[] { 5 });
+        TestUtils.EqualSequences(new int[] { }.Prepend(5), new[] { 5 });
     }
 }
