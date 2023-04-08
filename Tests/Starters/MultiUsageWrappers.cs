@@ -35,4 +35,22 @@ public class MultiUsageWrappers
         data.Data = l2;
         TestUtils.EqualSequences(query, new[] { (4, "a"), (5, "b"), (6, "c") });
     }
+    
+    [Fact]
+    public void Array()
+    {
+        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Select(c => c * 2), new [] { 2, 4, 6 });
+    }
+    
+    [Fact]
+    public void List()
+    {
+        TestUtils.EqualSequences(new List<int> { 1, 2, 3 }.Select(c => c * 2), new [] { 2, 4, 6 });
+    }
+    
+    [Fact]
+    public void HashSet()
+    {
+        TestUtils.EqualSequences(new HashSet<int> { 1, 2, 3 }.Select(c => c * 2), new [] { 2, 4, 6 });
+    }
 }
