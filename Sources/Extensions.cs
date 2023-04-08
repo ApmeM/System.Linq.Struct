@@ -164,6 +164,37 @@ namespace System.Linq.Struct
         }
 
 
+        public static T MaxBy<TEnumerator, T, T2>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, T2> keySelector)
+            where TEnumerator : IRefEnumerator<T>
+        {
+            bool haveData = false;
+            T max = default(T);
+            T2 maxValue = default(T2);
+            foreach (var v in seq)
+            {
+                if (!haveData)
+                {
+                    max = v;
+                    maxValue = keySelector(v);
+                }
+                else if (Comparer<T2>.Default.Compare(maxValue, keySelector(v)) < 0)
+                {
+                    max = v;
+                    maxValue = keySelector(v);
+                }
+
+                haveData = true;
+            }
+
+            if (!haveData)
+            {
+                throw new InvalidOperationException("Sequence contains no elements");
+            }
+
+            return max;
+        }
+
+
         public static T Min<TEnumerator, T>(this RefLinqEnumerable<T, TEnumerator> seq)
             where TEnumerator : IRefEnumerator<T>
         {
@@ -178,6 +209,36 @@ namespace System.Linq.Struct
                 else if (Comparer<T>.Default.Compare(max, v) > 0)
                 {
                     max = v;
+                }
+
+                haveData = true;
+            }
+
+            if (!haveData)
+            {
+                throw new InvalidOperationException("Sequence contains no elements");
+            }
+
+            return max;
+        }
+
+        public static T MinBy<TEnumerator, T, T2>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, T2> keySelector)
+            where TEnumerator : IRefEnumerator<T>
+        {
+            bool haveData = false;
+            T max = default(T);
+            T2 maxValue = default(T2);
+            foreach (var v in seq)
+            {
+                if (!haveData)
+                {
+                    max = v;
+                    maxValue = keySelector(v);
+                }
+                else if (Comparer<T2>.Default.Compare(maxValue, keySelector(v)) > 0)
+                {
+                    max = v;
+                    maxValue = keySelector(v);
                 }
 
                 haveData = true;

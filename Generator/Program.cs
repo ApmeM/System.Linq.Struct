@@ -72,6 +72,8 @@ internal class Program
         };
 
         var toMultiSources = new List<Method>{
+            new Method("MaxBy", "T", new List<Param> { new Param("Func<T, T2>", "keySelector") }, new List<Param>{new Param("", "T2")}),
+            new Method("MinBy", "T", new List<Param> { new Param("Func<T, T2>", "keySelector") }, new List<Param>{new Param("", "T2")}),
             new Method("All", "bool", new List<Param> { new Param("Func<T, bool>", "pred") }),
             new Method("Contains", "bool", new List<Param> { new Param("T", "toFind") }),
             new Method("Aggregate", "T", new List<Param> { new Param("Func<T, T, T>", "agg") }),

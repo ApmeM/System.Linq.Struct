@@ -66,6 +66,22 @@ namespace System.Linq.Struct
         public static RefLinqEnumerable<U, Select<T, TPrevious ,U>> Select<T, TPrevious,U>(this RefLinqEnumerable<T, TPrevious> prev ,Func<T, U> map)
             where TPrevious : IRefEnumerator<T> 
             => new RefLinqEnumerable<U, Select<T, TPrevious,U>>(new Select<T, TPrevious,U>(prev.enumerator ,map));
+        public static T MaxBy<T ,T2>(this IReadOnlyList<T> c ,Func<T, T2> keySelector)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).MaxBy(keySelector);
+        public static T MaxBy<T ,T2>(this T[] c ,Func<T, T2> keySelector)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).MaxBy(keySelector);
+        public static T MaxBy<T ,T2>(this HashSet<T> c ,Func<T, T2> keySelector)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).MaxBy(keySelector);
+        public static T MaxBy<T ,T2>(this MultiHashSetWrapper<T> c ,Func<T, T2> keySelector)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).MaxBy(keySelector);
+        public static T MinBy<T ,T2>(this IReadOnlyList<T> c ,Func<T, T2> keySelector)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).MinBy(keySelector);
+        public static T MinBy<T ,T2>(this T[] c ,Func<T, T2> keySelector)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).MinBy(keySelector);
+        public static T MinBy<T ,T2>(this HashSet<T> c ,Func<T, T2> keySelector)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).MinBy(keySelector);
+        public static T MinBy<T ,T2>(this MultiHashSetWrapper<T> c ,Func<T, T2> keySelector)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).MinBy(keySelector);
         public static bool All<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
             => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).All(pred);
         public static bool All<T >(this T[] c ,Func<T, bool> pred)
