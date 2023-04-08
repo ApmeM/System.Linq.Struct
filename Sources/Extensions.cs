@@ -9,15 +9,10 @@ namespace System.Linq.Struct
 {
     public static partial class Extensions
     {
-        public static RefLinqEnumerable<T, SelectMany<T, TPrevious, TEnumeratorOfEnumerators>> SelectMany<T, TPrevious, TEnumeratorOfEnumerators>(this RefLinqEnumerable<RefLinqEnumerable<T, TPrevious>, TEnumeratorOfEnumerators> prev)
+        internal static RefLinqEnumerable<T, SelectMany<T, TPrevious, TEnumeratorOfEnumerators>> SelectMany<T, TPrevious, TEnumeratorOfEnumerators>(this RefLinqEnumerable<RefLinqEnumerable<T, TPrevious>, TEnumeratorOfEnumerators> prev)
             where TPrevious : IRefEnumerator<T>
             where TEnumeratorOfEnumerators : IRefEnumerator<RefLinqEnumerable<T, TPrevious>>
             => new RefLinqEnumerable<T, SelectMany<T, TPrevious, TEnumeratorOfEnumerators>>(new SelectMany<T, TPrevious, TEnumeratorOfEnumerators>(prev.enumerator));
-
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, TPrevious, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, TPrevious, U, TUEnumerator>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
-            where TPrevious : IRefEnumerator<T>
-            where TUEnumerator : IRefEnumerator<U>
-            => prev.Select(func).SelectMany();
 
         public static T Aggregate<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, T, T> agg)
             where TPrevious : IRefEnumerator<T>

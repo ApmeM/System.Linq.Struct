@@ -7,12 +7,6 @@ namespace Tests.ExtensionsFunctionalTests;
 public class SelectManyTest
 {
     [Fact]
-    public void WithoutCondition()
-    {
-        TestUtils.EqualSequences(new [] { 1d, 2d, 3d }.Select(c => LazyLinqExtensions.Range(1, (int)c)).SelectMany(), new [] { 1, 1, 2, 1, 2, 3 });
-    }
-    
-    [Fact]
     public void EmptyList()
     {
         TestUtils.EqualSequences(new int[] { }.SelectMany(c => LazyLinqExtensions.Range(1, (int)c)), new int[] { });
@@ -34,6 +28,12 @@ public class SelectManyTest
     [Fact]
     public void OnlyEmptyEnumerables()
     {
-        TestUtils.EqualSequences(new[] { 1, 2, 3, 4, 5 }.Select(i => LazyLinqExtensions.Range(0, -1)).SelectMany(), new int[] { });
+        TestUtils.EqualSequences(new[] { 1, 2, 3, 4, 5 }.SelectMany(i => LazyLinqExtensions.Range(0, -1)), new int[] { });
+    }
+
+    [Fact]
+    public void SublistIsArray()
+    {
+        TestUtils.EqualSequences(new[] { 1, 2, 3, 4, 5 }.SelectMany(i => new int[]{ 1 }), new int[] { 1,1,1,1,1 });
     }
 }

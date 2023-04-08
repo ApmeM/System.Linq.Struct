@@ -118,6 +118,38 @@ internal class Program
             toMultiSources.Add(new Method(method.Name, $"RefLinqEnumerable<{method.ResultType}, {method.Name}<T, {{0}}{genericUsageString}>>", method.Params, method.Generics));
         }
 
+        // Separate generator for SelectMany
+        {
+            Console.WriteLine($"        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, TPrevious, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, TPrevious, U, TUEnumerator>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)");
+            Console.WriteLine($"            where TPrevious : IRefEnumerator<T>");
+            Console.WriteLine($"            where TUEnumerator : IRefEnumerator<U>");
+            Console.WriteLine($"            => prev.Select(func).SelectMany();");
+
+            toMultiSources.Add(new Method(
+                "SelectMany",
+                "RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, {0}, RefLinqEnumerable<U, TUEnumerator>>>>",
+                new List<Param> { new Param("Func<T, RefLinqEnumerable<U, TUEnumerator>>", "func") },
+                new List<Param> { new Param("", "U"), new Param("IRefEnumerator<U>", "TUEnumerator") }
+                ));
+
+            foreach (var type in sources)
+            {
+                var listType = type.Item1.Replace("T", "U");
+                var linqType = type.Item2.Replace("T", "U");
+                Console.WriteLine($"        public static RefLinqEnumerable<U, SelectMany<U, {linqType}, Select<{listType}, Select<T, TPrevious, {listType}>, RefLinqEnumerable<U, {linqType}>>>> SelectMany<T, TPrevious, U>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, {listType}> func)");
+                Console.WriteLine($"            where TPrevious : IRefEnumerator<T>");
+                Console.WriteLine($"            => prev.Select(func).Select(a => new RefLinqEnumerable<U, {linqType}>(new {linqType}(a))).SelectMany();");
+
+                toMultiSources.Add(new Method(
+                    "SelectMany",
+                    $"RefLinqEnumerable<U, SelectMany<U, {linqType}, Select<{listType}, Select<T, {{0}}, {listType}>, RefLinqEnumerable<U, {linqType}>>>>",
+                    new List<Param> { new Param($"Func<T, {listType}>", "func") },
+                    new List<Param> { new Param("", "U") }
+                    ));
+
+            }
+        }
+
         foreach (var method in toMultiSources)
         {
             var paramMethodString = method.Params == null ? "" : ("," + string.Join(",", method.Params.Select(a => $"{a.Type} {a.Name}")));
@@ -133,14 +165,6 @@ internal class Program
                     Console.WriteLine($"            {genericConstraintString}");
                 Console.WriteLine($"            => new RefLinqEnumerable<T, {type.Item2}>(new {type.Item2}(c)).{method.Name}({paramUsageString});");
             }
-        }
-
-        // Separate generator for SelectMany
-        foreach (var type in sources)
-        {
-            Console.WriteLine($"        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, {type.Item2}, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, U, TUEnumerator>(this {type.Item1} c, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)");
-            Console.WriteLine($"            where TUEnumerator : IRefEnumerator<U>");
-            Console.WriteLine($"            => c.Select(func).SelectMany();");
         }
 
         Console.WriteLine("    }");

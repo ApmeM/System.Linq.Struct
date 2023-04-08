@@ -93,6 +93,22 @@ namespace System.Linq.Struct
         public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,MultiHashSetWrapper<T2> seq2)
             where TPrevious : IRefEnumerator<T> 
             => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,MultiHashSetWrapperEnumerator<T2>>>(new Zip<T, TPrevious,T2,MultiHashSetWrapperEnumerator<T2>>(prev.enumerator ,new MultiHashSetWrapperEnumerator<T2>(seq2)));
+        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, TPrevious, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, TPrevious, U, TUEnumerator>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
+            where TPrevious : IRefEnumerator<T>
+            where TUEnumerator : IRefEnumerator<U>
+            => prev.Select(func).SelectMany();
+        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, TPrevious, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T, TPrevious, U>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, IReadOnlyList<U>> func)
+            where TPrevious : IRefEnumerator<T>
+            => prev.Select(func).Select(a => new RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>(new IReadOnlyListEnumerator<U>(a))).SelectMany();
+        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, TPrevious, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T, TPrevious, U>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, U[]> func)
+            where TPrevious : IRefEnumerator<T>
+            => prev.Select(func).Select(a => new RefLinqEnumerable<U, ArrayEnumerator<U>>(new ArrayEnumerator<U>(a))).SelectMany();
+        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, TPrevious, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T, TPrevious, U>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, HashSet<U>> func)
+            where TPrevious : IRefEnumerator<T>
+            => prev.Select(func).Select(a => new RefLinqEnumerable<U, HashSetEnumerator<U>>(new HashSetEnumerator<U>(a))).SelectMany();
+        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, TPrevious, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T, TPrevious, U>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, MultiHashSetWrapper<U>> func)
+            where TPrevious : IRefEnumerator<T>
+            => prev.Select(func).Select(a => new RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>(new MultiHashSetWrapperEnumerator<U>(a))).SelectMany();
         public static T MaxBy<T ,T2>(this IReadOnlyList<T> c ,Func<T, T2> keySelector)
             => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).MaxBy(keySelector);
         public static T MaxBy<T ,T2>(this T[] c ,Func<T, T2> keySelector)
@@ -493,17 +509,49 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,MultiHashSetWrapper<T2> seq2)
             => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, IReadOnlyListEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, U, TUEnumerator>(this IReadOnlyList<T> c, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
+        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, IReadOnlyListEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T ,U,TUEnumerator>(this IReadOnlyList<T> c ,Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
             where TUEnumerator : IRefEnumerator<U>
-            => c.Select(func).SelectMany();
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, ArrayEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, U, TUEnumerator>(this T[] c, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, ArrayEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T ,U,TUEnumerator>(this T[] c ,Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
             where TUEnumerator : IRefEnumerator<U>
-            => c.Select(func).SelectMany();
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, HashSetEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, U, TUEnumerator>(this HashSet<T> c, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, HashSetEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T ,U,TUEnumerator>(this HashSet<T> c ,Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
             where TUEnumerator : IRefEnumerator<U>
-            => c.Select(func).SelectMany();
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, MultiHashSetWrapperEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, U, TUEnumerator>(this MultiHashSetWrapper<T> c, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, MultiHashSetWrapperEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T ,U,TUEnumerator>(this MultiHashSetWrapper<T> c ,Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
             where TUEnumerator : IRefEnumerator<U>
-            => c.Select(func).SelectMany();
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, IReadOnlyListEnumerator<T>, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T ,U>(this IReadOnlyList<T> c ,Func<T, IReadOnlyList<U>> func)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, ArrayEnumerator<T>, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T ,U>(this T[] c ,Func<T, IReadOnlyList<U>> func)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, HashSetEnumerator<T>, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T ,U>(this HashSet<T> c ,Func<T, IReadOnlyList<U>> func)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, MultiHashSetWrapperEnumerator<T>, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, IReadOnlyList<U>> func)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, IReadOnlyListEnumerator<T>, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T ,U>(this IReadOnlyList<T> c ,Func<T, U[]> func)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, ArrayEnumerator<T>, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T ,U>(this T[] c ,Func<T, U[]> func)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, HashSetEnumerator<T>, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T ,U>(this HashSet<T> c ,Func<T, U[]> func)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, MultiHashSetWrapperEnumerator<T>, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, U[]> func)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, IReadOnlyListEnumerator<T>, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T ,U>(this IReadOnlyList<T> c ,Func<T, HashSet<U>> func)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, ArrayEnumerator<T>, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T ,U>(this T[] c ,Func<T, HashSet<U>> func)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, HashSetEnumerator<T>, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T ,U>(this HashSet<T> c ,Func<T, HashSet<U>> func)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, MultiHashSetWrapperEnumerator<T>, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, HashSet<U>> func)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, IReadOnlyListEnumerator<T>, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T ,U>(this IReadOnlyList<T> c ,Func<T, MultiHashSetWrapper<U>> func)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, ArrayEnumerator<T>, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T ,U>(this T[] c ,Func<T, MultiHashSetWrapper<U>> func)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, HashSetEnumerator<T>, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T ,U>(this HashSet<T> c ,Func<T, MultiHashSetWrapper<U>> func)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
+        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, MultiHashSetWrapperEnumerator<T>, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, MultiHashSetWrapper<U>> func)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
     }
 }
