@@ -9,24 +9,24 @@ public class ConcatTest
     [Fact]
     public void BothListsHaveData()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Concat(new [] { 4, 5 }.ToRefLinq()), new [] { 1, 2, 3, 4, 5 });
+        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Concat(new [] { 4, 5 }), new [] { 1, 2, 3, 4, 5 });
     }
 
     [Fact]
     public void OriginalListEmpty()
     {
-        TestUtils.EqualSequences(new int[] { }.Concat(new[] { 4, 5 }.ToRefLinq()), new[] { 4, 5 });
+        TestUtils.EqualSequences(new int[] { }.Concat(new[] { 4, 5 }), new[] { 4, 5 });
     }
 
     [Fact]
     public void SecondListEmpty()
     {
-        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Concat(new int[] { }.ToRefLinq()), new[] { 1, 2, 3 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Concat(new int[] { }), new[] { 1, 2, 3 });
     }
 
     [Fact]
     public void BothListEmpty()
     {
-        TestUtils.EqualSequences(new int[] { }.Concat(new int[] { }.ToRefLinq()), new int[] { });
+        TestUtils.EqualSequences(new int[] { }.Concat(new int[] { }), new int[] { });
     }
 }

@@ -69,15 +69,27 @@ namespace System.Linq.Struct
         public static RefLinqEnumerable<U, Select<T, TPrevious ,U>> Select<T, TPrevious,U>(this RefLinqEnumerable<T, TPrevious> prev ,Func<T, U> map)
             where TPrevious : IRefEnumerator<T> 
             => new RefLinqEnumerable<U, Select<T, TPrevious,U>>(new Select<T, TPrevious,U>(prev.enumerator ,map));
+        public static RefLinqEnumerable<T, Concat<T, TPrevious ,IReadOnlyListEnumerator<T>>> Concat<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,IReadOnlyList<T> seq2)
+            where TPrevious : IRefEnumerator<T> 
+            => new RefLinqEnumerable<T, Concat<T, TPrevious,IReadOnlyListEnumerator<T>>>(new Concat<T, TPrevious,IReadOnlyListEnumerator<T>>(prev.enumerator ,new IReadOnlyListEnumerator<T>(seq2)));
         public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,IReadOnlyListEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,IReadOnlyList<T2> seq2)
             where TPrevious : IRefEnumerator<T> 
             => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,IReadOnlyListEnumerator<T2>>>(new Zip<T, TPrevious,T2,IReadOnlyListEnumerator<T2>>(prev.enumerator ,new IReadOnlyListEnumerator<T2>(seq2)));
+        public static RefLinqEnumerable<T, Concat<T, TPrevious ,ArrayEnumerator<T>>> Concat<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,T[] seq2)
+            where TPrevious : IRefEnumerator<T> 
+            => new RefLinqEnumerable<T, Concat<T, TPrevious,ArrayEnumerator<T>>>(new Concat<T, TPrevious,ArrayEnumerator<T>>(prev.enumerator ,new ArrayEnumerator<T>(seq2)));
         public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,ArrayEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,T2[] seq2)
             where TPrevious : IRefEnumerator<T> 
             => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,ArrayEnumerator<T2>>>(new Zip<T, TPrevious,T2,ArrayEnumerator<T2>>(prev.enumerator ,new ArrayEnumerator<T2>(seq2)));
+        public static RefLinqEnumerable<T, Concat<T, TPrevious ,HashSetEnumerator<T>>> Concat<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,HashSet<T> seq2)
+            where TPrevious : IRefEnumerator<T> 
+            => new RefLinqEnumerable<T, Concat<T, TPrevious,HashSetEnumerator<T>>>(new Concat<T, TPrevious,HashSetEnumerator<T>>(prev.enumerator ,new HashSetEnumerator<T>(seq2)));
         public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,HashSetEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,HashSet<T2> seq2)
             where TPrevious : IRefEnumerator<T> 
             => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,HashSetEnumerator<T2>>>(new Zip<T, TPrevious,T2,HashSetEnumerator<T2>>(prev.enumerator ,new HashSetEnumerator<T2>(seq2)));
+        public static RefLinqEnumerable<T, Concat<T, TPrevious ,MultiHashSetWrapperEnumerator<T>>> Concat<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,MultiHashSetWrapper<T> seq2)
+            where TPrevious : IRefEnumerator<T> 
+            => new RefLinqEnumerable<T, Concat<T, TPrevious,MultiHashSetWrapperEnumerator<T>>>(new Concat<T, TPrevious,MultiHashSetWrapperEnumerator<T>>(prev.enumerator ,new MultiHashSetWrapperEnumerator<T>(seq2)));
         public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,MultiHashSetWrapper<T2> seq2)
             where TPrevious : IRefEnumerator<T> 
             => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,MultiHashSetWrapperEnumerator<T2>>>(new Zip<T, TPrevious,T2,MultiHashSetWrapperEnumerator<T2>>(prev.enumerator ,new MultiHashSetWrapperEnumerator<T2>(seq2)));
@@ -417,6 +429,14 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Select(map);
         public static RefLinqEnumerable<U, Select<T, MultiHashSetWrapperEnumerator<T>,U>> Select<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, U> map)
             => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Select(map);
+        public static RefLinqEnumerable<T, Concat<T, IReadOnlyListEnumerator<T>,IReadOnlyListEnumerator<T>>> Concat<T >(this IReadOnlyList<T> c ,IReadOnlyList<T> seq2)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, ArrayEnumerator<T>,IReadOnlyListEnumerator<T>>> Concat<T >(this T[] c ,IReadOnlyList<T> seq2)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, HashSetEnumerator<T>,IReadOnlyListEnumerator<T>>> Concat<T >(this HashSet<T> c ,IReadOnlyList<T> seq2)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, MultiHashSetWrapperEnumerator<T>,IReadOnlyListEnumerator<T>>> Concat<T >(this MultiHashSetWrapper<T> c ,IReadOnlyList<T> seq2)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Concat(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,IReadOnlyList<T2> seq2)
             => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this T[] c ,IReadOnlyList<T2> seq2)
@@ -425,6 +445,14 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,IReadOnlyList<T2> seq2)
             => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<T, Concat<T, IReadOnlyListEnumerator<T>,ArrayEnumerator<T>>> Concat<T >(this IReadOnlyList<T> c ,T[] seq2)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, ArrayEnumerator<T>,ArrayEnumerator<T>>> Concat<T >(this T[] c ,T[] seq2)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, HashSetEnumerator<T>,ArrayEnumerator<T>>> Concat<T >(this HashSet<T> c ,T[] seq2)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, MultiHashSetWrapperEnumerator<T>,ArrayEnumerator<T>>> Concat<T >(this MultiHashSetWrapper<T> c ,T[] seq2)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Concat(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,T2[] seq2)
             => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this T[] c ,T2[] seq2)
@@ -433,6 +461,14 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,T2[] seq2)
             => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<T, Concat<T, IReadOnlyListEnumerator<T>,HashSetEnumerator<T>>> Concat<T >(this IReadOnlyList<T> c ,HashSet<T> seq2)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, ArrayEnumerator<T>,HashSetEnumerator<T>>> Concat<T >(this T[] c ,HashSet<T> seq2)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, HashSetEnumerator<T>,HashSetEnumerator<T>>> Concat<T >(this HashSet<T> c ,HashSet<T> seq2)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, MultiHashSetWrapperEnumerator<T>,HashSetEnumerator<T>>> Concat<T >(this MultiHashSetWrapper<T> c ,HashSet<T> seq2)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Concat(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,HashSet<T2> seq2)
             => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this T[] c ,HashSet<T2> seq2)
@@ -441,6 +477,14 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,HashSet<T2> seq2)
             => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
+        public static RefLinqEnumerable<T, Concat<T, IReadOnlyListEnumerator<T>,MultiHashSetWrapperEnumerator<T>>> Concat<T >(this IReadOnlyList<T> c ,MultiHashSetWrapper<T> seq2)
+            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, ArrayEnumerator<T>,MultiHashSetWrapperEnumerator<T>>> Concat<T >(this T[] c ,MultiHashSetWrapper<T> seq2)
+            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, HashSetEnumerator<T>,MultiHashSetWrapperEnumerator<T>>> Concat<T >(this HashSet<T> c ,MultiHashSetWrapper<T> seq2)
+            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Concat(seq2);
+        public static RefLinqEnumerable<T, Concat<T, MultiHashSetWrapperEnumerator<T>,MultiHashSetWrapperEnumerator<T>>> Concat<T >(this MultiHashSetWrapper<T> c ,MultiHashSetWrapper<T> seq2)
+            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Concat(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,MultiHashSetWrapper<T2> seq2)
             => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
         public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this T[] c ,MultiHashSetWrapper<T2> seq2)

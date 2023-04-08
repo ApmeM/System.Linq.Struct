@@ -74,6 +74,7 @@ internal class Program
 
         foreach (var type in sources)
         {
+            toAddBasicExtension.Add(new Method("Concat", null, new List<Param> { new Param(type.Item1, "seq2", $"new {type.Item2}(seq2)") }, new List<Param> { new Param("", "", type.Item2) }));
             toAddBasicExtension.Add(new Method("Zip", null, new List<Param> { new Param(type.Item1.Replace("T", "T2"), "seq2", $"new {type.Item2.Replace("T", "T2")}(seq2)") }, new List<Param> { new Param("", "T2"), new Param("", "", type.Item2.Replace("T", "T2")) }, "(T,T2)"));
         }
 
@@ -106,9 +107,9 @@ internal class Program
         {
             var paramMethodString = method.Params == null ? "" : ("," + string.Join(",", method.Params.Select(a => $"{a.Type} {a.Name}")));
             var paramUsageString = method.Params == null ? "" : ("," + string.Join(",", method.Params.Select(a => $"{a.Usage}")));
-            var genericNameString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Name)).Select(a => $"{a.Name}")));
-            var genericUsageString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Usage)).Select(a => $"{a.Usage}")));
-            var genericConstraintString = method.Generics == null ? "" : (string.Join(" ", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Type)).Select(a => $"where {a.Name} : {a.Type}")));
+            var genericNameString = method.Generics == null || method.Generics.All(a => string.IsNullOrWhiteSpace(a.Name)) ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Name)).Select(a => $"{a.Name}")));
+            var genericUsageString = method.Generics == null || method.Generics.All(a => string.IsNullOrWhiteSpace(a.Usage)) ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Usage)).Select(a => $"{a.Usage}")));
+            var genericConstraintString = method.Generics == null || method.Generics.All(a => string.IsNullOrWhiteSpace(a.Type)) ? "" : (string.Join(" ", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Type)).Select(a => $"where {a.Name} : {a.Type}")));
 
             Console.WriteLine($"        public static RefLinqEnumerable<{method.ResultType}, {method.Name}<T, TPrevious {genericUsageString}>> {method.Name}<T, TPrevious{genericNameString}>(this RefLinqEnumerable<T, TPrevious> prev {paramMethodString})");
             Console.WriteLine($"            where TPrevious : IRefEnumerator<T> {genericConstraintString}");
@@ -121,9 +122,9 @@ internal class Program
         {
             var paramMethodString = method.Params == null ? "" : ("," + string.Join(",", method.Params.Select(a => $"{a.Type} {a.Name}")));
             var paramUsageString = method.Params == null ? "" : (string.Join(",", method.Params.Select(a => $"{a.Name}")));
-            var genericNameString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Name)).Select(a => $"{a.Name}")));
-            var genericUsageString = method.Generics == null ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Usage)).Select(a => $"{a.Usage}")));
-            var genericConstraintString = method.Generics == null ? "" : (string.Join(" ", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Type)).Select(a => $"where {a.Name} : {a.Type}")));
+            var genericNameString = method.Generics == null || method.Generics.All(a => string.IsNullOrWhiteSpace(a.Name)) ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Name)).Select(a => $"{a.Name}")));
+            var genericUsageString = method.Generics == null || method.Generics.All(a => string.IsNullOrWhiteSpace(a.Usage)) ? "" : ("," + string.Join(",", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Usage)).Select(a => $"{a.Usage}")));
+            var genericConstraintString = method.Generics == null || method.Generics.All(a => string.IsNullOrWhiteSpace(a.Type)) ? "" : (string.Join(" ", method.Generics.Where(a => !string.IsNullOrWhiteSpace(a.Type)).Select(a => $"where {a.Name} : {a.Type}")));
 
             foreach (var type in sources)
             {
