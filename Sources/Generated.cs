@@ -3,555 +3,681 @@ namespace System.Linq.Struct
 {
     public static partial class GeneratedExtensions
     {
-        public static int Count<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+#region Build
+        public static RefLinqEnumerable<TSource, IReadOnlyListEnumerator<TSource>> Build<TSource>(IReadOnlyList<TSource> c)
+            => new RefLinqEnumerable<TSource, IReadOnlyListEnumerator<TSource>>(new IReadOnlyListEnumerator<TSource>(c));
+        public static RefLinqEnumerable<TSource, ArrayEnumerator<TSource>> Build<TSource>(TSource[] c)
+            => new RefLinqEnumerable<TSource, ArrayEnumerator<TSource>>(new ArrayEnumerator<TSource>(c));
+        public static RefLinqEnumerable<TSource, HashSetEnumerator<TSource>> Build<TSource>(HashSet<TSource> c)
+            => new RefLinqEnumerable<TSource, HashSetEnumerator<TSource>>(new HashSetEnumerator<TSource>(c));
+        public static RefLinqEnumerable<TSource, MultiHashSetWrapperEnumerator<TSource>> Build<TSource>(MultiHashSetWrapper<TSource> c)
+            => new RefLinqEnumerable<TSource, MultiHashSetWrapperEnumerator<TSource>>(new MultiHashSetWrapperEnumerator<TSource>(c));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>> Build<TSource1, TSource2>(Dictionary<TSource1, TSource2> c)
+            => new RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>(new DictionaryEnumerator<TSource1, TSource2>(c));
+#endregion
+#region Add Where predicate to known finalizers that needs them
+        public static int Count<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).Count();
-        public static bool Any<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static int Count<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Count(pred);
+        public static int Count<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).Count(pred);
+        public static int Count<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Count(pred);
+        public static int Count<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Count(pred);
+        public static int Count<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).Count(pred);
+        public static bool Any<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).Any();
-        public static T Single<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static bool Any<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Any(pred);
+        public static bool Any<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).Any(pred);
+        public static bool Any<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Any(pred);
+        public static bool Any<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Any(pred);
+        public static bool Any<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).Any(pred);
+        public static TSource Single<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).Single();
-        public static T SingleOrDefault<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource Single<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Single(pred);
+        public static TSource Single<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).Single(pred);
+        public static TSource Single<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Single(pred);
+        public static TSource Single<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Single(pred);
+        public static KeyValuePair<TSource1, TSource2> Single<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).Single(pred);
+        public static TSource SingleOrDefault<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).SingleOrDefault();
-        public static T First<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource SingleOrDefault<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).SingleOrDefault(pred);
+        public static TSource SingleOrDefault<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).SingleOrDefault(pred);
+        public static TSource SingleOrDefault<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).SingleOrDefault(pred);
+        public static TSource SingleOrDefault<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).SingleOrDefault(pred);
+        public static KeyValuePair<TSource1, TSource2> SingleOrDefault<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).SingleOrDefault(pred);
+        public static TSource First<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).First();
-        public static T FirstOrDefault<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource First<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).First(pred);
+        public static TSource First<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).First(pred);
+        public static TSource First<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).First(pred);
+        public static TSource First<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).First(pred);
+        public static KeyValuePair<TSource1, TSource2> First<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).First(pred);
+        public static TSource FirstOrDefault<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).FirstOrDefault();
-        public static T Last<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource FirstOrDefault<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).FirstOrDefault(pred);
+        public static TSource FirstOrDefault<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).FirstOrDefault(pred);
+        public static TSource FirstOrDefault<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).FirstOrDefault(pred);
+        public static TSource FirstOrDefault<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).FirstOrDefault(pred);
+        public static KeyValuePair<TSource1, TSource2> FirstOrDefault<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).FirstOrDefault(pred);
+        public static TSource Last<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).Last();
-        public static T LastOrDefault<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource Last<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Last(pred);
+        public static TSource Last<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).Last(pred);
+        public static TSource Last<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Last(pred);
+        public static TSource Last<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Last(pred);
+        public static KeyValuePair<TSource1, TSource2> Last<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).Last(pred);
+        public static TSource LastOrDefault<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).LastOrDefault();
-        public static T Max<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource LastOrDefault<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).LastOrDefault(pred);
+        public static TSource LastOrDefault<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).LastOrDefault(pred);
+        public static TSource LastOrDefault<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).LastOrDefault(pred);
+        public static TSource LastOrDefault<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).LastOrDefault(pred);
+        public static KeyValuePair<TSource1, TSource2> LastOrDefault<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).LastOrDefault(pred);
+        public static TSource Max<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).Max();
-        public static T Min<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource Max<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Max(pred);
+        public static TSource Max<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).Max(pred);
+        public static TSource Max<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Max(pred);
+        public static TSource Max<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Max(pred);
+        public static KeyValuePair<TSource1, TSource2> Max<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).Max(pred);
+        public static TSource Min<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).Min();
-        public static T Average<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource Min<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Min(pred);
+        public static TSource Min<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).Min(pred);
+        public static TSource Min<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Min(pred);
+        public static TSource Min<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Min(pred);
+        public static KeyValuePair<TSource1, TSource2> Min<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).Min(pred);
+        public static TSource Average<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).Average();
-        public static T Sum<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource Average<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Average(pred);
+        public static TSource Average<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).Average(pred);
+        public static TSource Average<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Average(pred);
+        public static TSource Average<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Average(pred);
+        public static KeyValuePair<TSource1, TSource2> Average<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).Average(pred);
+        public static TSource Sum<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).Sum();
-        public static T Multiply<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq, Func<T, bool> pred)
-            where TEnumerator : IRefEnumerator<T>
+        public static TSource Sum<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Sum(pred);
+        public static TSource Sum<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).Sum(pred);
+        public static TSource Sum<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Sum(pred);
+        public static TSource Sum<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Sum(pred);
+        public static KeyValuePair<TSource1, TSource2> Sum<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).Sum(pred);
+        public static TSource Multiply<TSource, TEnumerator>(this RefLinqEnumerable<TSource, TEnumerator> seq, Func<TSource, bool> pred)
+            where TEnumerator : IRefEnumerator<TSource>
             => seq.Where(pred).Multiply();
-        public static RefLinqEnumerable<T, Where<T, TPrevious >> Where<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,Func<T, bool> predicate)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, Where<T, TPrevious>>(new Where<T, TPrevious>(prev.enumerator ,predicate));
-        public static RefLinqEnumerable<T, Skip<T, TPrevious >> Skip<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,int skip)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, Skip<T, TPrevious>>(new Skip<T, TPrevious>(prev.enumerator ,skip));
-        public static RefLinqEnumerable<T, Take<T, TPrevious >> Take<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,int take)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, Take<T, TPrevious>>(new Take<T, TPrevious>(prev.enumerator ,take));
-        public static RefLinqEnumerable<T, Append<T, TPrevious >> Append<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,T toAppend)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, Append<T, TPrevious>>(new Append<T, TPrevious>(prev.enumerator ,toAppend));
-        public static RefLinqEnumerable<T, Prepend<T, TPrevious >> Prepend<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,T toPrepend)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, Prepend<T, TPrevious>>(new Prepend<T, TPrevious>(prev.enumerator ,toPrepend));
-        public static RefLinqEnumerable<T, OrderBy<T, TPrevious ,TKey>> OrderBy<T, TPrevious,TKey>(this RefLinqEnumerable<T, TPrevious> prev ,Func<T, TKey> keySelector)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, OrderBy<T, TPrevious,TKey>>(new OrderBy<T, TPrevious,TKey>(prev.enumerator ,keySelector));
-        public static RefLinqEnumerable<T, Concat<T, TPrevious ,TEnumerator2>> Concat<T, TPrevious,TEnumerator2>(this RefLinqEnumerable<T, TPrevious> prev ,RefLinqEnumerable<T, TEnumerator2> seq2)
-            where TPrevious : IRefEnumerator<T> where TEnumerator2 : IRefEnumerator<T>
-            => new RefLinqEnumerable<T, Concat<T, TPrevious,TEnumerator2>>(new Concat<T, TPrevious,TEnumerator2>(prev.enumerator ,seq2.enumerator));
-        public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,TEnumerator2>> Zip<T, TPrevious,T2,TEnumerator2>(this RefLinqEnumerable<T, TPrevious> prev ,RefLinqEnumerable<T2, TEnumerator2> seq2)
-            where TPrevious : IRefEnumerator<T> where TEnumerator2 : IRefEnumerator<T2>
-            => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,TEnumerator2>>(new Zip<T, TPrevious,T2,TEnumerator2>(prev.enumerator ,seq2.enumerator));
-        public static RefLinqEnumerable<U, Select<T, TPrevious ,U>> Select<T, TPrevious,U>(this RefLinqEnumerable<T, TPrevious> prev ,Func<T, U> map)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<U, Select<T, TPrevious,U>>(new Select<T, TPrevious,U>(prev.enumerator ,map));
-        public static RefLinqEnumerable<T, Concat<T, TPrevious ,IReadOnlyListEnumerator<T>>> Concat<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,IReadOnlyList<T> seq2)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, Concat<T, TPrevious,IReadOnlyListEnumerator<T>>>(new Concat<T, TPrevious,IReadOnlyListEnumerator<T>>(prev.enumerator ,new IReadOnlyListEnumerator<T>(seq2)));
-        public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,IReadOnlyListEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,IReadOnlyList<T2> seq2)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,IReadOnlyListEnumerator<T2>>>(new Zip<T, TPrevious,T2,IReadOnlyListEnumerator<T2>>(prev.enumerator ,new IReadOnlyListEnumerator<T2>(seq2)));
-        public static RefLinqEnumerable<T, Concat<T, TPrevious ,ArrayEnumerator<T>>> Concat<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,T[] seq2)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, Concat<T, TPrevious,ArrayEnumerator<T>>>(new Concat<T, TPrevious,ArrayEnumerator<T>>(prev.enumerator ,new ArrayEnumerator<T>(seq2)));
-        public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,ArrayEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,T2[] seq2)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,ArrayEnumerator<T2>>>(new Zip<T, TPrevious,T2,ArrayEnumerator<T2>>(prev.enumerator ,new ArrayEnumerator<T2>(seq2)));
-        public static RefLinqEnumerable<T, Concat<T, TPrevious ,HashSetEnumerator<T>>> Concat<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,HashSet<T> seq2)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, Concat<T, TPrevious,HashSetEnumerator<T>>>(new Concat<T, TPrevious,HashSetEnumerator<T>>(prev.enumerator ,new HashSetEnumerator<T>(seq2)));
-        public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,HashSetEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,HashSet<T2> seq2)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,HashSetEnumerator<T2>>>(new Zip<T, TPrevious,T2,HashSetEnumerator<T2>>(prev.enumerator ,new HashSetEnumerator<T2>(seq2)));
-        public static RefLinqEnumerable<T, Concat<T, TPrevious ,MultiHashSetWrapperEnumerator<T>>> Concat<T, TPrevious>(this RefLinqEnumerable<T, TPrevious> prev ,MultiHashSetWrapper<T> seq2)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<T, Concat<T, TPrevious,MultiHashSetWrapperEnumerator<T>>>(new Concat<T, TPrevious,MultiHashSetWrapperEnumerator<T>>(prev.enumerator ,new MultiHashSetWrapperEnumerator<T>(seq2)));
-        public static RefLinqEnumerable<(T,T2), Zip<T, TPrevious ,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T, TPrevious,T2>(this RefLinqEnumerable<T, TPrevious> prev ,MultiHashSetWrapper<T2> seq2)
-            where TPrevious : IRefEnumerator<T> 
-            => new RefLinqEnumerable<(T,T2), Zip<T, TPrevious,T2,MultiHashSetWrapperEnumerator<T2>>>(new Zip<T, TPrevious,T2,MultiHashSetWrapperEnumerator<T2>>(prev.enumerator ,new MultiHashSetWrapperEnumerator<T2>(seq2)));
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, TPrevious, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T, TPrevious, U, TUEnumerator>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
+        public static TSource Multiply<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Multiply(pred);
+        public static TSource Multiply<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).Multiply(pred);
+        public static TSource Multiply<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Multiply(pred);
+        public static TSource Multiply<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).Multiply(pred);
+        public static KeyValuePair<TSource1, TSource2> Multiply<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).Multiply(pred);
+#endregion
+#region Add basic extensions for known finalizers
+        public static int Count<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Count();
+        public static int Count<TSource>(this TSource[] c)
+            => Build(c).Count();
+        public static int Count<TSource>(this HashSet<TSource> c)
+            => Build(c).Count();
+        public static int Count<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Count();
+        public static int Count<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Count();
+        public static bool Any<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Any();
+        public static bool Any<TSource>(this TSource[] c)
+            => Build(c).Any();
+        public static bool Any<TSource>(this HashSet<TSource> c)
+            => Build(c).Any();
+        public static bool Any<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Any();
+        public static bool Any<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Any();
+        public static TSource Single<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Single();
+        public static TSource Single<TSource>(this TSource[] c)
+            => Build(c).Single();
+        public static TSource Single<TSource>(this HashSet<TSource> c)
+            => Build(c).Single();
+        public static TSource Single<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Single();
+        public static KeyValuePair<TSource1, TSource2> Single<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Single();
+        public static TSource SingleOrDefault<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).SingleOrDefault();
+        public static TSource SingleOrDefault<TSource>(this TSource[] c)
+            => Build(c).SingleOrDefault();
+        public static TSource SingleOrDefault<TSource>(this HashSet<TSource> c)
+            => Build(c).SingleOrDefault();
+        public static TSource SingleOrDefault<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).SingleOrDefault();
+        public static KeyValuePair<TSource1, TSource2> SingleOrDefault<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).SingleOrDefault();
+        public static TSource First<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).First();
+        public static TSource First<TSource>(this TSource[] c)
+            => Build(c).First();
+        public static TSource First<TSource>(this HashSet<TSource> c)
+            => Build(c).First();
+        public static TSource First<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).First();
+        public static KeyValuePair<TSource1, TSource2> First<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).First();
+        public static TSource FirstOrDefault<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).FirstOrDefault();
+        public static TSource FirstOrDefault<TSource>(this TSource[] c)
+            => Build(c).FirstOrDefault();
+        public static TSource FirstOrDefault<TSource>(this HashSet<TSource> c)
+            => Build(c).FirstOrDefault();
+        public static TSource FirstOrDefault<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).FirstOrDefault();
+        public static KeyValuePair<TSource1, TSource2> FirstOrDefault<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).FirstOrDefault();
+        public static TSource Last<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Last();
+        public static TSource Last<TSource>(this TSource[] c)
+            => Build(c).Last();
+        public static TSource Last<TSource>(this HashSet<TSource> c)
+            => Build(c).Last();
+        public static TSource Last<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Last();
+        public static KeyValuePair<TSource1, TSource2> Last<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Last();
+        public static TSource LastOrDefault<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).LastOrDefault();
+        public static TSource LastOrDefault<TSource>(this TSource[] c)
+            => Build(c).LastOrDefault();
+        public static TSource LastOrDefault<TSource>(this HashSet<TSource> c)
+            => Build(c).LastOrDefault();
+        public static TSource LastOrDefault<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).LastOrDefault();
+        public static KeyValuePair<TSource1, TSource2> LastOrDefault<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).LastOrDefault();
+        public static TSource Max<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Max();
+        public static TSource Max<TSource>(this TSource[] c)
+            => Build(c).Max();
+        public static TSource Max<TSource>(this HashSet<TSource> c)
+            => Build(c).Max();
+        public static TSource Max<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Max();
+        public static KeyValuePair<TSource1, TSource2> Max<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Max();
+        public static TSource Min<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Min();
+        public static TSource Min<TSource>(this TSource[] c)
+            => Build(c).Min();
+        public static TSource Min<TSource>(this HashSet<TSource> c)
+            => Build(c).Min();
+        public static TSource Min<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Min();
+        public static KeyValuePair<TSource1, TSource2> Min<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Min();
+        public static TSource Average<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Average();
+        public static TSource Average<TSource>(this TSource[] c)
+            => Build(c).Average();
+        public static TSource Average<TSource>(this HashSet<TSource> c)
+            => Build(c).Average();
+        public static TSource Average<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Average();
+        public static KeyValuePair<TSource1, TSource2> Average<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Average();
+        public static TSource Sum<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Sum();
+        public static TSource Sum<TSource>(this TSource[] c)
+            => Build(c).Sum();
+        public static TSource Sum<TSource>(this HashSet<TSource> c)
+            => Build(c).Sum();
+        public static TSource Sum<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Sum();
+        public static KeyValuePair<TSource1, TSource2> Sum<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Sum();
+        public static TSource Multiply<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Multiply();
+        public static TSource Multiply<TSource>(this TSource[] c)
+            => Build(c).Multiply();
+        public static TSource Multiply<TSource>(this HashSet<TSource> c)
+            => Build(c).Multiply();
+        public static TSource Multiply<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Multiply();
+        public static KeyValuePair<TSource1, TSource2> Multiply<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Multiply();
+        public static TSource MaxBy<TSource, TMaxByKey>(this IReadOnlyList<TSource> c, Func<TSource, TMaxByKey> keySelector)
+            => Build(c).MaxBy(keySelector);
+        public static TSource MaxBy<TSource, TMaxByKey>(this TSource[] c, Func<TSource, TMaxByKey> keySelector)
+            => Build(c).MaxBy(keySelector);
+        public static TSource MaxBy<TSource, TMaxByKey>(this HashSet<TSource> c, Func<TSource, TMaxByKey> keySelector)
+            => Build(c).MaxBy(keySelector);
+        public static TSource MaxBy<TSource, TMaxByKey>(this MultiHashSetWrapper<TSource> c, Func<TSource, TMaxByKey> keySelector)
+            => Build(c).MaxBy(keySelector);
+        public static KeyValuePair<TSource1, TSource2> MaxBy<TSource1, TSource2, TMaxByKey>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TMaxByKey> keySelector)
+            => Build(c).MaxBy(keySelector);
+        public static TSource MinBy<TSource, TMinByKey>(this IReadOnlyList<TSource> c, Func<TSource, TMinByKey> keySelector)
+            => Build(c).MinBy(keySelector);
+        public static TSource MinBy<TSource, TMinByKey>(this TSource[] c, Func<TSource, TMinByKey> keySelector)
+            => Build(c).MinBy(keySelector);
+        public static TSource MinBy<TSource, TMinByKey>(this HashSet<TSource> c, Func<TSource, TMinByKey> keySelector)
+            => Build(c).MinBy(keySelector);
+        public static TSource MinBy<TSource, TMinByKey>(this MultiHashSetWrapper<TSource> c, Func<TSource, TMinByKey> keySelector)
+            => Build(c).MinBy(keySelector);
+        public static KeyValuePair<TSource1, TSource2> MinBy<TSource1, TSource2, TMinByKey>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TMinByKey> keySelector)
+            => Build(c).MinBy(keySelector);
+        public static bool All<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> pred)
+            => Build(c).All(pred);
+        public static bool All<TSource>(this TSource[] c, Func<TSource, bool> pred)
+            => Build(c).All(pred);
+        public static bool All<TSource>(this HashSet<TSource> c, Func<TSource, bool> pred)
+            => Build(c).All(pred);
+        public static bool All<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> pred)
+            => Build(c).All(pred);
+        public static bool All<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
+            => Build(c).All(pred);
+        public static bool Contains<TSource>(this IReadOnlyList<TSource> c, TSource toFind)
+            => Build(c).Contains(toFind);
+        public static bool Contains<TSource>(this TSource[] c, TSource toFind)
+            => Build(c).Contains(toFind);
+        public static bool Contains<TSource>(this HashSet<TSource> c, TSource toFind)
+            => Build(c).Contains(toFind);
+        public static bool Contains<TSource>(this MultiHashSetWrapper<TSource> c, TSource toFind)
+            => Build(c).Contains(toFind);
+        public static bool Contains<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, KeyValuePair<TSource1, TSource2> toFind)
+            => Build(c).Contains(toFind);
+        public static TSource Aggregate<TSource>(this IReadOnlyList<TSource> c, Func<TSource, TSource, TSource> agg)
+            => Build(c).Aggregate(agg);
+        public static TSource Aggregate<TSource>(this TSource[] c, Func<TSource, TSource, TSource> agg)
+            => Build(c).Aggregate(agg);
+        public static TSource Aggregate<TSource>(this HashSet<TSource> c, Func<TSource, TSource, TSource> agg)
+            => Build(c).Aggregate(agg);
+        public static TSource Aggregate<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, TSource, TSource> agg)
+            => Build(c).Aggregate(agg);
+        public static KeyValuePair<TSource1, TSource2> Aggregate<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, KeyValuePair<TSource1, TSource2>, KeyValuePair<TSource1, TSource2>> agg)
+            => Build(c).Aggregate(agg);
+        public static TAccumulate Aggregate<TSource, TAccumulate>(this IReadOnlyList<TSource> c, TAccumulate acc, Func<TAccumulate, TSource, TAccumulate> agg)
+            => Build(c).Aggregate(acc, agg);
+        public static TAccumulate Aggregate<TSource, TAccumulate>(this TSource[] c, TAccumulate acc, Func<TAccumulate, TSource, TAccumulate> agg)
+            => Build(c).Aggregate(acc, agg);
+        public static TAccumulate Aggregate<TSource, TAccumulate>(this HashSet<TSource> c, TAccumulate acc, Func<TAccumulate, TSource, TAccumulate> agg)
+            => Build(c).Aggregate(acc, agg);
+        public static TAccumulate Aggregate<TSource, TAccumulate>(this MultiHashSetWrapper<TSource> c, TAccumulate acc, Func<TAccumulate, TSource, TAccumulate> agg)
+            => Build(c).Aggregate(acc, agg);
+        public static TAccumulate Aggregate<TSource1, TSource2, TAccumulate>(this Dictionary<TSource1, TSource2> c, TAccumulate acc, Func<TAccumulate, KeyValuePair<TSource1, TSource2>, TAccumulate> agg)
+            => Build(c).Aggregate(acc, agg);
+#endregion
+#region Add basic extensions for known enumerables
+        public static RefLinqEnumerable<TSource, Where<TSource, TPrevious>> Where<TSource, TPrevious>(this RefLinqEnumerable<TSource, TPrevious> prev, Func<TSource, bool> predicate)
+            where TPrevious : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, Where<TSource, TPrevious>>(new Where<TSource, TPrevious>(prev.enumerator, predicate));
+        public static RefLinqEnumerable<TSource, Where<TSource, IReadOnlyListEnumerator<TSource>>> Where<TSource>(this IReadOnlyList<TSource> c, Func<TSource, bool> predicate)
+            => Build(c).Where(predicate);
+        public static RefLinqEnumerable<TSource, Where<TSource, ArrayEnumerator<TSource>>> Where<TSource>(this TSource[] c, Func<TSource, bool> predicate)
+            => Build(c).Where(predicate);
+        public static RefLinqEnumerable<TSource, Where<TSource, HashSetEnumerator<TSource>>> Where<TSource>(this HashSet<TSource> c, Func<TSource, bool> predicate)
+            => Build(c).Where(predicate);
+        public static RefLinqEnumerable<TSource, Where<TSource, MultiHashSetWrapperEnumerator<TSource>>> Where<TSource>(this MultiHashSetWrapper<TSource> c, Func<TSource, bool> predicate)
+            => Build(c).Where(predicate);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Where<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Where<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> predicate)
+            => Build(c).Where(predicate);
+        public static RefLinqEnumerable<TSource, Skip<TSource, TPrevious>> Skip<TSource, TPrevious>(this RefLinqEnumerable<TSource, TPrevious> prev, int skip)
+            where TPrevious : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, Skip<TSource, TPrevious>>(new Skip<TSource, TPrevious>(prev.enumerator, skip));
+        public static RefLinqEnumerable<TSource, Skip<TSource, IReadOnlyListEnumerator<TSource>>> Skip<TSource>(this IReadOnlyList<TSource> c, int skip)
+            => Build(c).Skip(skip);
+        public static RefLinqEnumerable<TSource, Skip<TSource, ArrayEnumerator<TSource>>> Skip<TSource>(this TSource[] c, int skip)
+            => Build(c).Skip(skip);
+        public static RefLinqEnumerable<TSource, Skip<TSource, HashSetEnumerator<TSource>>> Skip<TSource>(this HashSet<TSource> c, int skip)
+            => Build(c).Skip(skip);
+        public static RefLinqEnumerable<TSource, Skip<TSource, MultiHashSetWrapperEnumerator<TSource>>> Skip<TSource>(this MultiHashSetWrapper<TSource> c, int skip)
+            => Build(c).Skip(skip);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Skip<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Skip<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, int skip)
+            => Build(c).Skip(skip);
+        public static RefLinqEnumerable<TSource, Take<TSource, TPrevious>> Take<TSource, TPrevious>(this RefLinqEnumerable<TSource, TPrevious> prev, int take)
+            where TPrevious : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, Take<TSource, TPrevious>>(new Take<TSource, TPrevious>(prev.enumerator, take));
+        public static RefLinqEnumerable<TSource, Take<TSource, IReadOnlyListEnumerator<TSource>>> Take<TSource>(this IReadOnlyList<TSource> c, int take)
+            => Build(c).Take(take);
+        public static RefLinqEnumerable<TSource, Take<TSource, ArrayEnumerator<TSource>>> Take<TSource>(this TSource[] c, int take)
+            => Build(c).Take(take);
+        public static RefLinqEnumerable<TSource, Take<TSource, HashSetEnumerator<TSource>>> Take<TSource>(this HashSet<TSource> c, int take)
+            => Build(c).Take(take);
+        public static RefLinqEnumerable<TSource, Take<TSource, MultiHashSetWrapperEnumerator<TSource>>> Take<TSource>(this MultiHashSetWrapper<TSource> c, int take)
+            => Build(c).Take(take);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Take<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Take<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, int take)
+            => Build(c).Take(take);
+        public static RefLinqEnumerable<TSource, Append<TSource, TPrevious>> Append<TSource, TPrevious>(this RefLinqEnumerable<TSource, TPrevious> prev, TSource toAppend)
+            where TPrevious : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, Append<TSource, TPrevious>>(new Append<TSource, TPrevious>(prev.enumerator, toAppend));
+        public static RefLinqEnumerable<TSource, Append<TSource, IReadOnlyListEnumerator<TSource>>> Append<TSource>(this IReadOnlyList<TSource> c, TSource toAppend)
+            => Build(c).Append(toAppend);
+        public static RefLinqEnumerable<TSource, Append<TSource, ArrayEnumerator<TSource>>> Append<TSource>(this TSource[] c, TSource toAppend)
+            => Build(c).Append(toAppend);
+        public static RefLinqEnumerable<TSource, Append<TSource, HashSetEnumerator<TSource>>> Append<TSource>(this HashSet<TSource> c, TSource toAppend)
+            => Build(c).Append(toAppend);
+        public static RefLinqEnumerable<TSource, Append<TSource, MultiHashSetWrapperEnumerator<TSource>>> Append<TSource>(this MultiHashSetWrapper<TSource> c, TSource toAppend)
+            => Build(c).Append(toAppend);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Append<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Append<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, KeyValuePair<TSource1, TSource2> toAppend)
+            => Build(c).Append(toAppend);
+        public static RefLinqEnumerable<TSource, Prepend<TSource, TPrevious>> Prepend<TSource, TPrevious>(this RefLinqEnumerable<TSource, TPrevious> prev, TSource toPrepend)
+            where TPrevious : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, Prepend<TSource, TPrevious>>(new Prepend<TSource, TPrevious>(prev.enumerator, toPrepend));
+        public static RefLinqEnumerable<TSource, Prepend<TSource, IReadOnlyListEnumerator<TSource>>> Prepend<TSource>(this IReadOnlyList<TSource> c, TSource toPrepend)
+            => Build(c).Prepend(toPrepend);
+        public static RefLinqEnumerable<TSource, Prepend<TSource, ArrayEnumerator<TSource>>> Prepend<TSource>(this TSource[] c, TSource toPrepend)
+            => Build(c).Prepend(toPrepend);
+        public static RefLinqEnumerable<TSource, Prepend<TSource, HashSetEnumerator<TSource>>> Prepend<TSource>(this HashSet<TSource> c, TSource toPrepend)
+            => Build(c).Prepend(toPrepend);
+        public static RefLinqEnumerable<TSource, Prepend<TSource, MultiHashSetWrapperEnumerator<TSource>>> Prepend<TSource>(this MultiHashSetWrapper<TSource> c, TSource toPrepend)
+            => Build(c).Prepend(toPrepend);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Prepend<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Prepend<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, KeyValuePair<TSource1, TSource2> toPrepend)
+            => Build(c).Prepend(toPrepend);
+        public static RefLinqEnumerable<TSource, OrderBy<TSource, TPrevious, TOrderByKey>> OrderBy<TSource, TPrevious, TOrderByKey>(this RefLinqEnumerable<TSource, TPrevious> prev, Func<TSource, TOrderByKey> keySelector)
+            where TPrevious : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, OrderBy<TSource, TPrevious, TOrderByKey>>(new OrderBy<TSource, TPrevious, TOrderByKey>(prev.enumerator, keySelector));
+        public static RefLinqEnumerable<TSource, OrderBy<TSource, IReadOnlyListEnumerator<TSource>, TOrderByKey>> OrderBy<TSource, TOrderByKey>(this IReadOnlyList<TSource> c, Func<TSource, TOrderByKey> keySelector)
+            => Build(c).OrderBy(keySelector);
+        public static RefLinqEnumerable<TSource, OrderBy<TSource, ArrayEnumerator<TSource>, TOrderByKey>> OrderBy<TSource, TOrderByKey>(this TSource[] c, Func<TSource, TOrderByKey> keySelector)
+            => Build(c).OrderBy(keySelector);
+        public static RefLinqEnumerable<TSource, OrderBy<TSource, HashSetEnumerator<TSource>, TOrderByKey>> OrderBy<TSource, TOrderByKey>(this HashSet<TSource> c, Func<TSource, TOrderByKey> keySelector)
+            => Build(c).OrderBy(keySelector);
+        public static RefLinqEnumerable<TSource, OrderBy<TSource, MultiHashSetWrapperEnumerator<TSource>, TOrderByKey>> OrderBy<TSource, TOrderByKey>(this MultiHashSetWrapper<TSource> c, Func<TSource, TOrderByKey> keySelector)
+            => Build(c).OrderBy(keySelector);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, OrderBy<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TOrderByKey>> OrderBy<TSource1, TSource2, TOrderByKey>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TOrderByKey> keySelector)
+            => Build(c).OrderBy(keySelector);
+        public static RefLinqEnumerable<TOutput, Select<TSource, TPrevious, TOutput>> Select<TSource, TPrevious, TOutput>(this RefLinqEnumerable<TSource, TPrevious> prev, Func<TSource, TOutput> map)
+            where TPrevious : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TOutput, Select<TSource, TPrevious, TOutput>>(new Select<TSource, TPrevious, TOutput>(prev.enumerator, map));
+        public static RefLinqEnumerable<TOutput, Select<TSource, IReadOnlyListEnumerator<TSource>, TOutput>> Select<TSource, TOutput>(this IReadOnlyList<TSource> c, Func<TSource, TOutput> map)
+            => Build(c).Select(map);
+        public static RefLinqEnumerable<TOutput, Select<TSource, ArrayEnumerator<TSource>, TOutput>> Select<TSource, TOutput>(this TSource[] c, Func<TSource, TOutput> map)
+            => Build(c).Select(map);
+        public static RefLinqEnumerable<TOutput, Select<TSource, HashSetEnumerator<TSource>, TOutput>> Select<TSource, TOutput>(this HashSet<TSource> c, Func<TSource, TOutput> map)
+            => Build(c).Select(map);
+        public static RefLinqEnumerable<TOutput, Select<TSource, MultiHashSetWrapperEnumerator<TSource>, TOutput>> Select<TSource, TOutput>(this MultiHashSetWrapper<TSource> c, Func<TSource, TOutput> map)
+            => Build(c).Select(map);
+        public static RefLinqEnumerable<TOutput, Select<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TOutput>> Select<TSource1, TSource2, TOutput>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TOutput> map)
+            => Build(c).Select(map);
+#endregion
+#region Add basic extensions for known enumerables
+        public static RefLinqEnumerable<TSource, Concat<TSource, TPrevious, TSecondEnumerator>> Concat<TSource, TPrevious, TSecondEnumerator>(this RefLinqEnumerable<TSource, TPrevious> prev, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TPrevious : IRefEnumerator<TSource> where TSecondEnumerator : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, Concat<TSource, TPrevious, TSecondEnumerator>>(new Concat<TSource, TPrevious, TSecondEnumerator>(prev.enumerator, seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, IReadOnlyListEnumerator<TSource>, TSecondEnumerator>> Concat<TSource, TSecondEnumerator>(this IReadOnlyList<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Concat(seq2);
+        public static RefLinqEnumerable<TSource, Concat<TSource, IReadOnlyListEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Concat<TSource>(this IReadOnlyList<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, IReadOnlyListEnumerator<TSource>, ArrayEnumerator<TSource>>> Concat<TSource>(this IReadOnlyList<TSource> c, TSource[] seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, IReadOnlyListEnumerator<TSource>, HashSetEnumerator<TSource>>> Concat<TSource>(this IReadOnlyList<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, IReadOnlyListEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Concat<TSource>(this IReadOnlyList<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, ArrayEnumerator<TSource>, TSecondEnumerator>> Concat<TSource, TSecondEnumerator>(this TSource[] c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Concat(seq2);
+        public static RefLinqEnumerable<TSource, Concat<TSource, ArrayEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Concat<TSource>(this TSource[] c, IReadOnlyList<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, ArrayEnumerator<TSource>, ArrayEnumerator<TSource>>> Concat<TSource>(this TSource[] c, TSource[] seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, ArrayEnumerator<TSource>, HashSetEnumerator<TSource>>> Concat<TSource>(this TSource[] c, HashSet<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, ArrayEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Concat<TSource>(this TSource[] c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, HashSetEnumerator<TSource>, TSecondEnumerator>> Concat<TSource, TSecondEnumerator>(this HashSet<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Concat(seq2);
+        public static RefLinqEnumerable<TSource, Concat<TSource, HashSetEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Concat<TSource>(this HashSet<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, HashSetEnumerator<TSource>, ArrayEnumerator<TSource>>> Concat<TSource>(this HashSet<TSource> c, TSource[] seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, HashSetEnumerator<TSource>, HashSetEnumerator<TSource>>> Concat<TSource>(this HashSet<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, HashSetEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Concat<TSource>(this HashSet<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, MultiHashSetWrapperEnumerator<TSource>, TSecondEnumerator>> Concat<TSource, TSecondEnumerator>(this MultiHashSetWrapper<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Concat(seq2);
+        public static RefLinqEnumerable<TSource, Concat<TSource, MultiHashSetWrapperEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Concat<TSource>(this MultiHashSetWrapper<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, MultiHashSetWrapperEnumerator<TSource>, ArrayEnumerator<TSource>>> Concat<TSource>(this MultiHashSetWrapper<TSource> c, TSource[] seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, MultiHashSetWrapperEnumerator<TSource>, HashSetEnumerator<TSource>>> Concat<TSource>(this MultiHashSetWrapper<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Concat<TSource, MultiHashSetWrapperEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Concat<TSource>(this MultiHashSetWrapper<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Concat<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TSecondEnumerator>> Concat<TSource1, TSource2, TSecondEnumerator>(this Dictionary<TSource1, TSource2> c, RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<KeyValuePair<TSource1, TSource2>>
+            => Build(c).Concat(seq2);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Concat<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Concat<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Dictionary<TSource1, TSource2> seq2)
+            => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondInput), Zip<TSource, TPrevious, TSecondInput, TSecondEnumerator>> Zip<TSource, TPrevious, TSecondInput, TSecondEnumerator>(this RefLinqEnumerable<TSource, TPrevious> prev, RefLinqEnumerable<TSecondInput, TSecondEnumerator> seq2)
+            where TPrevious : IRefEnumerator<TSource> where TSecondEnumerator : IRefEnumerator<TSecondInput>
+            => new RefLinqEnumerable<(TSource, TSecondInput), Zip<TSource, TPrevious, TSecondInput, TSecondEnumerator>>(new Zip<TSource, TPrevious, TSecondInput, TSecondEnumerator>(prev.enumerator, seq2));
+        public static RefLinqEnumerable<(TSource, TSecondInput), Zip<TSource, IReadOnlyListEnumerator<TSource>, TSecondInput, TSecondEnumerator>> Zip<TSource, TSecondInput, TSecondEnumerator>(this IReadOnlyList<TSource> c, RefLinqEnumerable<TSecondInput, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSecondInput>
+            => Build(c).Zip(seq2);
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, IReadOnlyListEnumerator<TSource>, TSecondSource, IReadOnlyListEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this IReadOnlyList<TSource> c, IReadOnlyList<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, IReadOnlyListEnumerator<TSource>, TSecondSource, ArrayEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this IReadOnlyList<TSource> c, TSecondSource[] seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, IReadOnlyListEnumerator<TSource>, TSecondSource, HashSetEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this IReadOnlyList<TSource> c, HashSet<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, IReadOnlyListEnumerator<TSource>, TSecondSource, MultiHashSetWrapperEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this IReadOnlyList<TSource> c, MultiHashSetWrapper<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, KeyValuePair<TSecondSource1, TSecondSource2>), Zip<TSource, IReadOnlyListEnumerator<TSource>, KeyValuePair<TSecondSource1, TSecondSource2>, DictionaryEnumerator<TSecondSource1, TSecondSource2>>> Zip<TSource, TSecondSource1, TSecondSource2>(this IReadOnlyList<TSource> c, Dictionary<TSecondSource1, TSecondSource2> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondInput), Zip<TSource, ArrayEnumerator<TSource>, TSecondInput, TSecondEnumerator>> Zip<TSource, TSecondInput, TSecondEnumerator>(this TSource[] c, RefLinqEnumerable<TSecondInput, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSecondInput>
+            => Build(c).Zip(seq2);
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, ArrayEnumerator<TSource>, TSecondSource, IReadOnlyListEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this TSource[] c, IReadOnlyList<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, ArrayEnumerator<TSource>, TSecondSource, ArrayEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this TSource[] c, TSecondSource[] seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, ArrayEnumerator<TSource>, TSecondSource, HashSetEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this TSource[] c, HashSet<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, ArrayEnumerator<TSource>, TSecondSource, MultiHashSetWrapperEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this TSource[] c, MultiHashSetWrapper<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, KeyValuePair<TSecondSource1, TSecondSource2>), Zip<TSource, ArrayEnumerator<TSource>, KeyValuePair<TSecondSource1, TSecondSource2>, DictionaryEnumerator<TSecondSource1, TSecondSource2>>> Zip<TSource, TSecondSource1, TSecondSource2>(this TSource[] c, Dictionary<TSecondSource1, TSecondSource2> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondInput), Zip<TSource, HashSetEnumerator<TSource>, TSecondInput, TSecondEnumerator>> Zip<TSource, TSecondInput, TSecondEnumerator>(this HashSet<TSource> c, RefLinqEnumerable<TSecondInput, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSecondInput>
+            => Build(c).Zip(seq2);
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, HashSetEnumerator<TSource>, TSecondSource, IReadOnlyListEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this HashSet<TSource> c, IReadOnlyList<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, HashSetEnumerator<TSource>, TSecondSource, ArrayEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this HashSet<TSource> c, TSecondSource[] seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, HashSetEnumerator<TSource>, TSecondSource, HashSetEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this HashSet<TSource> c, HashSet<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, HashSetEnumerator<TSource>, TSecondSource, MultiHashSetWrapperEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this HashSet<TSource> c, MultiHashSetWrapper<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, KeyValuePair<TSecondSource1, TSecondSource2>), Zip<TSource, HashSetEnumerator<TSource>, KeyValuePair<TSecondSource1, TSecondSource2>, DictionaryEnumerator<TSecondSource1, TSecondSource2>>> Zip<TSource, TSecondSource1, TSecondSource2>(this HashSet<TSource> c, Dictionary<TSecondSource1, TSecondSource2> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondInput), Zip<TSource, MultiHashSetWrapperEnumerator<TSource>, TSecondInput, TSecondEnumerator>> Zip<TSource, TSecondInput, TSecondEnumerator>(this MultiHashSetWrapper<TSource> c, RefLinqEnumerable<TSecondInput, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSecondInput>
+            => Build(c).Zip(seq2);
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, MultiHashSetWrapperEnumerator<TSource>, TSecondSource, IReadOnlyListEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this MultiHashSetWrapper<TSource> c, IReadOnlyList<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, MultiHashSetWrapperEnumerator<TSource>, TSecondSource, ArrayEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this MultiHashSetWrapper<TSource> c, TSecondSource[] seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, MultiHashSetWrapperEnumerator<TSource>, TSecondSource, HashSetEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this MultiHashSetWrapper<TSource> c, HashSet<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, TSecondSource), Zip<TSource, MultiHashSetWrapperEnumerator<TSource>, TSecondSource, MultiHashSetWrapperEnumerator<TSecondSource>>> Zip<TSource, TSecondSource>(this MultiHashSetWrapper<TSource> c, MultiHashSetWrapper<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(TSource, KeyValuePair<TSecondSource1, TSecondSource2>), Zip<TSource, MultiHashSetWrapperEnumerator<TSource>, KeyValuePair<TSecondSource1, TSecondSource2>, DictionaryEnumerator<TSecondSource1, TSecondSource2>>> Zip<TSource, TSecondSource1, TSecondSource2>(this MultiHashSetWrapper<TSource> c, Dictionary<TSecondSource1, TSecondSource2> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(KeyValuePair<TSource1, TSource2>, TSecondInput), Zip<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TSecondInput, TSecondEnumerator>> Zip<TSource1, TSource2, TSecondInput, TSecondEnumerator>(this Dictionary<TSource1, TSource2> c, RefLinqEnumerable<TSecondInput, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSecondInput>
+            => Build(c).Zip(seq2);
+        public static RefLinqEnumerable<(KeyValuePair<TSource1, TSource2>, TSecondSource), Zip<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TSecondSource, IReadOnlyListEnumerator<TSecondSource>>> Zip<TSource1, TSource2, TSecondSource>(this Dictionary<TSource1, TSource2> c, IReadOnlyList<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(KeyValuePair<TSource1, TSource2>, TSecondSource), Zip<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TSecondSource, ArrayEnumerator<TSecondSource>>> Zip<TSource1, TSource2, TSecondSource>(this Dictionary<TSource1, TSource2> c, TSecondSource[] seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(KeyValuePair<TSource1, TSource2>, TSecondSource), Zip<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TSecondSource, HashSetEnumerator<TSecondSource>>> Zip<TSource1, TSource2, TSecondSource>(this Dictionary<TSource1, TSource2> c, HashSet<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(KeyValuePair<TSource1, TSource2>, TSecondSource), Zip<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TSecondSource, MultiHashSetWrapperEnumerator<TSecondSource>>> Zip<TSource1, TSource2, TSecondSource>(this Dictionary<TSource1, TSource2> c, MultiHashSetWrapper<TSecondSource> seq2)
+            => Build(c).Zip(Build(seq2));
+        public static RefLinqEnumerable<(KeyValuePair<TSource1, TSource2>, KeyValuePair<TSecondSource1, TSecondSource2>), Zip<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, KeyValuePair<TSecondSource1, TSecondSource2>, DictionaryEnumerator<TSecondSource1, TSecondSource2>>> Zip<TSource1, TSource2, TSecondSource1, TSecondSource2>(this Dictionary<TSource1, TSource2> c, Dictionary<TSecondSource1, TSecondSource2> seq2)
+            => Build(c).Zip(Build(seq2));
+#endregion
+#region SelectMany extensions
+        public static RefLinqEnumerable<U, SelectMany<U, UEnumerator, Select<T, TPrevious, RefLinqEnumerable<U, UEnumerator>>>> SelectMany<T, TPrevious, U, UEnumerator>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, RefLinqEnumerable<U, UEnumerator>> func)
             where TPrevious : IRefEnumerator<T>
-            where TUEnumerator : IRefEnumerator<U>
+            where UEnumerator : IRefEnumerator<U>
             => prev.Select(func).SelectMany();
-        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, TPrevious, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T, TPrevious, U>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, IReadOnlyList<U>> func)
+        public static RefLinqEnumerable<U, SelectMany<U, UEnumerator, Select<TSource, IReadOnlyListEnumerator<TSource>, RefLinqEnumerable<U, UEnumerator>>>> SelectMany<TSource ,U,UEnumerator>(this IReadOnlyList<TSource> c ,Func<TSource, RefLinqEnumerable<U, UEnumerator>> func)
+            where UEnumerator : IRefEnumerator<U>
+            => Build(c).SelectMany(func);
+        public static RefLinqEnumerable<USource, SelectMany<USource, IReadOnlyListEnumerator<USource>, Select<IReadOnlyList<USource>, Select<T, TPrevious, IReadOnlyList<USource>>, RefLinqEnumerable<USource, IReadOnlyListEnumerator<USource>>>>> SelectMany<T, TPrevious, USource>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, IReadOnlyList<USource>> func)
             where TPrevious : IRefEnumerator<T>
-            => prev.Select(func).Select(a => new RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>(new IReadOnlyListEnumerator<U>(a))).SelectMany();
-        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, TPrevious, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T, TPrevious, U>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, U[]> func)
+            => prev.Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, IReadOnlyListEnumerator<USource>, Select<IReadOnlyList<USource>, Select<TSource, IReadOnlyListEnumerator<TSource>, IReadOnlyList<USource>>, RefLinqEnumerable<USource, IReadOnlyListEnumerator<USource>>>>> SelectMany<TSource, USource>(this IReadOnlyList<TSource> prev, Func<TSource, IReadOnlyList<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, IReadOnlyListEnumerator<USource>, Select<IReadOnlyList<USource>, Select<TSource, ArrayEnumerator<TSource>, IReadOnlyList<USource>>, RefLinqEnumerable<USource, IReadOnlyListEnumerator<USource>>>>> SelectMany<TSource, USource>(this TSource[] prev, Func<TSource, IReadOnlyList<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, IReadOnlyListEnumerator<USource>, Select<IReadOnlyList<USource>, Select<TSource, HashSetEnumerator<TSource>, IReadOnlyList<USource>>, RefLinqEnumerable<USource, IReadOnlyListEnumerator<USource>>>>> SelectMany<TSource, USource>(this HashSet<TSource> prev, Func<TSource, IReadOnlyList<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, IReadOnlyListEnumerator<USource>, Select<IReadOnlyList<USource>, Select<TSource, MultiHashSetWrapperEnumerator<TSource>, IReadOnlyList<USource>>, RefLinqEnumerable<USource, IReadOnlyListEnumerator<USource>>>>> SelectMany<TSource, USource>(this MultiHashSetWrapper<TSource> prev, Func<TSource, IReadOnlyList<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, IReadOnlyListEnumerator<USource>, Select<IReadOnlyList<USource>, Select<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, IReadOnlyList<USource>>, RefLinqEnumerable<USource, IReadOnlyListEnumerator<USource>>>>> SelectMany<TSource1, TSource2, USource>(this Dictionary<TSource1, TSource2> prev, Func<KeyValuePair<TSource1, TSource2>, IReadOnlyList<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<U, SelectMany<U, UEnumerator, Select<TSource, ArrayEnumerator<TSource>, RefLinqEnumerable<U, UEnumerator>>>> SelectMany<TSource ,U,UEnumerator>(this TSource[] c ,Func<TSource, RefLinqEnumerable<U, UEnumerator>> func)
+            where UEnumerator : IRefEnumerator<U>
+            => Build(c).SelectMany(func);
+        public static RefLinqEnumerable<USource, SelectMany<USource, ArrayEnumerator<USource>, Select<USource[], Select<T, TPrevious, USource[]>, RefLinqEnumerable<USource, ArrayEnumerator<USource>>>>> SelectMany<T, TPrevious, USource>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, USource[]> func)
             where TPrevious : IRefEnumerator<T>
-            => prev.Select(func).Select(a => new RefLinqEnumerable<U, ArrayEnumerator<U>>(new ArrayEnumerator<U>(a))).SelectMany();
-        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, TPrevious, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T, TPrevious, U>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, HashSet<U>> func)
+            => prev.Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, ArrayEnumerator<USource>, Select<USource[], Select<TSource, IReadOnlyListEnumerator<TSource>, USource[]>, RefLinqEnumerable<USource, ArrayEnumerator<USource>>>>> SelectMany<TSource, USource>(this IReadOnlyList<TSource> prev, Func<TSource, USource[]> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, ArrayEnumerator<USource>, Select<USource[], Select<TSource, ArrayEnumerator<TSource>, USource[]>, RefLinqEnumerable<USource, ArrayEnumerator<USource>>>>> SelectMany<TSource, USource>(this TSource[] prev, Func<TSource, USource[]> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, ArrayEnumerator<USource>, Select<USource[], Select<TSource, HashSetEnumerator<TSource>, USource[]>, RefLinqEnumerable<USource, ArrayEnumerator<USource>>>>> SelectMany<TSource, USource>(this HashSet<TSource> prev, Func<TSource, USource[]> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, ArrayEnumerator<USource>, Select<USource[], Select<TSource, MultiHashSetWrapperEnumerator<TSource>, USource[]>, RefLinqEnumerable<USource, ArrayEnumerator<USource>>>>> SelectMany<TSource, USource>(this MultiHashSetWrapper<TSource> prev, Func<TSource, USource[]> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, ArrayEnumerator<USource>, Select<USource[], Select<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, USource[]>, RefLinqEnumerable<USource, ArrayEnumerator<USource>>>>> SelectMany<TSource1, TSource2, USource>(this Dictionary<TSource1, TSource2> prev, Func<KeyValuePair<TSource1, TSource2>, USource[]> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<U, SelectMany<U, UEnumerator, Select<TSource, HashSetEnumerator<TSource>, RefLinqEnumerable<U, UEnumerator>>>> SelectMany<TSource ,U,UEnumerator>(this HashSet<TSource> c ,Func<TSource, RefLinqEnumerable<U, UEnumerator>> func)
+            where UEnumerator : IRefEnumerator<U>
+            => Build(c).SelectMany(func);
+        public static RefLinqEnumerable<USource, SelectMany<USource, HashSetEnumerator<USource>, Select<HashSet<USource>, Select<T, TPrevious, HashSet<USource>>, RefLinqEnumerable<USource, HashSetEnumerator<USource>>>>> SelectMany<T, TPrevious, USource>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, HashSet<USource>> func)
             where TPrevious : IRefEnumerator<T>
-            => prev.Select(func).Select(a => new RefLinqEnumerable<U, HashSetEnumerator<U>>(new HashSetEnumerator<U>(a))).SelectMany();
-        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, TPrevious, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T, TPrevious, U>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, MultiHashSetWrapper<U>> func)
+            => prev.Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, HashSetEnumerator<USource>, Select<HashSet<USource>, Select<TSource, IReadOnlyListEnumerator<TSource>, HashSet<USource>>, RefLinqEnumerable<USource, HashSetEnumerator<USource>>>>> SelectMany<TSource, USource>(this IReadOnlyList<TSource> prev, Func<TSource, HashSet<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, HashSetEnumerator<USource>, Select<HashSet<USource>, Select<TSource, ArrayEnumerator<TSource>, HashSet<USource>>, RefLinqEnumerable<USource, HashSetEnumerator<USource>>>>> SelectMany<TSource, USource>(this TSource[] prev, Func<TSource, HashSet<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, HashSetEnumerator<USource>, Select<HashSet<USource>, Select<TSource, HashSetEnumerator<TSource>, HashSet<USource>>, RefLinqEnumerable<USource, HashSetEnumerator<USource>>>>> SelectMany<TSource, USource>(this HashSet<TSource> prev, Func<TSource, HashSet<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, HashSetEnumerator<USource>, Select<HashSet<USource>, Select<TSource, MultiHashSetWrapperEnumerator<TSource>, HashSet<USource>>, RefLinqEnumerable<USource, HashSetEnumerator<USource>>>>> SelectMany<TSource, USource>(this MultiHashSetWrapper<TSource> prev, Func<TSource, HashSet<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, HashSetEnumerator<USource>, Select<HashSet<USource>, Select<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, HashSet<USource>>, RefLinqEnumerable<USource, HashSetEnumerator<USource>>>>> SelectMany<TSource1, TSource2, USource>(this Dictionary<TSource1, TSource2> prev, Func<KeyValuePair<TSource1, TSource2>, HashSet<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<U, SelectMany<U, UEnumerator, Select<TSource, MultiHashSetWrapperEnumerator<TSource>, RefLinqEnumerable<U, UEnumerator>>>> SelectMany<TSource ,U,UEnumerator>(this MultiHashSetWrapper<TSource> c ,Func<TSource, RefLinqEnumerable<U, UEnumerator>> func)
+            where UEnumerator : IRefEnumerator<U>
+            => Build(c).SelectMany(func);
+        public static RefLinqEnumerable<USource, SelectMany<USource, MultiHashSetWrapperEnumerator<USource>, Select<MultiHashSetWrapper<USource>, Select<T, TPrevious, MultiHashSetWrapper<USource>>, RefLinqEnumerable<USource, MultiHashSetWrapperEnumerator<USource>>>>> SelectMany<T, TPrevious, USource>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, MultiHashSetWrapper<USource>> func)
             where TPrevious : IRefEnumerator<T>
-            => prev.Select(func).Select(a => new RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>(new MultiHashSetWrapperEnumerator<U>(a))).SelectMany();
-        public static T MaxBy<T ,T2>(this IReadOnlyList<T> c ,Func<T, T2> keySelector)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).MaxBy(keySelector);
-        public static T MaxBy<T ,T2>(this T[] c ,Func<T, T2> keySelector)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).MaxBy(keySelector);
-        public static T MaxBy<T ,T2>(this HashSet<T> c ,Func<T, T2> keySelector)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).MaxBy(keySelector);
-        public static T MaxBy<T ,T2>(this MultiHashSetWrapper<T> c ,Func<T, T2> keySelector)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).MaxBy(keySelector);
-        public static T MinBy<T ,T2>(this IReadOnlyList<T> c ,Func<T, T2> keySelector)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).MinBy(keySelector);
-        public static T MinBy<T ,T2>(this T[] c ,Func<T, T2> keySelector)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).MinBy(keySelector);
-        public static T MinBy<T ,T2>(this HashSet<T> c ,Func<T, T2> keySelector)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).MinBy(keySelector);
-        public static T MinBy<T ,T2>(this MultiHashSetWrapper<T> c ,Func<T, T2> keySelector)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).MinBy(keySelector);
-        public static bool All<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).All(pred);
-        public static bool All<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).All(pred);
-        public static bool All<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).All(pred);
-        public static bool All<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).All(pred);
-        public static bool Contains<T >(this IReadOnlyList<T> c ,T toFind)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Contains(toFind);
-        public static bool Contains<T >(this T[] c ,T toFind)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Contains(toFind);
-        public static bool Contains<T >(this HashSet<T> c ,T toFind)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Contains(toFind);
-        public static bool Contains<T >(this MultiHashSetWrapper<T> c ,T toFind)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Contains(toFind);
-        public static T Aggregate<T >(this IReadOnlyList<T> c ,Func<T, T, T> agg)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Aggregate(agg);
-        public static T Aggregate<T >(this T[] c ,Func<T, T, T> agg)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Aggregate(agg);
-        public static T Aggregate<T >(this HashSet<T> c ,Func<T, T, T> agg)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Aggregate(agg);
-        public static T Aggregate<T >(this MultiHashSetWrapper<T> c ,Func<T, T, T> agg)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Aggregate(agg);
-        public static TAccumulate Aggregate<T ,TAccumulate>(this IReadOnlyList<T> c ,TAccumulate acc,Func<TAccumulate, T, TAccumulate> agg)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Aggregate(acc,agg);
-        public static TAccumulate Aggregate<T ,TAccumulate>(this T[] c ,TAccumulate acc,Func<TAccumulate, T, TAccumulate> agg)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Aggregate(acc,agg);
-        public static TAccumulate Aggregate<T ,TAccumulate>(this HashSet<T> c ,TAccumulate acc,Func<TAccumulate, T, TAccumulate> agg)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Aggregate(acc,agg);
-        public static TAccumulate Aggregate<T ,TAccumulate>(this MultiHashSetWrapper<T> c ,TAccumulate acc,Func<TAccumulate, T, TAccumulate> agg)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Aggregate(acc,agg);
-        public static int Count<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Count();
-        public static int Count<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Count();
-        public static int Count<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Count();
-        public static int Count<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Count();
-        public static int Count<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Count(pred);
-        public static int Count<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Count(pred);
-        public static int Count<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Count(pred);
-        public static int Count<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Count(pred);
-        public static bool Any<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Any();
-        public static bool Any<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Any();
-        public static bool Any<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Any();
-        public static bool Any<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Any();
-        public static bool Any<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Any(pred);
-        public static bool Any<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Any(pred);
-        public static bool Any<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Any(pred);
-        public static bool Any<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Any(pred);
-        public static T Single<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Single();
-        public static T Single<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Single();
-        public static T Single<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Single();
-        public static T Single<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Single();
-        public static T Single<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Single(pred);
-        public static T Single<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Single(pred);
-        public static T Single<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Single(pred);
-        public static T Single<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Single(pred);
-        public static T SingleOrDefault<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SingleOrDefault();
-        public static T SingleOrDefault<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SingleOrDefault();
-        public static T SingleOrDefault<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SingleOrDefault();
-        public static T SingleOrDefault<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SingleOrDefault();
-        public static T SingleOrDefault<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SingleOrDefault(pred);
-        public static T SingleOrDefault<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SingleOrDefault(pred);
-        public static T SingleOrDefault<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SingleOrDefault(pred);
-        public static T SingleOrDefault<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SingleOrDefault(pred);
-        public static T First<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).First();
-        public static T First<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).First();
-        public static T First<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).First();
-        public static T First<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).First();
-        public static T First<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).First(pred);
-        public static T First<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).First(pred);
-        public static T First<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).First(pred);
-        public static T First<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).First(pred);
-        public static T FirstOrDefault<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).FirstOrDefault();
-        public static T FirstOrDefault<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).FirstOrDefault();
-        public static T FirstOrDefault<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).FirstOrDefault();
-        public static T FirstOrDefault<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).FirstOrDefault();
-        public static T FirstOrDefault<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).FirstOrDefault(pred);
-        public static T FirstOrDefault<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).FirstOrDefault(pred);
-        public static T FirstOrDefault<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).FirstOrDefault(pred);
-        public static T FirstOrDefault<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).FirstOrDefault(pred);
-        public static T Last<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Last();
-        public static T Last<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Last();
-        public static T Last<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Last();
-        public static T Last<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Last();
-        public static T Last<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Last(pred);
-        public static T Last<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Last(pred);
-        public static T Last<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Last(pred);
-        public static T Last<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Last(pred);
-        public static T LastOrDefault<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).LastOrDefault();
-        public static T LastOrDefault<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).LastOrDefault();
-        public static T LastOrDefault<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).LastOrDefault();
-        public static T LastOrDefault<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).LastOrDefault();
-        public static T LastOrDefault<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).LastOrDefault(pred);
-        public static T LastOrDefault<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).LastOrDefault(pred);
-        public static T LastOrDefault<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).LastOrDefault(pred);
-        public static T LastOrDefault<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).LastOrDefault(pred);
-        public static T Max<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Max();
-        public static T Max<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Max();
-        public static T Max<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Max();
-        public static T Max<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Max();
-        public static T Max<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Max(pred);
-        public static T Max<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Max(pred);
-        public static T Max<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Max(pred);
-        public static T Max<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Max(pred);
-        public static T Min<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Min();
-        public static T Min<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Min();
-        public static T Min<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Min();
-        public static T Min<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Min();
-        public static T Min<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Min(pred);
-        public static T Min<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Min(pred);
-        public static T Min<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Min(pred);
-        public static T Min<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Min(pred);
-        public static T Average<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Average();
-        public static T Average<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Average();
-        public static T Average<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Average();
-        public static T Average<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Average();
-        public static T Average<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Average(pred);
-        public static T Average<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Average(pred);
-        public static T Average<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Average(pred);
-        public static T Average<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Average(pred);
-        public static T Sum<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Sum();
-        public static T Sum<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Sum();
-        public static T Sum<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Sum();
-        public static T Sum<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Sum();
-        public static T Sum<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Sum(pred);
-        public static T Sum<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Sum(pred);
-        public static T Sum<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Sum(pred);
-        public static T Sum<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Sum(pred);
-        public static T Multiply<T >(this IReadOnlyList<T> c )
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Multiply();
-        public static T Multiply<T >(this T[] c )
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Multiply();
-        public static T Multiply<T >(this HashSet<T> c )
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Multiply();
-        public static T Multiply<T >(this MultiHashSetWrapper<T> c )
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Multiply();
-        public static T Multiply<T >(this IReadOnlyList<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Multiply(pred);
-        public static T Multiply<T >(this T[] c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Multiply(pred);
-        public static T Multiply<T >(this HashSet<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Multiply(pred);
-        public static T Multiply<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> pred)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Multiply(pred);
-        public static RefLinqEnumerable<T, Where<T, IReadOnlyListEnumerator<T>>> Where<T >(this IReadOnlyList<T> c ,Func<T, bool> predicate)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Where(predicate);
-        public static RefLinqEnumerable<T, Where<T, ArrayEnumerator<T>>> Where<T >(this T[] c ,Func<T, bool> predicate)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Where(predicate);
-        public static RefLinqEnumerable<T, Where<T, HashSetEnumerator<T>>> Where<T >(this HashSet<T> c ,Func<T, bool> predicate)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Where(predicate);
-        public static RefLinqEnumerable<T, Where<T, MultiHashSetWrapperEnumerator<T>>> Where<T >(this MultiHashSetWrapper<T> c ,Func<T, bool> predicate)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Where(predicate);
-        public static RefLinqEnumerable<T, Skip<T, IReadOnlyListEnumerator<T>>> Skip<T >(this IReadOnlyList<T> c ,int skip)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Skip(skip);
-        public static RefLinqEnumerable<T, Skip<T, ArrayEnumerator<T>>> Skip<T >(this T[] c ,int skip)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Skip(skip);
-        public static RefLinqEnumerable<T, Skip<T, HashSetEnumerator<T>>> Skip<T >(this HashSet<T> c ,int skip)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Skip(skip);
-        public static RefLinqEnumerable<T, Skip<T, MultiHashSetWrapperEnumerator<T>>> Skip<T >(this MultiHashSetWrapper<T> c ,int skip)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Skip(skip);
-        public static RefLinqEnumerable<T, Take<T, IReadOnlyListEnumerator<T>>> Take<T >(this IReadOnlyList<T> c ,int take)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Take(take);
-        public static RefLinqEnumerable<T, Take<T, ArrayEnumerator<T>>> Take<T >(this T[] c ,int take)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Take(take);
-        public static RefLinqEnumerable<T, Take<T, HashSetEnumerator<T>>> Take<T >(this HashSet<T> c ,int take)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Take(take);
-        public static RefLinqEnumerable<T, Take<T, MultiHashSetWrapperEnumerator<T>>> Take<T >(this MultiHashSetWrapper<T> c ,int take)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Take(take);
-        public static RefLinqEnumerable<T, Append<T, IReadOnlyListEnumerator<T>>> Append<T >(this IReadOnlyList<T> c ,T toAppend)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Append(toAppend);
-        public static RefLinqEnumerable<T, Append<T, ArrayEnumerator<T>>> Append<T >(this T[] c ,T toAppend)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Append(toAppend);
-        public static RefLinqEnumerable<T, Append<T, HashSetEnumerator<T>>> Append<T >(this HashSet<T> c ,T toAppend)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Append(toAppend);
-        public static RefLinqEnumerable<T, Append<T, MultiHashSetWrapperEnumerator<T>>> Append<T >(this MultiHashSetWrapper<T> c ,T toAppend)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Append(toAppend);
-        public static RefLinqEnumerable<T, Prepend<T, IReadOnlyListEnumerator<T>>> Prepend<T >(this IReadOnlyList<T> c ,T toPrepend)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Prepend(toPrepend);
-        public static RefLinqEnumerable<T, Prepend<T, ArrayEnumerator<T>>> Prepend<T >(this T[] c ,T toPrepend)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Prepend(toPrepend);
-        public static RefLinqEnumerable<T, Prepend<T, HashSetEnumerator<T>>> Prepend<T >(this HashSet<T> c ,T toPrepend)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Prepend(toPrepend);
-        public static RefLinqEnumerable<T, Prepend<T, MultiHashSetWrapperEnumerator<T>>> Prepend<T >(this MultiHashSetWrapper<T> c ,T toPrepend)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Prepend(toPrepend);
-        public static RefLinqEnumerable<T, OrderBy<T, IReadOnlyListEnumerator<T>,TKey>> OrderBy<T ,TKey>(this IReadOnlyList<T> c ,Func<T, TKey> keySelector)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).OrderBy(keySelector);
-        public static RefLinqEnumerable<T, OrderBy<T, ArrayEnumerator<T>,TKey>> OrderBy<T ,TKey>(this T[] c ,Func<T, TKey> keySelector)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).OrderBy(keySelector);
-        public static RefLinqEnumerable<T, OrderBy<T, HashSetEnumerator<T>,TKey>> OrderBy<T ,TKey>(this HashSet<T> c ,Func<T, TKey> keySelector)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).OrderBy(keySelector);
-        public static RefLinqEnumerable<T, OrderBy<T, MultiHashSetWrapperEnumerator<T>,TKey>> OrderBy<T ,TKey>(this MultiHashSetWrapper<T> c ,Func<T, TKey> keySelector)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).OrderBy(keySelector);
-        public static RefLinqEnumerable<T, Concat<T, IReadOnlyListEnumerator<T>,TEnumerator2>> Concat<T ,TEnumerator2>(this IReadOnlyList<T> c ,RefLinqEnumerable<T, TEnumerator2> seq2)
-            where TEnumerator2 : IRefEnumerator<T>
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, ArrayEnumerator<T>,TEnumerator2>> Concat<T ,TEnumerator2>(this T[] c ,RefLinqEnumerable<T, TEnumerator2> seq2)
-            where TEnumerator2 : IRefEnumerator<T>
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, HashSetEnumerator<T>,TEnumerator2>> Concat<T ,TEnumerator2>(this HashSet<T> c ,RefLinqEnumerable<T, TEnumerator2> seq2)
-            where TEnumerator2 : IRefEnumerator<T>
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, MultiHashSetWrapperEnumerator<T>,TEnumerator2>> Concat<T ,TEnumerator2>(this MultiHashSetWrapper<T> c ,RefLinqEnumerable<T, TEnumerator2> seq2)
-            where TEnumerator2 : IRefEnumerator<T>
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,TEnumerator2>> Zip<T ,T2,TEnumerator2>(this IReadOnlyList<T> c ,RefLinqEnumerable<T2, TEnumerator2> seq2)
-            where TEnumerator2 : IRefEnumerator<T2>
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,TEnumerator2>> Zip<T ,T2,TEnumerator2>(this T[] c ,RefLinqEnumerable<T2, TEnumerator2> seq2)
-            where TEnumerator2 : IRefEnumerator<T2>
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, HashSetEnumerator<T>,T2,TEnumerator2>> Zip<T ,T2,TEnumerator2>(this HashSet<T> c ,RefLinqEnumerable<T2, TEnumerator2> seq2)
-            where TEnumerator2 : IRefEnumerator<T2>
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,TEnumerator2>> Zip<T ,T2,TEnumerator2>(this MultiHashSetWrapper<T> c ,RefLinqEnumerable<T2, TEnumerator2> seq2)
-            where TEnumerator2 : IRefEnumerator<T2>
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<U, Select<T, IReadOnlyListEnumerator<T>,U>> Select<T ,U>(this IReadOnlyList<T> c ,Func<T, U> map)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Select(map);
-        public static RefLinqEnumerable<U, Select<T, ArrayEnumerator<T>,U>> Select<T ,U>(this T[] c ,Func<T, U> map)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Select(map);
-        public static RefLinqEnumerable<U, Select<T, HashSetEnumerator<T>,U>> Select<T ,U>(this HashSet<T> c ,Func<T, U> map)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Select(map);
-        public static RefLinqEnumerable<U, Select<T, MultiHashSetWrapperEnumerator<T>,U>> Select<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, U> map)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Select(map);
-        public static RefLinqEnumerable<T, Concat<T, IReadOnlyListEnumerator<T>,IReadOnlyListEnumerator<T>>> Concat<T >(this IReadOnlyList<T> c ,IReadOnlyList<T> seq2)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, ArrayEnumerator<T>,IReadOnlyListEnumerator<T>>> Concat<T >(this T[] c ,IReadOnlyList<T> seq2)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, HashSetEnumerator<T>,IReadOnlyListEnumerator<T>>> Concat<T >(this HashSet<T> c ,IReadOnlyList<T> seq2)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, MultiHashSetWrapperEnumerator<T>,IReadOnlyListEnumerator<T>>> Concat<T >(this MultiHashSetWrapper<T> c ,IReadOnlyList<T> seq2)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,IReadOnlyList<T2> seq2)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this T[] c ,IReadOnlyList<T2> seq2)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, HashSetEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this HashSet<T> c ,IReadOnlyList<T2> seq2)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,IReadOnlyListEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,IReadOnlyList<T2> seq2)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<T, Concat<T, IReadOnlyListEnumerator<T>,ArrayEnumerator<T>>> Concat<T >(this IReadOnlyList<T> c ,T[] seq2)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, ArrayEnumerator<T>,ArrayEnumerator<T>>> Concat<T >(this T[] c ,T[] seq2)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, HashSetEnumerator<T>,ArrayEnumerator<T>>> Concat<T >(this HashSet<T> c ,T[] seq2)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, MultiHashSetWrapperEnumerator<T>,ArrayEnumerator<T>>> Concat<T >(this MultiHashSetWrapper<T> c ,T[] seq2)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,T2[] seq2)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this T[] c ,T2[] seq2)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, HashSetEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this HashSet<T> c ,T2[] seq2)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,ArrayEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,T2[] seq2)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<T, Concat<T, IReadOnlyListEnumerator<T>,HashSetEnumerator<T>>> Concat<T >(this IReadOnlyList<T> c ,HashSet<T> seq2)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, ArrayEnumerator<T>,HashSetEnumerator<T>>> Concat<T >(this T[] c ,HashSet<T> seq2)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, HashSetEnumerator<T>,HashSetEnumerator<T>>> Concat<T >(this HashSet<T> c ,HashSet<T> seq2)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, MultiHashSetWrapperEnumerator<T>,HashSetEnumerator<T>>> Concat<T >(this MultiHashSetWrapper<T> c ,HashSet<T> seq2)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,HashSet<T2> seq2)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this T[] c ,HashSet<T2> seq2)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, HashSetEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this HashSet<T> c ,HashSet<T2> seq2)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,HashSetEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,HashSet<T2> seq2)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<T, Concat<T, IReadOnlyListEnumerator<T>,MultiHashSetWrapperEnumerator<T>>> Concat<T >(this IReadOnlyList<T> c ,MultiHashSetWrapper<T> seq2)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, ArrayEnumerator<T>,MultiHashSetWrapperEnumerator<T>>> Concat<T >(this T[] c ,MultiHashSetWrapper<T> seq2)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, HashSetEnumerator<T>,MultiHashSetWrapperEnumerator<T>>> Concat<T >(this HashSet<T> c ,MultiHashSetWrapper<T> seq2)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<T, Concat<T, MultiHashSetWrapperEnumerator<T>,MultiHashSetWrapperEnumerator<T>>> Concat<T >(this MultiHashSetWrapper<T> c ,MultiHashSetWrapper<T> seq2)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Concat(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, IReadOnlyListEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this IReadOnlyList<T> c ,MultiHashSetWrapper<T2> seq2)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, ArrayEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this T[] c ,MultiHashSetWrapper<T2> seq2)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, HashSetEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this HashSet<T> c ,MultiHashSetWrapper<T2> seq2)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<(T,T2), Zip<T, MultiHashSetWrapperEnumerator<T>,T2,MultiHashSetWrapperEnumerator<T2>>> Zip<T ,T2>(this MultiHashSetWrapper<T> c ,MultiHashSetWrapper<T2> seq2)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).Zip(seq2);
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, IReadOnlyListEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T ,U,TUEnumerator>(this IReadOnlyList<T> c ,Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
-            where TUEnumerator : IRefEnumerator<U>
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, ArrayEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T ,U,TUEnumerator>(this T[] c ,Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
-            where TUEnumerator : IRefEnumerator<U>
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, HashSetEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T ,U,TUEnumerator>(this HashSet<T> c ,Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
-            where TUEnumerator : IRefEnumerator<U>
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, TUEnumerator, Select<T, MultiHashSetWrapperEnumerator<T>, RefLinqEnumerable<U, TUEnumerator>>>> SelectMany<T ,U,TUEnumerator>(this MultiHashSetWrapper<T> c ,Func<T, RefLinqEnumerable<U, TUEnumerator>> func)
-            where TUEnumerator : IRefEnumerator<U>
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, IReadOnlyListEnumerator<T>, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T ,U>(this IReadOnlyList<T> c ,Func<T, IReadOnlyList<U>> func)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, ArrayEnumerator<T>, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T ,U>(this T[] c ,Func<T, IReadOnlyList<U>> func)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, HashSetEnumerator<T>, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T ,U>(this HashSet<T> c ,Func<T, IReadOnlyList<U>> func)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, IReadOnlyListEnumerator<U>, Select<IReadOnlyList<U>, Select<T, MultiHashSetWrapperEnumerator<T>, IReadOnlyList<U>>, RefLinqEnumerable<U, IReadOnlyListEnumerator<U>>>>> SelectMany<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, IReadOnlyList<U>> func)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, IReadOnlyListEnumerator<T>, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T ,U>(this IReadOnlyList<T> c ,Func<T, U[]> func)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, ArrayEnumerator<T>, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T ,U>(this T[] c ,Func<T, U[]> func)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, HashSetEnumerator<T>, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T ,U>(this HashSet<T> c ,Func<T, U[]> func)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, ArrayEnumerator<U>, Select<U[], Select<T, MultiHashSetWrapperEnumerator<T>, U[]>, RefLinqEnumerable<U, ArrayEnumerator<U>>>>> SelectMany<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, U[]> func)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, IReadOnlyListEnumerator<T>, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T ,U>(this IReadOnlyList<T> c ,Func<T, HashSet<U>> func)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, ArrayEnumerator<T>, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T ,U>(this T[] c ,Func<T, HashSet<U>> func)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, HashSetEnumerator<T>, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T ,U>(this HashSet<T> c ,Func<T, HashSet<U>> func)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, HashSetEnumerator<U>, Select<HashSet<U>, Select<T, MultiHashSetWrapperEnumerator<T>, HashSet<U>>, RefLinqEnumerable<U, HashSetEnumerator<U>>>>> SelectMany<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, HashSet<U>> func)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, IReadOnlyListEnumerator<T>, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T ,U>(this IReadOnlyList<T> c ,Func<T, MultiHashSetWrapper<U>> func)
-            => new RefLinqEnumerable<T, IReadOnlyListEnumerator<T>>(new IReadOnlyListEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, ArrayEnumerator<T>, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T ,U>(this T[] c ,Func<T, MultiHashSetWrapper<U>> func)
-            => new RefLinqEnumerable<T, ArrayEnumerator<T>>(new ArrayEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, HashSetEnumerator<T>, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T ,U>(this HashSet<T> c ,Func<T, MultiHashSetWrapper<U>> func)
-            => new RefLinqEnumerable<T, HashSetEnumerator<T>>(new HashSetEnumerator<T>(c)).SelectMany(func);
-        public static RefLinqEnumerable<U, SelectMany<U, MultiHashSetWrapperEnumerator<U>, Select<MultiHashSetWrapper<U>, Select<T, MultiHashSetWrapperEnumerator<T>, MultiHashSetWrapper<U>>, RefLinqEnumerable<U, MultiHashSetWrapperEnumerator<U>>>>> SelectMany<T ,U>(this MultiHashSetWrapper<T> c ,Func<T, MultiHashSetWrapper<U>> func)
-            => new RefLinqEnumerable<T, MultiHashSetWrapperEnumerator<T>>(new MultiHashSetWrapperEnumerator<T>(c)).SelectMany(func);
+            => prev.Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, MultiHashSetWrapperEnumerator<USource>, Select<MultiHashSetWrapper<USource>, Select<TSource, IReadOnlyListEnumerator<TSource>, MultiHashSetWrapper<USource>>, RefLinqEnumerable<USource, MultiHashSetWrapperEnumerator<USource>>>>> SelectMany<TSource, USource>(this IReadOnlyList<TSource> prev, Func<TSource, MultiHashSetWrapper<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, MultiHashSetWrapperEnumerator<USource>, Select<MultiHashSetWrapper<USource>, Select<TSource, ArrayEnumerator<TSource>, MultiHashSetWrapper<USource>>, RefLinqEnumerable<USource, MultiHashSetWrapperEnumerator<USource>>>>> SelectMany<TSource, USource>(this TSource[] prev, Func<TSource, MultiHashSetWrapper<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, MultiHashSetWrapperEnumerator<USource>, Select<MultiHashSetWrapper<USource>, Select<TSource, HashSetEnumerator<TSource>, MultiHashSetWrapper<USource>>, RefLinqEnumerable<USource, MultiHashSetWrapperEnumerator<USource>>>>> SelectMany<TSource, USource>(this HashSet<TSource> prev, Func<TSource, MultiHashSetWrapper<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, MultiHashSetWrapperEnumerator<USource>, Select<MultiHashSetWrapper<USource>, Select<TSource, MultiHashSetWrapperEnumerator<TSource>, MultiHashSetWrapper<USource>>, RefLinqEnumerable<USource, MultiHashSetWrapperEnumerator<USource>>>>> SelectMany<TSource, USource>(this MultiHashSetWrapper<TSource> prev, Func<TSource, MultiHashSetWrapper<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<USource, SelectMany<USource, MultiHashSetWrapperEnumerator<USource>, Select<MultiHashSetWrapper<USource>, Select<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, MultiHashSetWrapper<USource>>, RefLinqEnumerable<USource, MultiHashSetWrapperEnumerator<USource>>>>> SelectMany<TSource1, TSource2, USource>(this Dictionary<TSource1, TSource2> prev, Func<KeyValuePair<TSource1, TSource2>, MultiHashSetWrapper<USource>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<U, SelectMany<U, UEnumerator, Select<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, RefLinqEnumerable<U, UEnumerator>>>> SelectMany<TSource1, TSource2 ,U,UEnumerator>(this Dictionary<TSource1, TSource2> c ,Func<KeyValuePair<TSource1, TSource2>, RefLinqEnumerable<U, UEnumerator>> func)
+            where UEnumerator : IRefEnumerator<U>
+            => Build(c).SelectMany(func);
+        public static RefLinqEnumerable<KeyValuePair<USource1, USource2>, SelectMany<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>, Select<Dictionary<USource1, USource2>, Select<T, TPrevious, Dictionary<USource1, USource2>>, RefLinqEnumerable<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>>>>> SelectMany<T, TPrevious, USource1, USource2>(this RefLinqEnumerable<T, TPrevious> prev, Func<T, Dictionary<USource1, USource2>> func)
+            where TPrevious : IRefEnumerator<T>
+            => prev.Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<KeyValuePair<USource1, USource2>, SelectMany<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>, Select<Dictionary<USource1, USource2>, Select<TSource, IReadOnlyListEnumerator<TSource>, Dictionary<USource1, USource2>>, RefLinqEnumerable<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>>>>> SelectMany<TSource, USource1, USource2>(this IReadOnlyList<TSource> prev, Func<TSource, Dictionary<USource1, USource2>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<KeyValuePair<USource1, USource2>, SelectMany<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>, Select<Dictionary<USource1, USource2>, Select<TSource, ArrayEnumerator<TSource>, Dictionary<USource1, USource2>>, RefLinqEnumerable<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>>>>> SelectMany<TSource, USource1, USource2>(this TSource[] prev, Func<TSource, Dictionary<USource1, USource2>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<KeyValuePair<USource1, USource2>, SelectMany<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>, Select<Dictionary<USource1, USource2>, Select<TSource, HashSetEnumerator<TSource>, Dictionary<USource1, USource2>>, RefLinqEnumerable<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>>>>> SelectMany<TSource, USource1, USource2>(this HashSet<TSource> prev, Func<TSource, Dictionary<USource1, USource2>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<KeyValuePair<USource1, USource2>, SelectMany<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>, Select<Dictionary<USource1, USource2>, Select<TSource, MultiHashSetWrapperEnumerator<TSource>, Dictionary<USource1, USource2>>, RefLinqEnumerable<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>>>>> SelectMany<TSource, USource1, USource2>(this MultiHashSetWrapper<TSource> prev, Func<TSource, Dictionary<USource1, USource2>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+        public static RefLinqEnumerable<KeyValuePair<USource1, USource2>, SelectMany<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>, Select<Dictionary<USource1, USource2>, Select<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, Dictionary<USource1, USource2>>, RefLinqEnumerable<KeyValuePair<USource1, USource2>, DictionaryEnumerator<USource1, USource2>>>>> SelectMany<TSource1, TSource2, USource1, USource2>(this Dictionary<TSource1, TSource2> prev, Func<KeyValuePair<TSource1, TSource2>, Dictionary<USource1, USource2>> func)
+            => Build(prev).Select(func).Select(a => Build(a)).SelectMany();
+#endregion
     }
 }

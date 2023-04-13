@@ -14,10 +14,10 @@ public struct Zip<T1, TEnumerator1, T2, TEnumerator2>
     private TEnumerator1 en1;
     private TEnumerator2 en2;
 
-    public Zip(TEnumerator1 en1, TEnumerator2 en2)
+    public Zip(TEnumerator1 en1, RefLinqEnumerable<T2, TEnumerator2> en2)
     {
         this.en1 = en1;
-        this.en2 = en2;
+        this.en2 = en2.enumerator;
         Current = default;
     }
 

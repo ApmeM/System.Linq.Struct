@@ -14,10 +14,10 @@ namespace System.Linq.Struct
         private TEnumerator2 second;
         private bool firstIsOver;
 
-        public Concat(TEnumerator1 first, TEnumerator2 second)
+        public Concat(TEnumerator1 first, RefLinqEnumerable<T, TEnumerator2> second)
         {
             this.first = first;
-            this.second = second;
+            this.second = second.enumerator;
             firstIsOver = false;
             Current = default(T);
         }
