@@ -28,6 +28,21 @@ System.Linq.Struct from a consumer perspective works like BCL Linq. Its differen
         Assert.Equal(33.4, seq.Sum() + seq.Max());
 ```
 
+## Why to use
+
+Benefits over upstream library:
+
+- Do not have any external dependencies
+- No need for ToRefLinq method - just replace 'using' to System.Linq.Struct and it will work out of the box
+- More methods available (including those that requires inner allocation)
+- Has wrappers for reusing same pre-built query fordifferent original data (of the same list type)
+
+Benefits over classic Linq:
+
+- Zero allocations for methods that do not require inner data storage
+- Improved performance (benchamrk data can be checked on upstream readme)
+- Allows to cast value types array (e.g. this code will not fail: `int[]{1,2,3}.Cast<int, double>().sum())`
+
 ## Similar Libraries
 
 - [HonkPerf.NET](https://github.com/asc-community/HonkPerf.NET)
