@@ -22,14 +22,9 @@ public class DifferentLengths
     private int[] arr2 = default!;
 
     private static MultiListWrapper<int> data = new MultiListWrapper<int>();
-    private System.Linq.Struct.RefLinqEnumerable<int, System.Linq.Struct.Prepend<int, System.Linq.Struct.Take<int, System.Linq.Struct.OrderBy<int, System.Linq.Struct.Skip<int, System.Linq.Struct.Append<int, System.Linq.Struct.Where<int, System.Linq.Struct.Select<int, System.Linq.Struct.IReadOnlyListEnumerator<int>, int>>>>, int>>>> cachedQuery = data
-                .Select(c => c + 5)
+    private System.Linq.Struct.RefLinqEnumerable<int, System.Linq.Struct.OrderBy<int, System.Linq.Struct.Where<int, System.Linq.Struct.IReadOnlyListEnumerator<int>>, int>> cachedQuery = data
                 .Where(c => c % 2 == 0)
-                .Append(5)
-                .Skip(10)
-                .OrderBy(c => c)
-                .Take(20)
-                .Prepend(42);
+                .OrderBy(c => c);
 
 
     [GlobalSetup]
@@ -50,7 +45,8 @@ public class DifferentLengths
             .Append(5)
             .Skip(10)
             .Take(20)
-            .Prepend(42);
+            .Prepend(42)
+            .Cast<double>();
         foreach (var a in seq)
             res += a;
         return res;
@@ -66,7 +62,8 @@ public class DifferentLengths
             .Append(5)
             .Skip(10)
             .Take(20)
-            .Prepend(42);
+            .Prepend(42)
+            .Cast<int>();
         foreach (var a in seq)
             res += a;
         return res;
@@ -79,13 +76,8 @@ public class DifferentLengths
         var res = 0.0;
 
         var seq = arr
-            .Select(c => c + 5)
             .Where(c => c % 2 == 0)
-            .Append(5)
-            .Skip(10)
-            .OrderBy(c => c)
-            .Take(20)
-            .Prepend(42);
+            .OrderBy(c => c);
         foreach (var a in seq)
             res += a;
         return res;
@@ -96,13 +88,8 @@ public class DifferentLengths
     {
         var res = 0.0;
         var seq = ((IEnumerable<int>)arr)
-            .Select(c => c + 5)
             .Where(c => c % 2 == 0)
-            .Append(5)
-            .Skip(10)
-            .OrderBy(c => c)
-            .Take(20)
-            .Prepend(42);
+            .OrderBy(c => c);
         foreach (var a in seq)
             res += a;
         return res;
@@ -117,6 +104,4 @@ public class DifferentLengths
             res += a;
         return res;
     }
-
 }
-

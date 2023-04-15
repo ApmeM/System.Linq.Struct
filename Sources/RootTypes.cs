@@ -11,14 +11,14 @@ namespace System.Linq.Struct
         T Current { get; }
     }
 
-    public struct RefLinqEnumerable<T, TEnumerator>
-        where TEnumerator : IRefEnumerator<T>
+    public partial struct RefLinqEnumerable<TSource, TPrevious>
+        where TPrevious : IRefEnumerator<TSource>
     {
-        public TEnumerator enumerator;
+        public TPrevious enumerator;
 
-        public RefLinqEnumerable(TEnumerator en)
+        public RefLinqEnumerable(TPrevious en)
             => enumerator = en;
 
-        public TEnumerator GetEnumerator() => enumerator;
+        public TPrevious GetEnumerator() => enumerator;
     }
 }

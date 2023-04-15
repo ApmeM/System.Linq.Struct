@@ -15,7 +15,7 @@ namespace System.Linq.Struct
         {
             this.en = en;
             this.toSkip = toSkip;
-            Current = default(T);
+            this.Current = default(T);
         }
         public bool MoveNext()
         {
