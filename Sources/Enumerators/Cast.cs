@@ -12,15 +12,6 @@ namespace System.Linq.Struct
         : IRefEnumerator<U>
         where TEnumerator : IRefEnumerator<T>
     {
-
-        private static Func<T, U> cast;
-
-        static Cast()
-        {
-            var a = Expression.Parameter(typeof(T));
-            cast = (Func<T, U>)Expression.Lambda(Expression.Convert(a, typeof(U)), a).Compile();
-        }
-
         public Cast(TEnumerator prev)
         {
             this.prev = prev;
@@ -33,7 +24,7 @@ namespace System.Linq.Struct
         {
             if (!prev.MoveNext())
                 return false;
-            this.Current = cast(prev.Current);
+            this.Current = CastMethodGenerator<T, U>.cast(prev.Current);
             return true;
         }
         

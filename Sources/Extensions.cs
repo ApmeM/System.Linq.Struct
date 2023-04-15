@@ -3,7 +3,6 @@
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace System.Linq.Struct
 {
@@ -246,29 +245,12 @@ namespace System.Linq.Struct
             return max;
         }
 
-        private static class MethodGenerator<T>
-        {
-            public static Func<T, T, T> sum;
-            public static Func<T, T, T> mul;
-            public static Func<T, int, T> div;
-
-            static MethodGenerator()
-            {
-                var a = Expression.Parameter(typeof(T));
-                var b = Expression.Parameter(typeof(T));
-                var c = Expression.Parameter(typeof(int));
-                sum = (Func<T, T, T>)Expression.Lambda(Expression.Add(a, b), a, b).Compile();
-                mul = (Func<T, T, T>)Expression.Lambda(Expression.Multiply(a, b), a, b).Compile();
-                div = (Func<T, int, T>)Expression.Lambda(Expression.Divide(a, Expression.Convert(c, typeof(T))), a, c).Compile();
-            }
-        }
-
         public static T Sum<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq)
             where TEnumerator : IRefEnumerator<T>
         {
             T result = default(T);
             foreach (var el in seq)
-                result = MethodGenerator<T>.sum(result, el);
+                result = SumMethodGenerator<T>.sum(result, el);
             return result;
         }
 
@@ -279,10 +261,10 @@ namespace System.Linq.Struct
             int count = 0;
             foreach (var el in seq)
             {
-                result = MethodGenerator<T>.sum(result, el);
+                result = SumMethodGenerator<T>.sum(result, el);
                 count++;
             }
-            return MethodGenerator<T>.div(result, count);
+            return DivMethodGenerator<T>.div(result, count);
         }
 
         public static T Multiply<T, TEnumerator>(this RefLinqEnumerable<T, TEnumerator> seq)
@@ -299,11 +281,13 @@ namespace System.Linq.Struct
                 }
                 else
                 {
-                    result = MethodGenerator<T>.mul(result, el);
+                    result = MulMethodGenerator<T>.mul(result, el);
                 }
             }
 
             return result;
         }
     }
+
+
 }
