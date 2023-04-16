@@ -84,6 +84,7 @@ internal class Program
             ("Where", "TResult", "Func<TInput, bool> predicate", "", "predicate"),
             ("Skip", "TResult", "int skip", "", "skip"),
             ("Take", "TResult", "int take", "", "take"),
+            ("Reverse", "TResult", "", "", ""),
             ("Append", "TResult", "TInput toAppend", "", "toAppend"),
             ("Prepend", "TResult", "TInput toPrepend", "", "toPrepend"),
             ("OrderBy", "TResult", "Func<TInput, TOrderByKey> keySelector", "TOrderByKey", "keySelector"),

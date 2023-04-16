@@ -365,6 +365,16 @@ namespace System.Linq.Struct
             => Build(c).Take(take);
         public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Take<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Take<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, int take)
             => Build(c).Take(take);
+        public static RefLinqEnumerable<TSource, Reverse<TSource, IReadOnlyListEnumerator<TSource>>> Reverse<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Reverse();
+        public static RefLinqEnumerable<TSource, Reverse<TSource, ArrayEnumerator<TSource>>> Reverse<TSource>(this TSource[] c)
+            => Build(c).Reverse();
+        public static RefLinqEnumerable<TSource, Reverse<TSource, HashSetEnumerator<TSource>>> Reverse<TSource>(this HashSet<TSource> c)
+            => Build(c).Reverse();
+        public static RefLinqEnumerable<TSource, Reverse<TSource, MultiHashSetWrapperEnumerator<TSource>>> Reverse<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Reverse();
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Reverse<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Reverse<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Reverse();
         public static RefLinqEnumerable<TSource, Append<TSource, IReadOnlyListEnumerator<TSource>>> Append<TSource>(this IReadOnlyList<TSource> c, TSource toAppend)
             => Build(c).Append(toAppend);
         public static RefLinqEnumerable<TSource, Append<TSource, ArrayEnumerator<TSource>>> Append<TSource>(this TSource[] c, TSource toAppend)
@@ -640,6 +650,8 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<TSource, Skip<TSource, TPrevious>>(new Skip<TSource, TPrevious>(this.enumerator, skip));
         public RefLinqEnumerable<TSource, Take<TSource, TPrevious>> Take(int take)
             => new RefLinqEnumerable<TSource, Take<TSource, TPrevious>>(new Take<TSource, TPrevious>(this.enumerator, take));
+        public RefLinqEnumerable<TSource, Reverse<TSource, TPrevious>> Reverse()
+            => new RefLinqEnumerable<TSource, Reverse<TSource, TPrevious>>(new Reverse<TSource, TPrevious>(this.enumerator));
         public RefLinqEnumerable<TSource, Append<TSource, TPrevious>> Append(TSource toAppend)
             => new RefLinqEnumerable<TSource, Append<TSource, TPrevious>>(new Append<TSource, TPrevious>(this.enumerator, toAppend));
         public RefLinqEnumerable<TSource, Prepend<TSource, TPrevious>> Prepend(TSource toPrepend)

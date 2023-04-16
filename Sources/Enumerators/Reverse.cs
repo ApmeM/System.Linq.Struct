@@ -8,27 +8,23 @@ using System.Runtime.CompilerServices;
 namespace System.Linq.Struct
 {
 
-    public struct OrderBy<T, TEnumerator, TKey>
+    public struct Reverse<T, TEnumerator>
         : IRefEnumerator<T>
         where TEnumerator : IRefEnumerator<T>
     {
-        internal OrderBy(TEnumerator prev, Func<T, TKey> keySelector)
+        internal Reverse(TEnumerator prev)
         {
             this.prev = prev;
-            this.keySelector = keySelector;
-            this.idx = -1;
             Current = default(T);
             sortList = new List<T>();
             initialized = false;
-            comparer = (a, b) => Comparer<TKey>.Default.Compare(keySelector(a), keySelector(b));
+            idx=-1;
         }
 
         private TEnumerator prev;
-        private readonly Func<T, TKey> keySelector;
         private readonly List<T> sortList;
-        private int idx;
         private bool initialized;
-        private Comparison<T> comparer;
+        private int idx;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
@@ -41,17 +37,18 @@ namespace System.Linq.Struct
                 {
                     sortList.Add(prev.Current);
                 }
-                sortList.Sort(comparer);
+                idx = sortList.Count;
             }
 
-            idx++;
-            if(idx >= sortList.Count)
+            idx--;
+            if(idx < 0)
                 return false;
             this.Current = sortList[idx];
             return true;
         }
+
         public T Current { get; private set; }
 
-        public OrderBy<T, TEnumerator, TKey> GetEnumerator() => this;
+        public Reverse<T, TEnumerator> GetEnumerator() => this;
     }
 }

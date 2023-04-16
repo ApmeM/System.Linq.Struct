@@ -11,4 +11,6 @@ using System.Runtime.InteropServices;
 // c.ArrayLength = 5;
 // c.Setup();
 // c.StructWithCast();
-BenchmarkRunner.Run<DifferentLengths>();
+// BenchmarkRunner.Run<DifferentLengths>();
+BenchmarkRunner.Run<ReverseTest>();
+BenchmarkRunner.Run<OrderByTest>();
