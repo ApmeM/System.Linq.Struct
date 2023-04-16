@@ -12,5 +12,6 @@ using System.Runtime.InteropServices;
 // c.Setup();
 // c.StructWithCast();
 // BenchmarkRunner.Run<DifferentLengths>();
-BenchmarkRunner.Run<ReverseTest>();
-BenchmarkRunner.Run<OrderByTest>();
+// BenchmarkRunner.Run<ReverseTest>();
+// BenchmarkRunner.Run<OrderByTest>();
+BenchmarkRunner.Run<RepeatTest>();

@@ -385,6 +385,16 @@ namespace System.Linq.Struct
             => Build(c).Append(toAppend);
         public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Append<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Append<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, KeyValuePair<TSource1, TSource2> toAppend)
             => Build(c).Append(toAppend);
+        public static RefLinqEnumerable<TSource, Repeat<TSource, IReadOnlyListEnumerator<TSource>>> Repeat<TSource>(this IReadOnlyList<TSource> c, int times)
+            => Build(c).Repeat(times);
+        public static RefLinqEnumerable<TSource, Repeat<TSource, ArrayEnumerator<TSource>>> Repeat<TSource>(this TSource[] c, int times)
+            => Build(c).Repeat(times);
+        public static RefLinqEnumerable<TSource, Repeat<TSource, HashSetEnumerator<TSource>>> Repeat<TSource>(this HashSet<TSource> c, int times)
+            => Build(c).Repeat(times);
+        public static RefLinqEnumerable<TSource, Repeat<TSource, MultiHashSetWrapperEnumerator<TSource>>> Repeat<TSource>(this MultiHashSetWrapper<TSource> c, int times)
+            => Build(c).Repeat(times);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Repeat<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Repeat<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, int times)
+            => Build(c).Repeat(times);
         public static RefLinqEnumerable<TSource, Prepend<TSource, IReadOnlyListEnumerator<TSource>>> Prepend<TSource>(this IReadOnlyList<TSource> c, TSource toPrepend)
             => Build(c).Prepend(toPrepend);
         public static RefLinqEnumerable<TSource, Prepend<TSource, ArrayEnumerator<TSource>>> Prepend<TSource>(this TSource[] c, TSource toPrepend)
@@ -654,6 +664,8 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<TSource, Reverse<TSource, TPrevious>>(new Reverse<TSource, TPrevious>(this.enumerator));
         public RefLinqEnumerable<TSource, Append<TSource, TPrevious>> Append(TSource toAppend)
             => new RefLinqEnumerable<TSource, Append<TSource, TPrevious>>(new Append<TSource, TPrevious>(this.enumerator, toAppend));
+        public RefLinqEnumerable<TSource, Repeat<TSource, TPrevious>> Repeat(int times)
+            => new RefLinqEnumerable<TSource, Repeat<TSource, TPrevious>>(new Repeat<TSource, TPrevious>(this.enumerator, times));
         public RefLinqEnumerable<TSource, Prepend<TSource, TPrevious>> Prepend(TSource toPrepend)
             => new RefLinqEnumerable<TSource, Prepend<TSource, TPrevious>>(new Prepend<TSource, TPrevious>(this.enumerator, toPrepend));
         public RefLinqEnumerable<TSource, OrderBy<TSource, TPrevious, TOrderByKey>> OrderBy<TOrderByKey>(Func<TSource, TOrderByKey> keySelector)

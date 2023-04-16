@@ -86,6 +86,7 @@ internal class Program
             ("Take", "TResult", "int take", "", "take"),
             ("Reverse", "TResult", "", "", ""),
             ("Append", "TResult", "TInput toAppend", "", "toAppend"),
+            ("Repeat", "TResult", "int times", "", "times"),
             ("Prepend", "TResult", "TInput toPrepend", "", "toPrepend"),
             ("OrderBy", "TResult", "Func<TInput, TOrderByKey> keySelector", "TOrderByKey", "keySelector"),
             ("Select", "TOutput", "Func<TInput, TOutput> map", "TOutput", "map"),
