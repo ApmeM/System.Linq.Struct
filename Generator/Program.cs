@@ -10,6 +10,7 @@ internal class Program
         ("HashSet<TSource>", "HashSetEnumerator<TSource>", "TSource", "TSource"),
         ("MultiHashSetWrapper<TSource>", "MultiHashSetWrapperEnumerator<TSource>", "TSource", "TSource"),
         ("Dictionary<TSource1, TSource2>", "DictionaryEnumerator<TSource1, TSource2>", "KeyValuePair<TSource1, TSource2>", "TSource1, TSource2"),
+        ("MultiDictionaryWrapper<TSource1, TSource2>", "MultiDictionaryWrapperEnumerator<TSource1, TSource2>", "KeyValuePair<TSource1, TSource2>", "TSource1, TSource2"),
     };
 
     private static StringBuilder extensions = new StringBuilder();
