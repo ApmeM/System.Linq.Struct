@@ -90,6 +90,8 @@ internal class Program
             ("Repeat", "TResult", "int times", "", "times"),
             ("Prepend", "TResult", "TInput toPrepend", "", "toPrepend"),
             ("OrderBy", "TResult", "Func<TInput, TOrderByKey> keySelector", "TOrderByKey", "keySelector"),
+            ("DistinctBy", "TResult", "Func<TInput, TDistinctByKey> keySelector", "TDistinctByKey", "keySelector"),
+            ("Distinct", "TResult", "", "", ""),
             ("Select", "TOutput", "Func<TInput, TOutput> map", "TOutput", "map"),
             ("Cast", "TOutput", "", "TOutput", ""),
             ("OfType", "TOutput", "", "TOutput", ""),

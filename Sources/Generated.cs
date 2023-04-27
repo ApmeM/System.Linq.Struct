@@ -497,6 +497,30 @@ namespace System.Linq.Struct
             => Build(c).OrderBy<TOrderByKey>(keySelector);
         public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, OrderBy<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, TOrderByKey>> OrderBy<TSource1, TSource2, TOrderByKey>(this MultiDictionaryWrapper<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TOrderByKey> keySelector)
             => Build(c).OrderBy<TOrderByKey>(keySelector);
+        public static RefLinqEnumerable<TSource, DistinctBy<TSource, IReadOnlyListEnumerator<TSource>, TDistinctByKey>> DistinctBy<TSource, TDistinctByKey>(this IReadOnlyList<TSource> c, Func<TSource, TDistinctByKey> keySelector)
+            => Build(c).DistinctBy<TDistinctByKey>(keySelector);
+        public static RefLinqEnumerable<TSource, DistinctBy<TSource, ArrayEnumerator<TSource>, TDistinctByKey>> DistinctBy<TSource, TDistinctByKey>(this TSource[] c, Func<TSource, TDistinctByKey> keySelector)
+            => Build(c).DistinctBy<TDistinctByKey>(keySelector);
+        public static RefLinqEnumerable<TSource, DistinctBy<TSource, HashSetEnumerator<TSource>, TDistinctByKey>> DistinctBy<TSource, TDistinctByKey>(this HashSet<TSource> c, Func<TSource, TDistinctByKey> keySelector)
+            => Build(c).DistinctBy<TDistinctByKey>(keySelector);
+        public static RefLinqEnumerable<TSource, DistinctBy<TSource, MultiHashSetWrapperEnumerator<TSource>, TDistinctByKey>> DistinctBy<TSource, TDistinctByKey>(this MultiHashSetWrapper<TSource> c, Func<TSource, TDistinctByKey> keySelector)
+            => Build(c).DistinctBy<TDistinctByKey>(keySelector);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, DistinctBy<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TDistinctByKey>> DistinctBy<TSource1, TSource2, TDistinctByKey>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TDistinctByKey> keySelector)
+            => Build(c).DistinctBy<TDistinctByKey>(keySelector);
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, DistinctBy<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, TDistinctByKey>> DistinctBy<TSource1, TSource2, TDistinctByKey>(this MultiDictionaryWrapper<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TDistinctByKey> keySelector)
+            => Build(c).DistinctBy<TDistinctByKey>(keySelector);
+        public static RefLinqEnumerable<TSource, Distinct<TSource, IReadOnlyListEnumerator<TSource>>> Distinct<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).Distinct();
+        public static RefLinqEnumerable<TSource, Distinct<TSource, ArrayEnumerator<TSource>>> Distinct<TSource>(this TSource[] c)
+            => Build(c).Distinct();
+        public static RefLinqEnumerable<TSource, Distinct<TSource, HashSetEnumerator<TSource>>> Distinct<TSource>(this HashSet<TSource> c)
+            => Build(c).Distinct();
+        public static RefLinqEnumerable<TSource, Distinct<TSource, MultiHashSetWrapperEnumerator<TSource>>> Distinct<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).Distinct();
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Distinct<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Distinct<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).Distinct();
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Distinct<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>>> Distinct<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c)
+            => Build(c).Distinct();
         public static RefLinqEnumerable<TOutput, Select<TSource, IReadOnlyListEnumerator<TSource>, TOutput>> Select<TSource, TOutput>(this IReadOnlyList<TSource> c, Func<TSource, TOutput> map)
             => Build(c).Select<TOutput>(map);
         public static RefLinqEnumerable<TOutput, Select<TSource, ArrayEnumerator<TSource>, TOutput>> Select<TSource, TOutput>(this TSource[] c, Func<TSource, TOutput> map)
@@ -817,6 +841,10 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<TSource, Prepend<TSource, TPrevious>>(new Prepend<TSource, TPrevious>(this.enumerator, toPrepend));
         public RefLinqEnumerable<TSource, OrderBy<TSource, TPrevious, TOrderByKey>> OrderBy<TOrderByKey>(Func<TSource, TOrderByKey> keySelector)
             => new RefLinqEnumerable<TSource, OrderBy<TSource, TPrevious, TOrderByKey>>(new OrderBy<TSource, TPrevious, TOrderByKey>(this.enumerator, keySelector));
+        public RefLinqEnumerable<TSource, DistinctBy<TSource, TPrevious, TDistinctByKey>> DistinctBy<TDistinctByKey>(Func<TSource, TDistinctByKey> keySelector)
+            => new RefLinqEnumerable<TSource, DistinctBy<TSource, TPrevious, TDistinctByKey>>(new DistinctBy<TSource, TPrevious, TDistinctByKey>(this.enumerator, keySelector));
+        public RefLinqEnumerable<TSource, Distinct<TSource, TPrevious>> Distinct()
+            => new RefLinqEnumerable<TSource, Distinct<TSource, TPrevious>>(new Distinct<TSource, TPrevious>(this.enumerator));
         public RefLinqEnumerable<TOutput, Select<TSource, TPrevious, TOutput>> Select<TOutput>(Func<TSource, TOutput> map)
             => new RefLinqEnumerable<TOutput, Select<TSource, TPrevious, TOutput>>(new Select<TSource, TPrevious, TOutput>(this.enumerator, map));
         public RefLinqEnumerable<TOutput, Cast<TSource, TPrevious, TOutput>> Cast<TOutput>()
