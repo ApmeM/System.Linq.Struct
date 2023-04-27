@@ -52,6 +52,16 @@ internal class Program
         }
 
         foreach (var method in new List<(string, string, string, string, string)>{
+            ("ToList", "List<TResult>", "", "", ""),
+            ("ToList", "List<TResult>", ", List<TInput> list", "", "list"),
+            ("ToArray", "TResult[]", "", "", ""),
+            ("ToArray", "TResult[]", ", List<TInput> list", "", "list"),
+            ("ToHashSet", "HashSet<TResult>", "", "", ""),
+            ("ToHashSet", "HashSet<TResult>", ", HashSet<TInput> set", "", "set"),
+            ("ToDictionary", "Dictionary<TKey, TResult>", ", Func<TInput, TKey> keySelector", ", TKey", "keySelector"),
+            ("ToDictionary", "Dictionary<TKey, TResult>", ", Func<TInput, TKey> keySelector, Dictionary<TKey, TInput> dict", ", TKey", "keySelector, dict"),
+            ("ToDictionary", "Dictionary<TKey, TValue>", ", Func<TInput, TKey> keySelector, Func<TInput, TValue> valueSelector", ", TKey, TValue", "keySelector, valueSelector"),
+            ("ToDictionary", "Dictionary<TKey, TValue>", ", Func<TInput, TKey> keySelector, Func<TInput, TValue> valueSelector, Dictionary<TKey, TValue> dict", ", TKey, TValue", "keySelector, valueSelector, dict"),
             ("Count", "int", "", "", ""),
             ("Any", "bool", "", "", ""),
             ("Single", "TResult", "", "", ""),

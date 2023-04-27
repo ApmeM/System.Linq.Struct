@@ -173,6 +173,126 @@ namespace System.Linq.Struct
             => Build(c).Multiply(pred);
         public static KeyValuePair<TSource1, TSource2> Multiply<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, bool> pred)
             => Build(c).Multiply(pred);
+        public static List<TSource> ToList<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).ToList();
+        public static List<TSource> ToList<TSource>(this TSource[] c)
+            => Build(c).ToList();
+        public static List<TSource> ToList<TSource>(this HashSet<TSource> c)
+            => Build(c).ToList();
+        public static List<TSource> ToList<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).ToList();
+        public static List<KeyValuePair<TSource1, TSource2>> ToList<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).ToList();
+        public static List<KeyValuePair<TSource1, TSource2>> ToList<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c)
+            => Build(c).ToList();
+        public static List<TSource> ToList<TSource>(this IReadOnlyList<TSource> c, List<TSource> list)
+            => Build(c).ToList(list);
+        public static List<TSource> ToList<TSource>(this TSource[] c, List<TSource> list)
+            => Build(c).ToList(list);
+        public static List<TSource> ToList<TSource>(this HashSet<TSource> c, List<TSource> list)
+            => Build(c).ToList(list);
+        public static List<TSource> ToList<TSource>(this MultiHashSetWrapper<TSource> c, List<TSource> list)
+            => Build(c).ToList(list);
+        public static List<KeyValuePair<TSource1, TSource2>> ToList<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, List<KeyValuePair<TSource1, TSource2>> list)
+            => Build(c).ToList(list);
+        public static List<KeyValuePair<TSource1, TSource2>> ToList<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, List<KeyValuePair<TSource1, TSource2>> list)
+            => Build(c).ToList(list);
+        public static TSource[] ToArray<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).ToArray();
+        public static TSource[] ToArray<TSource>(this TSource[] c)
+            => Build(c).ToArray();
+        public static TSource[] ToArray<TSource>(this HashSet<TSource> c)
+            => Build(c).ToArray();
+        public static TSource[] ToArray<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).ToArray();
+        public static KeyValuePair<TSource1, TSource2>[] ToArray<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).ToArray();
+        public static KeyValuePair<TSource1, TSource2>[] ToArray<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c)
+            => Build(c).ToArray();
+        public static TSource[] ToArray<TSource>(this IReadOnlyList<TSource> c, List<TSource> list)
+            => Build(c).ToArray(list);
+        public static TSource[] ToArray<TSource>(this TSource[] c, List<TSource> list)
+            => Build(c).ToArray(list);
+        public static TSource[] ToArray<TSource>(this HashSet<TSource> c, List<TSource> list)
+            => Build(c).ToArray(list);
+        public static TSource[] ToArray<TSource>(this MultiHashSetWrapper<TSource> c, List<TSource> list)
+            => Build(c).ToArray(list);
+        public static KeyValuePair<TSource1, TSource2>[] ToArray<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, List<KeyValuePair<TSource1, TSource2>> list)
+            => Build(c).ToArray(list);
+        public static KeyValuePair<TSource1, TSource2>[] ToArray<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, List<KeyValuePair<TSource1, TSource2>> list)
+            => Build(c).ToArray(list);
+        public static HashSet<TSource> ToHashSet<TSource>(this IReadOnlyList<TSource> c)
+            => Build(c).ToHashSet();
+        public static HashSet<TSource> ToHashSet<TSource>(this TSource[] c)
+            => Build(c).ToHashSet();
+        public static HashSet<TSource> ToHashSet<TSource>(this HashSet<TSource> c)
+            => Build(c).ToHashSet();
+        public static HashSet<TSource> ToHashSet<TSource>(this MultiHashSetWrapper<TSource> c)
+            => Build(c).ToHashSet();
+        public static HashSet<KeyValuePair<TSource1, TSource2>> ToHashSet<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c)
+            => Build(c).ToHashSet();
+        public static HashSet<KeyValuePair<TSource1, TSource2>> ToHashSet<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c)
+            => Build(c).ToHashSet();
+        public static HashSet<TSource> ToHashSet<TSource>(this IReadOnlyList<TSource> c, HashSet<TSource> set)
+            => Build(c).ToHashSet(set);
+        public static HashSet<TSource> ToHashSet<TSource>(this TSource[] c, HashSet<TSource> set)
+            => Build(c).ToHashSet(set);
+        public static HashSet<TSource> ToHashSet<TSource>(this HashSet<TSource> c, HashSet<TSource> set)
+            => Build(c).ToHashSet(set);
+        public static HashSet<TSource> ToHashSet<TSource>(this MultiHashSetWrapper<TSource> c, HashSet<TSource> set)
+            => Build(c).ToHashSet(set);
+        public static HashSet<KeyValuePair<TSource1, TSource2>> ToHashSet<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, HashSet<KeyValuePair<TSource1, TSource2>> set)
+            => Build(c).ToHashSet(set);
+        public static HashSet<KeyValuePair<TSource1, TSource2>> ToHashSet<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, HashSet<KeyValuePair<TSource1, TSource2>> set)
+            => Build(c).ToHashSet(set);
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IReadOnlyList<TSource> c, Func<TSource, TKey> keySelector)
+            => Build(c).ToDictionary(keySelector);
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this TSource[] c, Func<TSource, TKey> keySelector)
+            => Build(c).ToDictionary(keySelector);
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this HashSet<TSource> c, Func<TSource, TKey> keySelector)
+            => Build(c).ToDictionary(keySelector);
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this MultiHashSetWrapper<TSource> c, Func<TSource, TKey> keySelector)
+            => Build(c).ToDictionary(keySelector);
+        public static Dictionary<TKey, KeyValuePair<TSource1, TSource2>> ToDictionary<TSource1, TSource2, TKey>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TKey> keySelector)
+            => Build(c).ToDictionary(keySelector);
+        public static Dictionary<TKey, KeyValuePair<TSource1, TSource2>> ToDictionary<TSource1, TSource2, TKey>(this MultiDictionaryWrapper<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TKey> keySelector)
+            => Build(c).ToDictionary(keySelector);
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IReadOnlyList<TSource> c, Func<TSource, TKey> keySelector, Dictionary<TKey, TSource> dict)
+            => Build(c).ToDictionary(keySelector, dict);
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this TSource[] c, Func<TSource, TKey> keySelector, Dictionary<TKey, TSource> dict)
+            => Build(c).ToDictionary(keySelector, dict);
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this HashSet<TSource> c, Func<TSource, TKey> keySelector, Dictionary<TKey, TSource> dict)
+            => Build(c).ToDictionary(keySelector, dict);
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this MultiHashSetWrapper<TSource> c, Func<TSource, TKey> keySelector, Dictionary<TKey, TSource> dict)
+            => Build(c).ToDictionary(keySelector, dict);
+        public static Dictionary<TKey, KeyValuePair<TSource1, TSource2>> ToDictionary<TSource1, TSource2, TKey>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TKey> keySelector, Dictionary<TKey, KeyValuePair<TSource1, TSource2>> dict)
+            => Build(c).ToDictionary(keySelector, dict);
+        public static Dictionary<TKey, KeyValuePair<TSource1, TSource2>> ToDictionary<TSource1, TSource2, TKey>(this MultiDictionaryWrapper<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TKey> keySelector, Dictionary<TKey, KeyValuePair<TSource1, TSource2>> dict)
+            => Build(c).ToDictionary(keySelector, dict);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this IReadOnlyList<TSource> c, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector)
+            => Build(c).ToDictionary(keySelector, valueSelector);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this TSource[] c, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector)
+            => Build(c).ToDictionary(keySelector, valueSelector);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this HashSet<TSource> c, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector)
+            => Build(c).ToDictionary(keySelector, valueSelector);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this MultiHashSetWrapper<TSource> c, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector)
+            => Build(c).ToDictionary(keySelector, valueSelector);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource1, TSource2, TKey, TValue>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TKey> keySelector, Func<KeyValuePair<TSource1, TSource2>, TValue> valueSelector)
+            => Build(c).ToDictionary(keySelector, valueSelector);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource1, TSource2, TKey, TValue>(this MultiDictionaryWrapper<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TKey> keySelector, Func<KeyValuePair<TSource1, TSource2>, TValue> valueSelector)
+            => Build(c).ToDictionary(keySelector, valueSelector);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this IReadOnlyList<TSource> c, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector, Dictionary<TKey, TValue> dict)
+            => Build(c).ToDictionary(keySelector, valueSelector, dict);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this TSource[] c, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector, Dictionary<TKey, TValue> dict)
+            => Build(c).ToDictionary(keySelector, valueSelector, dict);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this HashSet<TSource> c, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector, Dictionary<TKey, TValue> dict)
+            => Build(c).ToDictionary(keySelector, valueSelector, dict);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource, TKey, TValue>(this MultiHashSetWrapper<TSource> c, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector, Dictionary<TKey, TValue> dict)
+            => Build(c).ToDictionary(keySelector, valueSelector, dict);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource1, TSource2, TKey, TValue>(this Dictionary<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TKey> keySelector, Func<KeyValuePair<TSource1, TSource2>, TValue> valueSelector, Dictionary<TKey, TValue> dict)
+            => Build(c).ToDictionary(keySelector, valueSelector, dict);
+        public static Dictionary<TKey, TValue> ToDictionary<TSource1, TSource2, TKey, TValue>(this MultiDictionaryWrapper<TSource1, TSource2> c, Func<KeyValuePair<TSource1, TSource2>, TKey> keySelector, Func<KeyValuePair<TSource1, TSource2>, TValue> valueSelector, Dictionary<TKey, TValue> dict)
+            => Build(c).ToDictionary(keySelector, valueSelector, dict);
         public static int Count<TSource>(this IReadOnlyList<TSource> c)
             => Build(c).Count();
         public static int Count<TSource>(this TSource[] c)
