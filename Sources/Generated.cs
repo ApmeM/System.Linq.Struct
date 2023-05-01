@@ -751,6 +751,154 @@ namespace System.Linq.Struct
             => Build(c).Concat(Build(seq2));
         public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Concat<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>>> Concat<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, MultiDictionaryWrapper<TSource1, TSource2> seq2)
             => Build(c).Concat(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, IReadOnlyListEnumerator<TSource>, TSecondEnumerator>> Except<TSource, TSecondEnumerator>(this IReadOnlyList<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Except(seq2);
+        public static RefLinqEnumerable<TSource, Except<TSource, IReadOnlyListEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Except<TSource>(this IReadOnlyList<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, IReadOnlyListEnumerator<TSource>, ArrayEnumerator<TSource>>> Except<TSource>(this IReadOnlyList<TSource> c, TSource[] seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, IReadOnlyListEnumerator<TSource>, HashSetEnumerator<TSource>>> Except<TSource>(this IReadOnlyList<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, IReadOnlyListEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Except<TSource>(this IReadOnlyList<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+        public static RefLinqEnumerable<TSource, Except<TSource, ArrayEnumerator<TSource>, TSecondEnumerator>> Except<TSource, TSecondEnumerator>(this TSource[] c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Except(seq2);
+        public static RefLinqEnumerable<TSource, Except<TSource, ArrayEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Except<TSource>(this TSource[] c, IReadOnlyList<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, ArrayEnumerator<TSource>, ArrayEnumerator<TSource>>> Except<TSource>(this TSource[] c, TSource[] seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, ArrayEnumerator<TSource>, HashSetEnumerator<TSource>>> Except<TSource>(this TSource[] c, HashSet<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, ArrayEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Except<TSource>(this TSource[] c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+        public static RefLinqEnumerable<TSource, Except<TSource, HashSetEnumerator<TSource>, TSecondEnumerator>> Except<TSource, TSecondEnumerator>(this HashSet<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Except(seq2);
+        public static RefLinqEnumerable<TSource, Except<TSource, HashSetEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Except<TSource>(this HashSet<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, HashSetEnumerator<TSource>, ArrayEnumerator<TSource>>> Except<TSource>(this HashSet<TSource> c, TSource[] seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, HashSetEnumerator<TSource>, HashSetEnumerator<TSource>>> Except<TSource>(this HashSet<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, HashSetEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Except<TSource>(this HashSet<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+        public static RefLinqEnumerable<TSource, Except<TSource, MultiHashSetWrapperEnumerator<TSource>, TSecondEnumerator>> Except<TSource, TSecondEnumerator>(this MultiHashSetWrapper<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Except(seq2);
+        public static RefLinqEnumerable<TSource, Except<TSource, MultiHashSetWrapperEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Except<TSource>(this MultiHashSetWrapper<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, MultiHashSetWrapperEnumerator<TSource>, ArrayEnumerator<TSource>>> Except<TSource>(this MultiHashSetWrapper<TSource> c, TSource[] seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, MultiHashSetWrapperEnumerator<TSource>, HashSetEnumerator<TSource>>> Except<TSource>(this MultiHashSetWrapper<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Except<TSource, MultiHashSetWrapperEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Except<TSource>(this MultiHashSetWrapper<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Except(Build(seq2));
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Except<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TSecondEnumerator>> Except<TSource1, TSource2, TSecondEnumerator>(this Dictionary<TSource1, TSource2> c, RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<KeyValuePair<TSource1, TSource2>>
+            => Build(c).Except(seq2);
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Except<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Except<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Dictionary<TSource1, TSource2> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Except<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>>> Except<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, MultiDictionaryWrapper<TSource1, TSource2> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Except<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, TSecondEnumerator>> Except<TSource1, TSource2, TSecondEnumerator>(this MultiDictionaryWrapper<TSource1, TSource2> c, RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<KeyValuePair<TSource1, TSource2>>
+            => Build(c).Except(seq2);
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+// TODO: Dictionary not supported for Except.
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Except<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Except<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, Dictionary<TSource1, TSource2> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Except<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>>> Except<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, MultiDictionaryWrapper<TSource1, TSource2> seq2)
+            => Build(c).Except(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, IReadOnlyListEnumerator<TSource>, TSecondEnumerator>> Intersect<TSource, TSecondEnumerator>(this IReadOnlyList<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Intersect(seq2);
+        public static RefLinqEnumerable<TSource, Intersect<TSource, IReadOnlyListEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Intersect<TSource>(this IReadOnlyList<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, IReadOnlyListEnumerator<TSource>, ArrayEnumerator<TSource>>> Intersect<TSource>(this IReadOnlyList<TSource> c, TSource[] seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, IReadOnlyListEnumerator<TSource>, HashSetEnumerator<TSource>>> Intersect<TSource>(this IReadOnlyList<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, IReadOnlyListEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Intersect<TSource>(this IReadOnlyList<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+        public static RefLinqEnumerable<TSource, Intersect<TSource, ArrayEnumerator<TSource>, TSecondEnumerator>> Intersect<TSource, TSecondEnumerator>(this TSource[] c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Intersect(seq2);
+        public static RefLinqEnumerable<TSource, Intersect<TSource, ArrayEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Intersect<TSource>(this TSource[] c, IReadOnlyList<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, ArrayEnumerator<TSource>, ArrayEnumerator<TSource>>> Intersect<TSource>(this TSource[] c, TSource[] seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, ArrayEnumerator<TSource>, HashSetEnumerator<TSource>>> Intersect<TSource>(this TSource[] c, HashSet<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, ArrayEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Intersect<TSource>(this TSource[] c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+        public static RefLinqEnumerable<TSource, Intersect<TSource, HashSetEnumerator<TSource>, TSecondEnumerator>> Intersect<TSource, TSecondEnumerator>(this HashSet<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Intersect(seq2);
+        public static RefLinqEnumerable<TSource, Intersect<TSource, HashSetEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Intersect<TSource>(this HashSet<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, HashSetEnumerator<TSource>, ArrayEnumerator<TSource>>> Intersect<TSource>(this HashSet<TSource> c, TSource[] seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, HashSetEnumerator<TSource>, HashSetEnumerator<TSource>>> Intersect<TSource>(this HashSet<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, HashSetEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Intersect<TSource>(this HashSet<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+        public static RefLinqEnumerable<TSource, Intersect<TSource, MultiHashSetWrapperEnumerator<TSource>, TSecondEnumerator>> Intersect<TSource, TSecondEnumerator>(this MultiHashSetWrapper<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Intersect(seq2);
+        public static RefLinqEnumerable<TSource, Intersect<TSource, MultiHashSetWrapperEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Intersect<TSource>(this MultiHashSetWrapper<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, MultiHashSetWrapperEnumerator<TSource>, ArrayEnumerator<TSource>>> Intersect<TSource>(this MultiHashSetWrapper<TSource> c, TSource[] seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, MultiHashSetWrapperEnumerator<TSource>, HashSetEnumerator<TSource>>> Intersect<TSource>(this MultiHashSetWrapper<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<TSource, Intersect<TSource, MultiHashSetWrapperEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Intersect<TSource>(this MultiHashSetWrapper<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Intersect(Build(seq2));
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Intersect<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TSecondEnumerator>> Intersect<TSource1, TSource2, TSecondEnumerator>(this Dictionary<TSource1, TSource2> c, RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<KeyValuePair<TSource1, TSource2>>
+            => Build(c).Intersect(seq2);
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Intersect<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Intersect<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Dictionary<TSource1, TSource2> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Intersect<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>>> Intersect<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, MultiDictionaryWrapper<TSource1, TSource2> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Intersect<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, TSecondEnumerator>> Intersect<TSource1, TSource2, TSecondEnumerator>(this MultiDictionaryWrapper<TSource1, TSource2> c, RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<KeyValuePair<TSource1, TSource2>>
+            => Build(c).Intersect(seq2);
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+// TODO: Dictionary not supported for Intersect.
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Intersect<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Intersect<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, Dictionary<TSource1, TSource2> seq2)
+            => Build(c).Intersect(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Intersect<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>>> Intersect<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, MultiDictionaryWrapper<TSource1, TSource2> seq2)
+            => Build(c).Intersect(Build(seq2));
         public static RefLinqEnumerable<(TSource, TSecondInput), Zip<TSource, IReadOnlyListEnumerator<TSource>, TSecondInput, TSecondEnumerator>> Zip<TSource, TSecondInput, TSecondEnumerator>(this IReadOnlyList<TSource> c, RefLinqEnumerable<TSecondInput, TSecondEnumerator> seq2)
             where TSecondEnumerator : IRefEnumerator<TSecondInput>
             => Build(c).Zip(seq2);
@@ -974,6 +1122,12 @@ namespace System.Linq.Struct
         public RefLinqEnumerable<TSource, Concat<TSource, TPrevious, TSecondEnumerator>> Concat<TSecondEnumerator>(RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
             where TSecondEnumerator : IRefEnumerator<TSource>
             => new RefLinqEnumerable<TSource, Concat<TSource, TPrevious, TSecondEnumerator>>(new Concat<TSource, TPrevious, TSecondEnumerator>(this.enumerator, seq2));
+        public RefLinqEnumerable<TSource, Except<TSource, TPrevious, TSecondEnumerator>> Except<TSecondEnumerator>(RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, Except<TSource, TPrevious, TSecondEnumerator>>(new Except<TSource, TPrevious, TSecondEnumerator>(this.enumerator, seq2));
+        public RefLinqEnumerable<TSource, Intersect<TSource, TPrevious, TSecondEnumerator>> Intersect<TSecondEnumerator>(RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, Intersect<TSource, TPrevious, TSecondEnumerator>>(new Intersect<TSource, TPrevious, TSecondEnumerator>(this.enumerator, seq2));
         public RefLinqEnumerable<(TSource, TSecondInput), Zip<TSource, TPrevious, TSecondInput, TSecondEnumerator>> Zip<TSecondInput, TSecondEnumerator>(RefLinqEnumerable<TSecondInput, TSecondEnumerator> seq2)
             where TSecondEnumerator : IRefEnumerator<TSecondInput>
             => new RefLinqEnumerable<(TSource, TSecondInput), Zip<TSource, TPrevious, TSecondInput, TSecondEnumerator>>(new Zip<TSource, TPrevious, TSecondInput, TSecondEnumerator>(this.enumerator, seq2));

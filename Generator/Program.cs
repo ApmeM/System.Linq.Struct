@@ -124,6 +124,8 @@ internal class Program
 
         foreach (var method in new List<(string, string, string, string, string, bool)>{
             ("Concat", "TResult", "RefLinqEnumerable<TInput, TSecondEnumerator>", "TSecondEnumerator", "where TSecondEnumerator : IRefEnumerator<TInput>", false),
+            ("Except", "TResult", "RefLinqEnumerable<TInput, TSecondEnumerator>", "TSecondEnumerator", "where TSecondEnumerator : IRefEnumerator<TInput>", false),
+            ("Intersect", "TResult", "RefLinqEnumerable<TInput, TSecondEnumerator>", "TSecondEnumerator", "where TSecondEnumerator : IRefEnumerator<TInput>", false),
             ("Zip", "(TResult, TSecondInput)", "RefLinqEnumerable<TSecondInput, TSecondEnumerator>", "TSecondInput, TSecondEnumerator", "where TSecondEnumerator : IRefEnumerator<TSecondInput>", true),
         })
         {
