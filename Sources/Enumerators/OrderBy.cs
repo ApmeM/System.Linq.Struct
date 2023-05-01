@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
-
     public struct OrderBy<T, TEnumerator, TKey>
         : IRefEnumerator<T>
         where TEnumerator : IRefEnumerator<T>

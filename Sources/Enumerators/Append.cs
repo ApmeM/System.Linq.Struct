@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
-
     public struct Append<T, TEnumerator>
         : IRefEnumerator<T>
         where TEnumerator : IRefEnumerator<T>

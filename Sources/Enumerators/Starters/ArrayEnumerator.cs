@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
-
     public struct ArrayEnumerator<T> : IRefEnumerator<T>
     {
         private readonly T[] array;

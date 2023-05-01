@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
-
     public struct Concat<T, TEnumerator1, TEnumerator2>
         : IRefEnumerator<T>
         where TEnumerator1 : IRefEnumerator<T>

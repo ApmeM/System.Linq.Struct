@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
-
     public struct RepeatEnumerator<T>
         : IRefEnumerator<T>
     {

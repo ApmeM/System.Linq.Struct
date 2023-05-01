@@ -2,12 +2,10 @@
 // This file from HonkPerf.NET project is MIT-licensed.
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
-using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
-
     public struct Cast<T, TEnumerator, U>
         : IRefEnumerator<U>
         where TEnumerator : IRefEnumerator<T>

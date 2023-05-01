@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
-
     public struct IReadOnlyListEnumerator<T> : IRefEnumerator<T>
     {
         private readonly IReadOnlyList<T> list;

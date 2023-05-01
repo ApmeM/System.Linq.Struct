@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
-
     public struct Select<T, TEnumerator, U>
         : IRefEnumerator<U>
         where TEnumerator : IRefEnumerator<T>
