@@ -9,7 +9,7 @@ public class PrependTest
     [Fact]
     public void ListWithData()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Prepend(5), new [] { 5, 1, 2, 3 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Prepend(5), new[] { 5, 1, 2, 3 });
     }
 
     [Fact]

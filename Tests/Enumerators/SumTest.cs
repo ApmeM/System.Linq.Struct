@@ -9,7 +9,7 @@ public class SumTest
     [Fact]
     public void ListWithIntData()
     {
-        Assert.Equal(6, new [] { 1, 2, 3 }.Sum());
+        Assert.Equal(6, new[] { 1, 2, 3 }.Sum());
     }
 
     [Fact]

@@ -25,11 +25,11 @@ namespace System.Linq.Struct
                 return false;
             if (!(prev.Current is U uCurrent))
                 goto tryAgain;
-            
+
             this.Current = uCurrent;
             return true;
         }
-        
-        public U Current {get; private set;}
+
+        public U Current { get; private set; }
     }
 }

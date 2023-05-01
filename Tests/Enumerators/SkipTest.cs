@@ -9,7 +9,7 @@ public class SkipTest
     [Fact]
     public void ListContainsEnoughData()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3, 4 }.Skip(2), new [] { 3, 4 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3, 4 }.Skip(2), new[] { 3, 4 });
     }
 
     [Fact]

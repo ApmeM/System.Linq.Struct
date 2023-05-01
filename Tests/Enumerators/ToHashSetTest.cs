@@ -11,14 +11,14 @@ public class ToHashSetTest
     [Fact]
     public void ListContainsValue()
     {
-        TestUtils.EqualSequences(new[] { 1, 2, 3}.Select(a => a), new[] { 1, 2, 3, 1 }.ToHashSet());
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Select(a => a), new[] { 1, 2, 3, 1 }.ToHashSet());
     }
     [Fact]
     public void WithTempObject()
     {
         var set = new HashSet<int>();
         new[] { 1, 2, 3, 4 }.ToHashSet(set);
-        TestUtils.EqualSequences(new[] { 1, 2, 3, 4}.Select(a => a), set);
+        TestUtils.EqualSequences(new[] { 1, 2, 3, 4 }.Select(a => a), set);
     }
 
 }

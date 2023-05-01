@@ -18,7 +18,7 @@ namespace System.Linq.Struct
             Current = default(T);
             sortList = new List<T>();
             initialized = false;
-            idx=-1;
+            idx = -1;
         }
 
         private TEnumerator prev;
@@ -41,7 +41,7 @@ namespace System.Linq.Struct
             }
 
             idx--;
-            if(idx < 0)
+            if (idx < 0)
                 return false;
             this.Current = sortList[idx];
             return true;

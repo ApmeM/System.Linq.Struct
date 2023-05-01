@@ -11,7 +11,7 @@ public class ExceptTest
     [Fact]
     public void BothListsHaveData()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Except(new [] { 3, 4, 5 }), new [] { 1, 2 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Except(new[] { 3, 4, 5 }), new[] { 1, 2 });
     }
 
     [Fact]

@@ -9,7 +9,7 @@ public class SelectTest
     [Fact]
     public void ListWithData()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Select(c => c * 2), new [] { 2, 4, 6 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Select(c => c * 2), new[] { 2, 4, 6 });
     }
 
     [Fact]

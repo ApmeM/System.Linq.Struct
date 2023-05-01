@@ -9,7 +9,7 @@ public class TakeTest
     [Fact]
     public void TakeEnoughData()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Take(2), new [] { 1, 2 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Take(2), new[] { 1, 2 });
     }
 
     [Fact]

@@ -9,7 +9,7 @@ public class CastTest
     [Fact]
     public void InitialArrayContainElementsOfType()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Cast<int, float>(), new float[] { 1, 2, 3 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Cast<int, float>(), new float[] { 1, 2, 3 });
     }
 
     [Fact]

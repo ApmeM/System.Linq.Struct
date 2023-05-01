@@ -25,6 +25,6 @@ namespace System.Linq.Struct
             return count >= 0;
         }
 
-        public T Current{get; private set;}
+        public T Current { get; private set; }
     }
 }

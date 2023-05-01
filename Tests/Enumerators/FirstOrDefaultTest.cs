@@ -27,6 +27,6 @@ public class FirstOrDefaultTest
     [Fact]
     public void ListDoesNotContainValue()
     {
-        Assert.Equal(0, new [] { 1 }.FirstOrDefault(c => c > 1));
+        Assert.Equal(0, new[] { 1 }.FirstOrDefault(c => c > 1));
     }
 }

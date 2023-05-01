@@ -11,14 +11,14 @@ namespace System.Linq.Struct
         : IRefEnumerator<U>
         where TEnumerator : IRefEnumerator<T>
     {
-        internal Select(TEnumerator prev, Func<T,U> map)
+        internal Select(TEnumerator prev, Func<T, U> map)
         {
             this.prev = prev;
             this.map = map;
             Current = default(U);
         }
         private TEnumerator prev;
-        private readonly Func<T,U> map;
+        private readonly Func<T, U> map;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()

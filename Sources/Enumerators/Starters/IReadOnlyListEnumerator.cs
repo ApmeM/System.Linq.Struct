@@ -18,7 +18,7 @@ namespace System.Linq.Struct
             this.list = list;
             this.curr = -1;
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {

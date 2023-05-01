@@ -27,7 +27,7 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            start:
+        start:
             if (count == 0)
             {
                 return false;
@@ -38,7 +38,7 @@ namespace System.Linq.Struct
                 Current = this.cur.Current;
                 return true;
             }
-            count --;
+            count--;
             this.cur = this.first;
             goto start;
         }

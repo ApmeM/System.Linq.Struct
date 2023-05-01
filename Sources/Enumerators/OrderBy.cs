@@ -45,7 +45,7 @@ namespace System.Linq.Struct
             }
 
             idx++;
-            if(idx >= sortList.Count)
+            if (idx >= sortList.Count)
                 return false;
             this.Current = sortList[idx];
             return true;

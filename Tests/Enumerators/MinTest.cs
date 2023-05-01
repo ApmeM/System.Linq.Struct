@@ -17,7 +17,7 @@ public class MinTest
     [Fact]
     public void EmptyList()
     {
-        Assert.Throws<InvalidOperationException>(() => new float [] { }.Min());
+        Assert.Throws<InvalidOperationException>(() => new float[] { }.Min());
     }
 
     [Fact]

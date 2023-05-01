@@ -37,6 +37,6 @@ public class SelectManyTest
     [Fact]
     public void SublistIsArray()
     {
-        TestUtils.EqualSequences(new[] { 1, 2, 3, 4, 5 }.SelectMany(i => new int[]{ 1 }), new int[] { 1,1,1,1,1 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3, 4, 5 }.SelectMany(i => new int[] { 1 }), new int[] { 1, 1, 1, 1, 1 });
     }
 }

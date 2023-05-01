@@ -9,7 +9,7 @@ public class MultiplyTest
     [Fact]
     public void ListWithIntData()
     {
-        Assert.Equal(6, new [] { 1, 2, 3 }.Multiply());
+        Assert.Equal(6, new[] { 1, 2, 3 }.Multiply());
     }
 
     [Fact]

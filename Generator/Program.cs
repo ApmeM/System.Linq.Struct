@@ -110,7 +110,7 @@ internal class Program
             var methodParameters = (string.IsNullOrWhiteSpace(method.Item5) ? "" : ", ") + method.Item5;
             var methodArguments = (string.IsNullOrWhiteSpace(method.Item3) ? "" : ", ") + method.Item3;
             var genericParameters = (string.IsNullOrWhiteSpace(method.Item4) ? "" : ", ") + method.Item4;
-            var genericFullParameters = (string.IsNullOrWhiteSpace(method.Item4) ? "" : "<") + method.Item4+(string.IsNullOrWhiteSpace(method.Item4) ? "" : ">");
+            var genericFullParameters = (string.IsNullOrWhiteSpace(method.Item4) ? "" : "<") + method.Item4 + (string.IsNullOrWhiteSpace(method.Item4) ? "" : ">");
 
             methods.AppendLine($"        public RefLinqEnumerable<{method.Item2.Replace("TResult", "TSource")}, {method.Item1}<TSource, TPrevious{genericParameters}>> {method.Item1}{genericFullParameters}({method.Item3.Replace("TInput", "TSource")})");
             methods.AppendLine($"            => new RefLinqEnumerable<{method.Item2.Replace("TResult", "TSource")}, {method.Item1}<TSource, TPrevious{genericParameters}>>(new {method.Item1}<TSource, TPrevious{genericParameters}>(this.enumerator{methodParameters}));");

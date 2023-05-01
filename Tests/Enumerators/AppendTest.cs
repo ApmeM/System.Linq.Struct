@@ -9,7 +9,7 @@ public class AppendTest
     [Fact]
     public void AppendToExistingList()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Append(5), new [] { 1, 2, 3, 5 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Append(5), new[] { 1, 2, 3, 5 });
     }
 
     [Fact]

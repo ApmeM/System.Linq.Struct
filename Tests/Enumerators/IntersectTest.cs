@@ -11,7 +11,7 @@ public class IntersectTest
     [Fact]
     public void BothListsHaveData()
     {
-        TestUtils.EqualSequences(new [] { 1, 2, 3 }.Intersect(new [] { 3, 4, 5 }), new [] { 3 });
+        TestUtils.EqualSequences(new[] { 1, 2, 3 }.Intersect(new[] { 3, 4, 5 }), new[] { 3 });
     }
 
     [Fact]

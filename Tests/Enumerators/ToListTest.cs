@@ -18,7 +18,7 @@ public class ToListTest
     {
         var list = new List<int>();
         new[] { 1, 2, 3, 4 }.ToList(list);
-        TestUtils.EqualSequences(new[] { 1, 2, 3, 4}.Select(a => a), list);
+        TestUtils.EqualSequences(new[] { 1, 2, 3, 4 }.Select(a => a), list);
     }
 
 }

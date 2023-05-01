@@ -9,7 +9,7 @@ public class AllTest
     [Fact]
     public void ListContainsValue()
     {
-        Assert.True(new [] { 1, 2, 3, 4 }.All(c => c < 5));
+        Assert.True(new[] { 1, 2, 3, 4 }.All(c => c < 5));
     }
 
     [Fact]

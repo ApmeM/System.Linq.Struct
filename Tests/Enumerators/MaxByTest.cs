@@ -23,12 +23,12 @@ public class MaxByTest
     [Fact]
     public void EmptyList()
     {
-        Assert.Throws<InvalidOperationException>(() => new float [] { }.MaxBy(c => c));
+        Assert.Throws<InvalidOperationException>(() => new float[] { }.MaxBy(c => c));
     }
 
     [Fact]
     public void SingleElement()
     {
-        Assert.Equal("aaaa", new [] { (1.0f, "aaaa") }.MaxBy(c => c.Item1).Item2);
+        Assert.Equal("aaaa", new[] { (1.0f, "aaaa") }.MaxBy(c => c.Item1).Item2);
     }
 }

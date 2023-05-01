@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
-    
+
     public struct Cast<T, TEnumerator, U>
         : IRefEnumerator<U>
         where TEnumerator : IRefEnumerator<T>
@@ -27,7 +27,7 @@ namespace System.Linq.Struct
             this.Current = CastMethodGenerator<T, U>.cast(prev.Current);
             return true;
         }
-        
-        public U Current {get; private set;}
+
+        public U Current { get; private set; }
     }
 }

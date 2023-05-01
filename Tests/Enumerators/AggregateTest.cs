@@ -9,7 +9,7 @@ public class AggregateTest
     [Fact]
     public void WithAccumulator()
     {
-        Assert.Equal("123", new [] { 1, 2, 3 }.Aggregate("", (a, b) => a + b));
+        Assert.Equal("123", new[] { 1, 2, 3 }.Aggregate("", (a, b) => a + b));
     }
 
     [Fact]
