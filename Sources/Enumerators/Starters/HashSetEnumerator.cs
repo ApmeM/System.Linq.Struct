@@ -5,25 +5,24 @@ namespace System.Linq.Struct
 {
     public struct HashSetEnumerator<T> : IRefEnumerator<T>
     {
-        private T curr;
         private HashSet<T>.Enumerator ie;
 
         public HashSetEnumerator(HashSet<T> set)
         {
             this.ie = set.GetEnumerator();
-            this.curr = default;
+            this.Current = default;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
             bool t = this.ie.MoveNext();
-            this.curr = this.ie.Current;
+            this.Current = this.ie.Current;
             if (!t)
                 this.ie.Dispose();
             return t;
         }
 
-        public T Current => curr;
+        public T Current { get; private set; }
     }
 }

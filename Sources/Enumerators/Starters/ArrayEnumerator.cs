@@ -10,21 +10,22 @@ namespace System.Linq.Struct
     public struct ArrayEnumerator<T> : IRefEnumerator<T>
     {
         private readonly T[] array;
-        private int curr;
+        private int idx;
 
         public ArrayEnumerator(T[] array)
         {
             this.array = array;
-            this.curr = -1;
-            this.Current = default(T);
+            this.idx = -1;
+            this.Current = default;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            this.curr++;
-            if (this.curr < this.array.Length)
+            this.idx++;
+            if (this.idx < this.array.Length)
             {
-                this.Current = this.array[curr];
+                this.Current = this.array[idx];
                 return true;
             }
             return false;

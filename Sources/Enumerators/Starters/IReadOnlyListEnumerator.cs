@@ -11,21 +11,27 @@ namespace System.Linq.Struct
     public struct IReadOnlyListEnumerator<T> : IRefEnumerator<T>
     {
         private readonly IReadOnlyList<T> list;
-        private int curr;
+        private int idx;
 
         public IReadOnlyListEnumerator(IReadOnlyList<T> list)
         {
             this.list = list;
-            this.curr = -1;
+            this.idx = -1;
+            this.Current = default;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            this.curr++;
-            return this.curr < this.list.Count;
+            this.idx++;
+            if (this.idx < this.list.Count)
+            {
+                this.Current = this.list[this.idx];
+                return true;
+            }
+            return false;
         }
 
-        public T Current => this.list[curr];
+        public T Current { get; private set; }
     }
 }

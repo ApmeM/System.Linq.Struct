@@ -50,6 +50,7 @@ namespace System.Linq.Struct
             this.Current = this.sortList[this.idx];
             return true;
         }
+        
         public T Current { get; private set; }
     }
 }

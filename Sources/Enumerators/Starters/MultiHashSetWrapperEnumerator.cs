@@ -5,7 +5,6 @@ namespace System.Linq.Struct
 {
     public struct MultiHashSetWrapperEnumerator<T> : IRefEnumerator<T>
     {
-        private T curr;
         private MultiHashSetWrapper<T> set;
         private HashSet<T>.Enumerator ie;
         private bool initialized;
@@ -13,7 +12,7 @@ namespace System.Linq.Struct
         public MultiHashSetWrapperEnumerator(MultiHashSetWrapper<T> wrapper)
         {
             this.set = wrapper;
-            this.curr = default;
+            this.Current = default;
             this.ie = default;
             this.initialized = false;
         }
@@ -28,12 +27,12 @@ namespace System.Linq.Struct
             }
 
             bool t = this.ie.MoveNext();
-            this.curr = this.ie.Current;
+            this.Current = this.ie.Current;
             if (!t)
                 this.ie.Dispose();
             return t;
         }
 
-        public T Current => curr;
+        public T Current { get; private set; }
     }
 }

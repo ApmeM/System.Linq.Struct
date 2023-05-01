@@ -44,6 +44,7 @@ namespace System.Linq.Struct
             this.Current = this.prev.Current;
             return true;
         }
+        
         public T Current { get; private set; }
     }
 }

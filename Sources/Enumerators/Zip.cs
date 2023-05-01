@@ -21,8 +21,6 @@ namespace System.Linq.Struct
             this.Current = default;
         }
 
-        public (T1, T2) Current { get; private set; }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
@@ -42,5 +40,7 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void ThrowInvalid()
             => throw new InvalidOperationException("Collections should have the same size");
+
+        public (T1, T2) Current { get; private set; }
     }
 }
