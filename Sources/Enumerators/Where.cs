@@ -25,11 +25,11 @@ namespace System.Linq.Struct
         public bool MoveNext()
         {
         tryAgain:
-            if (!prev.MoveNext())
+            if (!this.prev.MoveNext())
                 return false;
-            if (!map.Invoke(prev.Current))
+            if (!this.map.Invoke(this.prev.Current))
                 goto tryAgain;
-            this.Current = prev.Current;
+            this.Current = this.prev.Current;
             return true;
         }
         public T Current { get; private set; }

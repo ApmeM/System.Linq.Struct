@@ -17,16 +17,16 @@ namespace System.Linq.Struct
         {
             this.en = en;
             this.toTake = toTake;
-            Current = default(T);
+            this.Current = default(T);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (toTake > 0 && en.MoveNext())
+            if (this.toTake > 0 && this.en.MoveNext())
             {
-                Current = en.Current;
-                toTake--;
+                this.Current = this.en.Current;
+                this.toTake--;
                 return true;
             }
             return false;

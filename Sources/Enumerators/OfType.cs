@@ -21,9 +21,9 @@ namespace System.Linq.Struct
         public bool MoveNext()
         {
         tryAgain:
-            if (!prev.MoveNext())
+            if (!this.prev.MoveNext())
                 return false;
-            if (!(prev.Current is U uCurrent))
+            if (!(this.prev.Current is U uCurrent))
                 goto tryAgain;
 
             this.Current = uCurrent;

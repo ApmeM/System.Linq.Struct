@@ -17,24 +17,24 @@ namespace System.Linq.Struct
         public Append(TEnumerator prev, T toAppend)
         {
             this.prev = prev;
-            theLastAlreadyYielded = false;
+            this.theLastAlreadyYielded = false;
             this.toAppend = toAppend;
-            Current = default(T);
+            this.Current = default(T);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (theLastAlreadyYielded)
+            if (this.theLastAlreadyYielded)
                 return false;
-            if (prev.MoveNext())
+            if (this.prev.MoveNext())
             {
-                Current = prev.Current;
+                this.Current = this.prev.Current;
             }
             else
             {
-                Current = toAppend;
-                theLastAlreadyYielded = true;
+                this.Current = this.toAppend;
+                this.theLastAlreadyYielded = true;
             }
             return true;
         }

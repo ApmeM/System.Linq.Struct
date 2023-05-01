@@ -7,18 +7,18 @@ namespace System.Linq.Struct
     {
         public IReadOnlyList<T> Data;
 
-        public T this[int index] => Data[index];
+        public T this[int index] => this.Data[index];
 
-        public int Count => Data.Count;
+        public int Count => this.Data.Count;
 
         public IEnumerator<T> GetEnumerator()
         {
-            return Data.GetEnumerator();
+            return this.Data.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return Data.GetEnumerator();
+            return this.Data.GetEnumerator();
         }
     }
 }

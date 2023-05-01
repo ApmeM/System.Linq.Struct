@@ -15,7 +15,7 @@ namespace System.Linq.Struct
         {
             this.prev = prev;
             this.map = map;
-            Current = default(U);
+            this.Current = default(U);
         }
         private TEnumerator prev;
         private readonly Func<T, U> map;
@@ -23,9 +23,9 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            var res = prev.MoveNext();
+            var res = this.prev.MoveNext();
             if (res)
-                Current = map.Invoke(prev.Current);
+                this.Current = this.map.Invoke(this.prev.Current);
             return res;
         }
         public U Current { get; private set; }

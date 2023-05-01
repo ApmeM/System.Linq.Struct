@@ -12,25 +12,25 @@ namespace System.Linq.Struct
 
         public MultiDictionaryWrapperEnumerator(MultiDictionaryWrapper<T1, T2> wrapper)
         {
-            set = wrapper;
-            curr = default;
-            ie = default;
-            initialized = false;
+            this.set = wrapper;
+            this.curr = default;
+            this.ie = default;
+            this.initialized = false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (!initialized)
+            if (!this.initialized)
             {
-                ie = set.GetEnumerator();
-                initialized = true;
+                this.ie = this.set.GetEnumerator();
+                this.initialized = true;
             }
 
-            bool t = ie.MoveNext();
-            curr = ie.Current;
+            bool t = this.ie.MoveNext();
+            this.curr = this.ie.Current;
             if (!t)
-                ie.Dispose();
+                this.ie.Dispose();
             return t;
         }
 

@@ -6,6 +6,6 @@ namespace System.Linq.Struct
     {
         public HashSet<T> Data;
 
-        public HashSet<T>.Enumerator GetEnumerator() => Data.GetEnumerator();
+        public HashSet<T>.Enumerator GetEnumerator() => this.Data.GetEnumerator();
     }
 }

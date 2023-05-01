@@ -22,9 +22,9 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (!prev.MoveNext())
+            if (!this.prev.MoveNext())
                 return false;
-            this.Current = CastMethodGenerator<T, U>.cast(prev.Current);
+            this.Current = CastMethodGenerator<T, U>.cast(this.prev.Current);
             return true;
         }
 

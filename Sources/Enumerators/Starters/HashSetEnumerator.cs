@@ -10,17 +10,17 @@ namespace System.Linq.Struct
 
         public HashSetEnumerator(HashSet<T> set)
         {
-            ie = set.GetEnumerator();
-            curr = default;
+            this.ie = set.GetEnumerator();
+            this.curr = default;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            bool t = ie.MoveNext();
-            curr = ie.Current;
+            bool t = this.ie.MoveNext();
+            this.curr = this.ie.Current;
             if (!t)
-                ie.Dispose();
+                this.ie.Dispose();
             return t;
         }
 

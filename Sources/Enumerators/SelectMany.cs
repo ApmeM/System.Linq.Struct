@@ -19,9 +19,9 @@ namespace System.Linq.Struct
         public SelectMany(TEnumeratorOfEnumerators en)
         {
             this.en = en;
-            currEn = default(TEnumerator);
-            iterStarted = false;
-            Current = default(T);
+            this.currEn = default(TEnumerator);
+            this.iterStarted = false;
+            this.Current = default(T);
         }
 
 
@@ -29,22 +29,22 @@ namespace System.Linq.Struct
         public bool MoveNext()
         {
         begin:
-            if (!iterStarted)
+            if (!this.iterStarted)
             {
-                iterStarted = true;
-                if (en.MoveNext())
+                this.iterStarted = true;
+                if (this.en.MoveNext())
                 {
-                    currEn = en.Current.enumerator;
+                    this.currEn = this.en.Current.enumerator;
                     goto begin;
                 }
                 return false;
             }
-            if (currEn.MoveNext())
+            if (this.currEn.MoveNext())
             {
-                Current = currEn.Current;
+                this.Current = this.currEn.Current;
                 return true;
             }
-            iterStarted = false;
+            this.iterStarted = false;
             goto begin;
         }
 

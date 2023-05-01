@@ -29,22 +29,22 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (!initialized)
+            if (!this.initialized)
             {
                 this.initialized = true;
                 this.sortList.Clear();
-                while (second.MoveNext())
+                while (this.second.MoveNext())
                 {
-                    sortList.Add(second.Current);
+                    this.sortList.Add(this.second.Current);
                 }
             }
 
         tryAgain:
-            if (!prev.MoveNext())
+            if (!this.prev.MoveNext())
                 return false;
-            if (!this.sortList.Contains(prev.Current))
+            if (!this.sortList.Contains(this.prev.Current))
                 goto tryAgain;
-            this.Current = prev.Current;
+            this.Current = this.prev.Current;
             return true;
         }
         public T Current { get; private set; }

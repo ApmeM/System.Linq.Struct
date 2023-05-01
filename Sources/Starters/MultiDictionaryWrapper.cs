@@ -6,6 +6,6 @@ namespace System.Linq.Struct
     {
         public Dictionary<T1, T2> Data;
 
-        public Dictionary<T1, T2>.Enumerator GetEnumerator() => Data.GetEnumerator();
+        public Dictionary<T1, T2>.Enumerator GetEnumerator() => this.Data.GetEnumerator();
     }
 }

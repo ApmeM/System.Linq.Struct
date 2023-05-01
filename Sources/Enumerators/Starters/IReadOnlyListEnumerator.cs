@@ -22,10 +22,10 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            curr++;
-            return curr < list.Count;
+            this.curr++;
+            return this.curr < this.list.Count;
         }
 
-        public T Current => list[curr];
+        public T Current => this.list[curr];
     }
 }

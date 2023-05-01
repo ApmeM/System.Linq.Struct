@@ -15,17 +15,17 @@ namespace System.Linq.Struct
 
         public RangeEnumerator(int start, int count)
         {
-            current = start - 1;
-            end = start + count;
+            this.current = start - 1;
+            this.end = start + count;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            current++;
-            return current < end;
+            this.current++;
+            return this.current < this.end;
         }
 
-        public int Current => current;
+        public int Current => this.current;
     }
 }

@@ -22,8 +22,8 @@ namespace System.Linq.Struct
         {
             this.first = first;
             this.second = second.enumerator;
-            firstIsOver = false;
-            Current = default(T);
+            this.firstIsOver = false;
+            this.Current = default(T);
             this.sortList = new HashSet<T>();
             this.initialized = false;
         }
@@ -31,34 +31,34 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (!initialized)
+            if (!this.initialized)
             {
                 this.initialized = true;
                 this.sortList.Clear();
             }
 
-            if (firstIsOver)
+            if (this.firstIsOver)
             {
             tryAgain2:
-                if (!second.MoveNext())
+                if (!this.second.MoveNext())
                     return false;
-                if (this.sortList.Contains(second.Current))
+                if (this.sortList.Contains(this.second.Current))
                     goto tryAgain2;
-                this.sortList.Add(second.Current);
-                this.Current = second.Current;
+                this.sortList.Add(this.second.Current);
+                this.Current = this.second.Current;
                 return true;
             }
 
         tryAgain1:
-            if (!first.MoveNext())
+            if (!this.first.MoveNext())
             {
-                firstIsOver = true;
+                this.firstIsOver = true;
                 return MoveNext();
             }
-            if (this.sortList.Contains(first.Current))
+            if (this.sortList.Contains(this.first.Current))
                 goto tryAgain1;
-            this.sortList.Add(first.Current);
-            this.Current = first.Current;
+            this.sortList.Add(this.first.Current);
+            this.Current = this.first.Current;
             return true;
         }
 

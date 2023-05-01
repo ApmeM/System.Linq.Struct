@@ -20,30 +20,30 @@ namespace System.Linq.Struct
         {
             this.first = first;
             this.second = second.enumerator;
-            firstIsOver = false;
-            Current = default(T);
+            this.firstIsOver = false;
+            this.Current = default(T);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (firstIsOver)
+            if (this.firstIsOver)
             {
-                if (second.MoveNext())
+                if (this.second.MoveNext())
                 {
-                    Current = second.Current;
+                    this.Current = this.second.Current;
                     return true;
                 }
                 return false;
             }
-            if (first.MoveNext())
+            if (this.first.MoveNext())
             {
-                Current = first.Current;
+                this.Current = this.first.Current;
                 return true;
             }
             else
             {
-                firstIsOver = true;
+                this.firstIsOver = true;
                 return MoveNext();
             }
         }

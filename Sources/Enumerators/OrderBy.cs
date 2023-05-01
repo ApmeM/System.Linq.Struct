@@ -17,10 +17,10 @@ namespace System.Linq.Struct
             this.prev = prev;
             this.keySelector = keySelector;
             this.idx = -1;
-            Current = default(T);
-            sortList = new List<T>();
-            initialized = false;
-            comparer = (a, b) => Comparer<TKey>.Default.Compare(keySelector(a), keySelector(b));
+            this.Current = default(T);
+            this.sortList = new List<T>();
+            this.initialized = false;
+            this.comparer = (a, b) => Comparer<TKey>.Default.Compare(keySelector(a), keySelector(b));
         }
 
         private TEnumerator prev;
@@ -33,21 +33,21 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (!initialized)
+            if (!this.initialized)
             {
-                initialized = true;
-                sortList.Clear();
-                while (prev.MoveNext())
+                this.initialized = true;
+                this.sortList.Clear();
+                while (this.prev.MoveNext())
                 {
-                    sortList.Add(prev.Current);
+                    this.sortList.Add(this.prev.Current);
                 }
-                sortList.Sort(comparer);
+                this.sortList.Sort(this.comparer);
             }
 
-            idx++;
-            if (idx >= sortList.Count)
+            this.idx++;
+            if (this.idx >= this.sortList.Count)
                 return false;
-            this.Current = sortList[idx];
+            this.Current = this.sortList[this.idx];
             return true;
         }
         public T Current { get; private set; }

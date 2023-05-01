@@ -17,25 +17,25 @@ namespace System.Linq.Struct
         public Prepend(TEnumerator prev, T toPrepend)
         {
             this.prev = prev;
-            theFirstAlreadyYielded = false;
+            this.theFirstAlreadyYielded = false;
             this.toPrepend = toPrepend;
-            Current = default(T);
+            this.Current = default(T);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (theFirstAlreadyYielded)
+            if (this.theFirstAlreadyYielded)
             {
-                if (prev.MoveNext())
+                if (this.prev.MoveNext())
                 {
-                    Current = prev.Current;
+                    this.Current = this.prev.Current;
                     return true;
                 }
                 return false;
             }
-            Current = toPrepend;
-            theFirstAlreadyYielded = true;
+            this.Current = this.toPrepend;
+            this.theFirstAlreadyYielded = true;
             return true;
         }
 

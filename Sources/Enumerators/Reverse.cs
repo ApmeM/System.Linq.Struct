@@ -15,10 +15,10 @@ namespace System.Linq.Struct
         internal Reverse(TEnumerator prev)
         {
             this.prev = prev;
-            Current = default(T);
-            sortList = new List<T>();
-            initialized = false;
-            idx = -1;
+            this.Current = default(T);
+            this.sortList = new List<T>();
+            this.initialized = false;
+            this.idx = -1;
         }
 
         private TEnumerator prev;
@@ -29,21 +29,21 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (!initialized)
+            if (!this.initialized)
             {
-                initialized = true;
-                sortList.Clear();
-                while (prev.MoveNext())
+                this.initialized = true;
+                this.sortList.Clear();
+                while (this.prev.MoveNext())
                 {
-                    sortList.Add(prev.Current);
+                    this.sortList.Add(this.prev.Current);
                 }
-                idx = sortList.Count;
+                this.idx = this.sortList.Count;
             }
 
-            idx--;
-            if (idx < 0)
+            this.idx--;
+            if (this.idx < 0)
                 return false;
-            this.Current = sortList[idx];
+            this.Current = this.sortList[idx];
             return true;
         }
 

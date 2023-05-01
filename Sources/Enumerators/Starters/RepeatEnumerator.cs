@@ -22,7 +22,7 @@ namespace System.Linq.Struct
         public bool MoveNext()
         {
             this.count--;
-            return count >= 0;
+            return this.count >= 0;
         }
 
         public T Current { get; private set; }

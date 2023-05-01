@@ -18,7 +18,7 @@ namespace System.Linq.Struct
         {
             this.en1 = en1;
             this.en2 = en2.enumerator;
-            Current = default;
+            this.Current = default;
         }
 
         public (T1, T2) Current { get; private set; }
@@ -26,13 +26,13 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            var res1 = en1.MoveNext();
-            var res2 = en2.MoveNext();
+            var res1 = this.en1.MoveNext();
+            var res2 = this.en2.MoveNext();
             if (!res1 && !res2)
                 return false;
             if (res1 && res2)
             {
-                Current = (en1.Current, en2.Current);
+                this.Current = (this.en1.Current, this.en2.Current);
                 return true;
             }
             ThrowInvalid();

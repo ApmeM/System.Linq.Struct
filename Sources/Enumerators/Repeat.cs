@@ -20,7 +20,7 @@ namespace System.Linq.Struct
             this.first = first;
             this.cur = this.first;
             this.count = count;
-            Current = default(T);
+            this.Current = default(T);
         }
 
 
@@ -28,17 +28,17 @@ namespace System.Linq.Struct
         public bool MoveNext()
         {
         start:
-            if (count == 0)
+            if (this.count == 0)
             {
                 return false;
             }
 
             if (this.cur.MoveNext())
             {
-                Current = this.cur.Current;
+                this.Current = this.cur.Current;
                 return true;
             }
-            count--;
+            this.count--;
             this.cur = this.first;
             goto start;
         }

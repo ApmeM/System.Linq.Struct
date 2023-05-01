@@ -16,15 +16,15 @@ namespace System.Linq.Struct
         {
             this.array = array;
             this.curr = -1;
-            Current = default(T);
+            this.Current = default(T);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            curr++;
-            if (curr < array.Length)
+            this.curr++;
+            if (this.curr < this.array.Length)
             {
-                Current = array[curr];
+                this.Current = this.array[curr];
                 return true;
             }
             return false;

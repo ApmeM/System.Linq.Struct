@@ -23,21 +23,21 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (toSkip is 0)
+            if (this.toSkip is 0)
             {
                 var res = en.MoveNext();
                 if (res)
-                    Current = en.Current;
+                    Current = this.en.Current;
                 return res;
             }
             bool theLastMovedNext;
-            while ((theLastMovedNext = en.MoveNext()) && toSkip > 0)
+            while ((theLastMovedNext = this.en.MoveNext()) && this.toSkip > 0)
             {
-                toSkip--;
+                this.toSkip--;
             }
             if (!theLastMovedNext)
                 return false;
-            Current = en.Current;
+            this.Current = this.en.Current;
             return true;
         }
 

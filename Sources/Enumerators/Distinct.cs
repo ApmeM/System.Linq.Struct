@@ -26,20 +26,20 @@ namespace System.Linq.Struct
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (!initialized)
+            if (!this.initialized)
             {
-                initialized = true;
-                sortList.Clear();
+                this.initialized = true;
+                this.sortList.Clear();
             }
 
         tryAgain:
-            if (!prev.MoveNext())
+            if (!this.prev.MoveNext())
                 return false;
-            var key = prev.Current;
+            var key = this.prev.Current;
             if (this.sortList.Contains(key))
                 goto tryAgain;
             this.sortList.Add(key);
-            this.Current = prev.Current;
+            this.Current = this.prev.Current;
             return true;
         }
         public T Current { get; private set; }
