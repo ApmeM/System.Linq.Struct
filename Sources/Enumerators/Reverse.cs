@@ -48,7 +48,5 @@ namespace System.Linq.Struct
         }
 
         public T Current { get; private set; }
-
-        public Reverse<T, TEnumerator> GetEnumerator() => this;
     }
 }

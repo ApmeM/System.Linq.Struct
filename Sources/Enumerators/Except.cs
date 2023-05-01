@@ -48,7 +48,5 @@ namespace System.Linq.Struct
             return true;
         }
         public T Current { get; private set; }
-
-        public Except<T, TEnumerator1, TEnumerator2> GetEnumerator() => this;
     }
 }

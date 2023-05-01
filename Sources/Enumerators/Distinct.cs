@@ -43,7 +43,5 @@ namespace System.Linq.Struct
             return true;
         }
         public T Current { get; private set; }
-
-        public Distinct<T, TEnumerator> GetEnumerator() => this;
     }
 }

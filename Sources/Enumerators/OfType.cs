@@ -31,7 +31,5 @@ namespace System.Linq.Struct
         }
         
         public U Current {get; private set;}
-
-        public OfType<T, TEnumerator, U> GetEnumerator() => this;
     }
 }

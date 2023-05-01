@@ -29,7 +29,5 @@ namespace System.Linq.Struct
         }
         
         public U Current {get; private set;}
-
-        public Cast<T, TEnumerator, U> GetEnumerator() => this;
     }
 }

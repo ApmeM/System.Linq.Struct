@@ -51,7 +51,5 @@ namespace System.Linq.Struct
             return true;
         }
         public T Current { get; private set; }
-
-        public OrderBy<T, TEnumerator, TKey> GetEnumerator() => this;
     }
 }

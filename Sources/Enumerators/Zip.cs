@@ -42,7 +42,5 @@ public struct Zip<T1, TEnumerator1, T2, TEnumerator2>
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void ThrowInvalid()
         => throw new InvalidOperationException("Collections should have the same size");
-
-    public Zip<T1, TEnumerator1, T2, TEnumerator2> GetEnumerator() => this;
 }
 }

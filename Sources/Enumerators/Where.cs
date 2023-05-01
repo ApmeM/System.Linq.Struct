@@ -33,7 +33,5 @@ namespace System.Linq.Struct
             return true;
         }
         public T Current { get; private set; }
-
-        public Where<T, TEnumerator> GetEnumerator() => this;
     }
 }

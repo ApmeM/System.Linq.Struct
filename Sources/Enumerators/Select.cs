@@ -29,7 +29,5 @@ namespace System.Linq.Struct
             return res;
         }
         public U Current { get; private set; }
-
-        public Select<T, TEnumerator, U> GetEnumerator() => this;
     }
 }
