@@ -2,6 +2,8 @@
 // This file from HonkPerf.NET project is MIT-licensed.
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
+using System.Collections.Generic;
+
 namespace Tests.ExtensionsFunctionalTests;
 
 public class IntersectTest
@@ -29,4 +31,17 @@ public class IntersectTest
     {
         TestUtils.EqualSequences(new int[] { }.Intersect(new int[] { }), new int[] { });
     }
+
+    [Fact]
+    public void ChangeListBetweenCalls()
+    {
+        var l1 = new List<int> { 1, 2, 3 };
+        var l2 = new List<int> { 3, 4, 5 };
+        var query = l1.Intersect(l2);
+        TestUtils.EqualSequences(query, new int[] { 3 });
+        l1.Add(3);
+        l2.Add(2);
+        TestUtils.EqualSequences(query, new int[] { 2, 3, 3 });
+    }
+
 }
