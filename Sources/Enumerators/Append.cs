@@ -2,6 +2,8 @@
 // This file from HonkPerf.NET project is MIT-licensed.
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
+using System.Runtime.CompilerServices;
+
 namespace System.Linq.Struct
 {
 
@@ -20,6 +22,7 @@ namespace System.Linq.Struct
             Current = default(T);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
             if (theLastAlreadyYielded)

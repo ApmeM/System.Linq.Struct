@@ -3,6 +3,7 @@
 // Read more: https://github.com/asc-community/HonkPerf.NET
 
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace System.Linq.Struct
 {
@@ -27,6 +28,7 @@ namespace System.Linq.Struct
             this.initialized = false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
             if (!initialized)
