@@ -677,6 +677,80 @@ namespace System.Linq.Struct
             => Build(c).OfType<TOutput>();
         public static RefLinqEnumerable<TOutput, OfType<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, TOutput>> OfType<TSource1, TSource2, TOutput>(this MultiDictionaryWrapper<TSource1, TSource2> c)
             => Build(c).OfType<TOutput>();
+        public static RefLinqEnumerable<TSource, Union<TSource, IReadOnlyListEnumerator<TSource>, TSecondEnumerator>> Union<TSource, TSecondEnumerator>(this IReadOnlyList<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Union(seq2);
+        public static RefLinqEnumerable<TSource, Union<TSource, IReadOnlyListEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Union<TSource>(this IReadOnlyList<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, IReadOnlyListEnumerator<TSource>, ArrayEnumerator<TSource>>> Union<TSource>(this IReadOnlyList<TSource> c, TSource[] seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, IReadOnlyListEnumerator<TSource>, HashSetEnumerator<TSource>>> Union<TSource>(this IReadOnlyList<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, IReadOnlyListEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Union<TSource>(this IReadOnlyList<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+        public static RefLinqEnumerable<TSource, Union<TSource, ArrayEnumerator<TSource>, TSecondEnumerator>> Union<TSource, TSecondEnumerator>(this TSource[] c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Union(seq2);
+        public static RefLinqEnumerable<TSource, Union<TSource, ArrayEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Union<TSource>(this TSource[] c, IReadOnlyList<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, ArrayEnumerator<TSource>, ArrayEnumerator<TSource>>> Union<TSource>(this TSource[] c, TSource[] seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, ArrayEnumerator<TSource>, HashSetEnumerator<TSource>>> Union<TSource>(this TSource[] c, HashSet<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, ArrayEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Union<TSource>(this TSource[] c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+        public static RefLinqEnumerable<TSource, Union<TSource, HashSetEnumerator<TSource>, TSecondEnumerator>> Union<TSource, TSecondEnumerator>(this HashSet<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Union(seq2);
+        public static RefLinqEnumerable<TSource, Union<TSource, HashSetEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Union<TSource>(this HashSet<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, HashSetEnumerator<TSource>, ArrayEnumerator<TSource>>> Union<TSource>(this HashSet<TSource> c, TSource[] seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, HashSetEnumerator<TSource>, HashSetEnumerator<TSource>>> Union<TSource>(this HashSet<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, HashSetEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Union<TSource>(this HashSet<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+        public static RefLinqEnumerable<TSource, Union<TSource, MultiHashSetWrapperEnumerator<TSource>, TSecondEnumerator>> Union<TSource, TSecondEnumerator>(this MultiHashSetWrapper<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => Build(c).Union(seq2);
+        public static RefLinqEnumerable<TSource, Union<TSource, MultiHashSetWrapperEnumerator<TSource>, IReadOnlyListEnumerator<TSource>>> Union<TSource>(this MultiHashSetWrapper<TSource> c, IReadOnlyList<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, MultiHashSetWrapperEnumerator<TSource>, ArrayEnumerator<TSource>>> Union<TSource>(this MultiHashSetWrapper<TSource> c, TSource[] seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, MultiHashSetWrapperEnumerator<TSource>, HashSetEnumerator<TSource>>> Union<TSource>(this MultiHashSetWrapper<TSource> c, HashSet<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<TSource, Union<TSource, MultiHashSetWrapperEnumerator<TSource>, MultiHashSetWrapperEnumerator<TSource>>> Union<TSource>(this MultiHashSetWrapper<TSource> c, MultiHashSetWrapper<TSource> seq2)
+            => Build(c).Union(Build(seq2));
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Union<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, TSecondEnumerator>> Union<TSource1, TSource2, TSecondEnumerator>(this Dictionary<TSource1, TSource2> c, RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<KeyValuePair<TSource1, TSource2>>
+            => Build(c).Union(seq2);
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Union<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Union<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, Dictionary<TSource1, TSource2> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Union<KeyValuePair<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>>> Union<TSource1, TSource2>(this Dictionary<TSource1, TSource2> c, MultiDictionaryWrapper<TSource1, TSource2> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Union<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, TSecondEnumerator>> Union<TSource1, TSource2, TSecondEnumerator>(this MultiDictionaryWrapper<TSource1, TSource2> c, RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<KeyValuePair<TSource1, TSource2>>
+            => Build(c).Union(seq2);
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+// TODO: Dictionary not supported for Union.
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Union<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, DictionaryEnumerator<TSource1, TSource2>>> Union<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, Dictionary<TSource1, TSource2> seq2)
+            => Build(c).Union(Build(seq2));
+        public static RefLinqEnumerable<KeyValuePair<TSource1, TSource2>, Union<KeyValuePair<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>, MultiDictionaryWrapperEnumerator<TSource1, TSource2>>> Union<TSource1, TSource2>(this MultiDictionaryWrapper<TSource1, TSource2> c, MultiDictionaryWrapper<TSource1, TSource2> seq2)
+            => Build(c).Union(Build(seq2));
         public static RefLinqEnumerable<TSource, Concat<TSource, IReadOnlyListEnumerator<TSource>, TSecondEnumerator>> Concat<TSource, TSecondEnumerator>(this IReadOnlyList<TSource> c, RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
             where TSecondEnumerator : IRefEnumerator<TSource>
             => Build(c).Concat(seq2);
@@ -1119,6 +1193,9 @@ namespace System.Linq.Struct
             => new RefLinqEnumerable<TOutput, Cast<TSource, TPrevious, TOutput>>(new Cast<TSource, TPrevious, TOutput>(this.enumerator));
         public RefLinqEnumerable<TOutput, OfType<TSource, TPrevious, TOutput>> OfType<TOutput>()
             => new RefLinqEnumerable<TOutput, OfType<TSource, TPrevious, TOutput>>(new OfType<TSource, TPrevious, TOutput>(this.enumerator));
+        public RefLinqEnumerable<TSource, Union<TSource, TPrevious, TSecondEnumerator>> Union<TSecondEnumerator>(RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
+            where TSecondEnumerator : IRefEnumerator<TSource>
+            => new RefLinqEnumerable<TSource, Union<TSource, TPrevious, TSecondEnumerator>>(new Union<TSource, TPrevious, TSecondEnumerator>(this.enumerator, seq2));
         public RefLinqEnumerable<TSource, Concat<TSource, TPrevious, TSecondEnumerator>> Concat<TSecondEnumerator>(RefLinqEnumerable<TSource, TSecondEnumerator> seq2)
             where TSecondEnumerator : IRefEnumerator<TSource>
             => new RefLinqEnumerable<TSource, Concat<TSource, TPrevious, TSecondEnumerator>>(new Concat<TSource, TPrevious, TSecondEnumerator>(this.enumerator, seq2));
