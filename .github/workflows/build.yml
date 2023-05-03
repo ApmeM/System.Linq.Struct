@@ -36,14 +36,14 @@ jobs:
         run: dotnet restore
       
       - name: Build
-        run: dotnet build -c Release
+        run: dotnet build
       
       - name: Test
         run: dotnet test
       
       - name: Pack
         if: startsWith(github.ref, 'refs/tags/v')
-        run: dotnet pack -p:PackageVersion=${GITHUB_REF:11}
+        run: dotnet pack -c Release -p:PackageVersion=${GITHUB_REF:11}
 
       - name: Upload windows artifact
         uses: actions/upload-artifact@v3
