@@ -41,9 +41,13 @@ jobs:
       - name: Test
         run: dotnet test
       
-      - name: Pack
+      - name: Pack for version
         if: startsWith(github.ref, 'refs/tags/v')
         run: dotnet pack -c Release -p:PackageVersion=${GITHUB_REF:11}
+
+      - name: Pack without version
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        run: dotnet pack -c Release -p:PackageVersion=1.0.0.0
 
       - name: Upload windows artifact
         uses: actions/upload-artifact@v3
