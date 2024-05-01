@@ -23,7 +23,7 @@ public class SingleOrDefaultTest
     [Fact]
     public void ListContainsMultipleValues()
     {
-        Assert.Equal(0, new int[] { 1, 2 }.SingleOrDefault());
+        Assert.Throws<InvalidOperationException>(() => new int[] { 1, 2 }.SingleOrDefault());
     }
 
     [Fact]
